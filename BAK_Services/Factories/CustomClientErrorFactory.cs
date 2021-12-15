@@ -16,8 +16,8 @@ namespace BAK_Services.Factories
     /// </summary>
     public class CustomClientErrorFactory : IClientErrorFactory
     {
-        private ILoggingService _loggerService;
-        public CustomClientErrorFactory(ILoggingService loggerService)
+        private ICourseService _loggerService;
+        public CustomClientErrorFactory(ICourseService loggerService)
         {
             _loggerService = loggerService;
         }

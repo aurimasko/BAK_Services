@@ -9,7 +9,7 @@ namespace BAK_Services
 {
     public static class Config
     {
-        public const string DatabaseConnectionString = "server=localhost; port=3306; database=BAK; user=root; password=Laser1140?;";
+        public const string DatabaseConnectionString = "Server=tcp:localhost,1433;User ID=sa;Password=Laser1140?;database=BAK;Trusted_Connection=False;Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;";
 
         public static ILocalizationService LocalizationService { get; set; }
 

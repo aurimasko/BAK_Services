@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BAK_Services.Repositories.Logging
 {
-    public interface ILoggingRepository
+    public interface ICourseRepository
     {
         Task<IEnumerable<Error>> GetLogs();
         Task<LogReport> Log(Error error);

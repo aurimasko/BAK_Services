@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BAK_Services.Services.Logging
 {
-    public interface ILoggingService
+    public interface ICourseService
     {
         Task<IEnumerable<Error>> GetLogs();
         Task<LogReport> Log(Error error);

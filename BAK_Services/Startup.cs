@@ -16,11 +16,23 @@ using Microsoft.AspNetCore.Localization;
 using BAK_Services.Services.Localization;
 using BAK_Services.Models;
 using BAK_Services.Factories;
-using BAK_Services.Services.Logging;
 using BAK_Services.Database;
 using BAK_Services.Helpers;
 using Microsoft.EntityFrameworkCore;
 using BAK_Services.Exceptions;
+using BAK_Services.Repositories.Course;
+using BAK_Services.Repositories.Task;
+using BAK_Services.Repositories.TaskExecution;
+using BAK_Services.Repositories.Test;
+using BAK_Services.Services.Course;
+using BAK_Services.Services.Task;
+using BAK_Services.Services.TaskExecution;
+using BAK_Services.Services.Test;
+using BAK_Services.Validators;
+using BAK_Services.Validators.Task;
+using BAK_Services.Validators.TaskExecution;
+using BAK_Services.Validators.Test;
+using FluentValidation.AspNetCore;
 
 namespace BAK_Services
 {
@@ -36,37 +48,17 @@ namespace BAK_Services
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-            //Add newtonsoft as json serializer
-            /*.AddNewtonsoftJson(options =>
-            {
-                //Ignore reference looping
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                //serialize enums as strings not integers
-                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-            })*/;
+            services.AddAutoMapper(typeof(Startup));
 
-            //Add request localization options
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
+            services.AddControllers().AddFluentValidation()
+                .AddNewtonsoftJson(options =>
                 {
-                    new CultureInfo("en"),
-                    new CultureInfo("lt")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
-                {
-                    var userLangs = context.Request.Headers["Accept-Language"].ToString();
-                    var firstLang = userLangs.Split(',').FirstOrDefault();
-                    var defaultLang = string.IsNullOrEmpty(firstLang) ? "en" : firstLang;
-                    return Task.FromResult(new ProviderCultureResult(defaultLang, defaultLang));
-                }));
-            });
-
+                    //Ignore reference looping
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    //serialize enums as strings not integers
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                });
+            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //Return custom model state validation results
@@ -97,11 +89,8 @@ namespace BAK_Services
 
             //Add database connection
             services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                string connectionString = Config.DatabaseConnectionString;
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-            }
-            );
+                options.UseSqlServer(Config.DatabaseConnectionString));
+
 
             //Add swagger services
             //Register the Swagger generator, defining 1 or more Swagger documents
@@ -147,25 +136,33 @@ namespace BAK_Services
             services.AddMemoryCache();
 
             //Register repositories
-            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<ITaskExecutionRepository, TaskExecutionRepository>();
+            services.AddScoped<ITestRepository, TestRepository> ();
 
             //Register services
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ITaskExecutionService, TaskExecutionService>();
+            services.AddScoped<ITestService, TestService>();
 
+            services.AddScoped<ICourseValidator, CourseValidator>();
+            services.AddScoped<ITaskValidator, TaskValidator>();
+            services.AddScoped<ITestValidator, TestValidator>();
+            services.AddScoped<ITaskExecutionValidator, TaskExecutionValidator>();
 
             //Register factories for custom error validation
-            services.AddTransient<IClientErrorFactory, CustomClientErrorFactory>((provider) =>
-            {
-                using (var scope = provider.CreateScope())
-                {
-                    var loggingService = scope.ServiceProvider.GetService<ILoggingService>();
-                    var service = new CustomClientErrorFactory(loggingService);
-                    return service;
-                }
-            });
+            /* services.AddTransient<IClientErrorFactory, CustomClientErrorFactory>((provider) =>
+             {
+                 using (var scope = provider.CreateScope())
+                 {
+                     var loggingService = scope.ServiceProvider.GetService<ILo>();
+                     var service = new CustomClientErrorFactory(loggingService);
+                     return service;
+                 }
+             });*/
 
-            //Register default localization service
-            Config.LocalizationService = new LocalizationService();
 
             //Add http context accessor
             services.AddHttpContextAccessor();

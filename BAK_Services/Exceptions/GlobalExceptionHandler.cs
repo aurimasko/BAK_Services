@@ -34,17 +34,13 @@ namespace BAK_Services.Exceptions
                         {
                             using (var scope = app.ApplicationServices.CreateScope())
                             {
-                                //Log exception
-                                var logService = scope.ServiceProvider.GetService<ILoggingService>();
-                                if (logService != null)
-                                {
-                                    var logReport = await logService.Log(new Error(contextFeature.Error, context.Request));
-                                    await context.Response.WriteAsync(new Response("An internal error occured, please contact support with error id '" + logReport.IssueId + "'", ErrorCodesEnum.Exception).ToString());
-                                }
-                                else
-                                {
-                                    await context.Response.WriteAsync(new Response("An internal error occured", ErrorCodesEnum.Exception).ToString());
-                                }
+                                var response = new Response("An internal error occured, please contact support",
+                                    ErrorCodesEnum.Exception);
+
+                                if (contextFeature.Error.GetType() == typeof(EntityNotFoundException))
+                                    response = new Response(ErrorCodesEnum.NotFound, contextFeature.Error.Message);
+                                
+                                await context.Response.WriteAsync(response.ToString());
                             }
                         }
                         catch (Exception)

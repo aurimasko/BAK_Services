@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BAK_Services.Repositories.Logging
 {
-    public class LoggingRepository : ILoggingRepository
+    public class CourseRepository : ICourseRepository
     {
         private readonly ApplicationDbContext _context;
-        public LoggingRepository(ApplicationDbContext context)
+        public CourseRepository(ApplicationDbContext context)
         {
             _context = context;
         }

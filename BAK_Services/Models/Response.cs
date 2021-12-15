@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
 namespace BAK_Services.Models
 {
@@ -157,6 +158,12 @@ namespace BAK_Services.Models
         {
         }
 
+        public Response(ValidationResult validationResult)
+        {
+            IsSuccess = validationResult.IsValid;
+            ErrorMessages = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+        }
+        
         public bool IsSuccess { get; set; }
 
         public List<ErrorCodesEnum> ErrorCodes { get; set; }
@@ -185,6 +192,7 @@ namespace BAK_Services.Models
     /// <typeparam name="T">Response type</typeparam>
     public class Response<T> : Response
     {
+        public Response(ValidationResult validationResult) : base(validationResult) { }
         public Response() { }
 
         /// <summary>

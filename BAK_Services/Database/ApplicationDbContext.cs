@@ -1,4 +1,5 @@
 ﻿using BAK_Services.Models;
+using BAK_Services.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BAK_Services.Database
@@ -7,6 +8,11 @@ namespace BAK_Services.Database
     {
         //Map entities to the database
        public DbSet<Error> Errors { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

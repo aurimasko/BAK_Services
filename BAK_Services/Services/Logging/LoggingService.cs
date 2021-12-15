@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BAK_Services.Services.Logging
 {
-    public class LoggingService : ILoggingService
+    public class CourseService : ICourseService
     {
-        private readonly ILoggingRepository _repository;
+        private readonly ICourseRepository _repository;
 
-        public LoggingService(ILoggingRepository repository)
+        public CourseService(ICourseRepository repository)
         {
             _repository = repository;
         }
