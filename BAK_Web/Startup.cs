@@ -1,25 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using BAK_Services.Services.Localization;
-using BAK_Services.Models;
-using BAK_Services.Factories;
+using BAK_Services;
 using BAK_Services.Database;
-using BAK_Services.Helpers;
-using Microsoft.EntityFrameworkCore;
 using BAK_Services.Exceptions;
+using BAK_Services.Models;
 using BAK_Services.Repositories.Course;
 using BAK_Services.Repositories.Task;
 using BAK_Services.Repositories.TaskExecution;
@@ -33,8 +16,18 @@ using BAK_Services.Validators.Task;
 using BAK_Services.Validators.TaskExecution;
 using BAK_Services.Validators.Test;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
-namespace BAK_Services
+namespace bak_web
 {
     public class Startup
     {
@@ -58,7 +51,7 @@ namespace BAK_Services
                     //serialize enums as strings not integers
                     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 });
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //Return custom model state validation results
@@ -76,7 +69,7 @@ namespace BAK_Services
                         {
                             foreach (var error in errors)
                             {
-                                if (!String.IsNullOrEmpty(error.ErrorMessage))
+                                if (!string.IsNullOrEmpty(error.ErrorMessage))
                                     listOfErrorMessages.Add(error.ErrorMessage);
                             }
                         }
@@ -92,46 +85,6 @@ namespace BAK_Services
                 options.UseSqlServer(Config.DatabaseConnectionString));
 
 
-            //Add swagger services
-            //Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "API"
-                });
-
-                //Use full name of the class to avoid conflicts
-                c.CustomSchemaIds(i => i.FullName);
-
-                //Add bearer token authorization
-                /*c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] { }
-                    }
-                });*/
-           });
-
             //Add in memory cache
             services.AddMemoryCache();
 
@@ -139,7 +92,7 @@ namespace BAK_Services
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<ITaskExecutionRepository, TaskExecutionRepository>();
-            services.AddScoped<ITestRepository, TestRepository> ();
+            services.AddScoped<ITestRepository, TestRepository>();
 
             //Register services
             services.AddScoped<ICourseService, CourseService>();
@@ -168,13 +121,13 @@ namespace BAK_Services
             services.AddHttpContextAccessor();
 
             //Add JWT token validation for authentication
-           /* services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = Config.IdentityServerUrl;
-                    options.Audience = Config.IdentityServerApiName;
-                }
-                );*/
+            /* services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                 .AddJwtBearer(options =>
+                 {
+                     options.Authority = Config.IdentityServerUrl;
+                     options.Audience = Config.IdentityServerApiName;
+                 }
+                 );*/
 
             //Add Cors for all request
             //IN PRODUCTION REPLACE WITH HOSTED ADDRESS
@@ -189,6 +142,12 @@ namespace BAK_Services
                         .AllowAnyHeader();
                 });
             });
+
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -198,24 +157,19 @@ namespace BAK_Services
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            
             // Configure Cors
             app.UseCors("AllowAllRequests");
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
             // Add request localization
             app.UseRequestLocalization();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
-                c.RoutePrefix = string.Empty;
-            });
-
+            
             //Add global exception handler
             app.ConfigureExceptionHandler();
 
@@ -229,6 +183,26 @@ namespace BAK_Services
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
 
             //Applies any pending migrations and seeds initial data

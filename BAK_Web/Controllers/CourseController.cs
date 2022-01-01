@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BAK_Services.Controllers
+namespace BAK_Web.Controllers
 {
    // [Authorize]
     [ApiController]

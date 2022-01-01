@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAK_Services", "BAK_Services\BAK_Services.csproj", "{A4035BB6-BB76-4536-844B-2B5FF41A1343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAK_Services", "BAK_Services\BAK_Services.csproj", "{A4035BB6-BB76-4536-844B-2B5FF41A1343}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAK_Web", "BAK_Web\BAK_Web.csproj", "{0F883B24-2864-4E0C-AA25-7792C3D66EDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A4035BB6-BB76-4536-844B-2B5FF41A1343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4035BB6-BB76-4536-844B-2B5FF41A1343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4035BB6-BB76-4536-844B-2B5FF41A1343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F883B24-2864-4E0C-AA25-7792C3D66EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F883B24-2864-4E0C-AA25-7792C3D66EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F883B24-2864-4E0C-AA25-7792C3D66EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F883B24-2864-4E0C-AA25-7792C3D66EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
