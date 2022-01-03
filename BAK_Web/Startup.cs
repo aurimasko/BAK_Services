@@ -43,7 +43,7 @@ namespace bak_web
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers().AddFluentValidation()
+            services.AddControllers(x => x.AllowEmptyInputInBodyModelBinding = true).AddFluentValidation()
                 .AddNewtonsoftJson(options =>
                 {
                     //Ignore reference looping

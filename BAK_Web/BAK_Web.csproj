@@ -24,7 +24,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\interfaces\service-response.interface.ts" />
+    <None Remove="ClientApp\src\app\modules\course\course.component.ts" />
+    <None Remove="ClientApp\src\app\modules\courses\courses.component.ts" />
+    <None Remove="ClientApp\src\app\services\course.service.ts" />
+    <None Remove="ClientApp\src\app\services\task.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BAK_Services\BAK_Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\service-response.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modules\course\course.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\modules\courses\courses.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\task.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\services\course.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

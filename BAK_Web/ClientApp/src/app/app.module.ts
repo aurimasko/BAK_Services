@@ -5,18 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NavMenuComponent } from './modules/nav-menu/nav-menu.component';
+import { HomeComponent } from './modules/home/home.component';
+import { CoursesComponent } from './modules/courses/courses.component';
+import { CourseComponent } from './modules/course/course.component';
+
+import { CourseService } from './services/course.service';
+import { TaskService } from './services/task.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    CoursesComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,11 +27,14 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'courses', component: CoursesComponent },
+      { path: 'course', component: CourseComponent }
     ])
   ],
-  providers: [],
+  providers: [
+    CourseService,
+    TaskService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

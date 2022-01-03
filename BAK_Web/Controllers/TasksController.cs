@@ -21,7 +21,7 @@ namespace BAK_Services.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/Get")]
+        [Route("api/[controller]/Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(IEnumerable<Guid> tasksIds = null)
         {
@@ -35,7 +35,7 @@ namespace BAK_Services.Controllers
 
 
         [HttpGet]
-        [Route("courses/{courseId}/tasks")]
+        [Route("api/courses/{courseId}/tasks")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByCourseId(Guid courseId)
         {
@@ -48,7 +48,7 @@ namespace BAK_Services.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]")]
+        [Route("api/[controller]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Post([FromBody] TaskDto task)
@@ -62,7 +62,7 @@ namespace BAK_Services.Controllers
         }
 
         [HttpPut]
-        [Route("[controller]")]
+        [Route("api/[controller]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put([FromBody] TaskDto task)

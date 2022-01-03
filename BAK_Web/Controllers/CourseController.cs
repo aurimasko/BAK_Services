@@ -13,7 +13,7 @@ namespace BAK_Web.Controllers
 {
    // [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;

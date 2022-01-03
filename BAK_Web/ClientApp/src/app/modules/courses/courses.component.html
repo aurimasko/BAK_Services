@@ -1,0 +1,23 @@
+<div>
+
+  <h2>Kursai</h2>
+
+  <p>Pasirinkite norimą kursą:</p>
+
+  <table id="coursesTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Pavadinimas</th>
+        <th class="col-sm-4 hidden-xs">Lygis</th>
+      </tr>
+    </thead>
+    <tbody id="agreementsTableBody">
+      <tr tabindex="-1"
+          *ngFor="let course of courses"
+          (click)="openCourse(course)">
+          <td>{{course.name}}</td>
+          <td>{{course.level}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
