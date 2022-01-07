@@ -74,5 +74,15 @@ namespace BAK_Services.Controllers
             
             return BadRequest(response);
         }
+
+        [HttpDelete]
+        [Route("api/[controller]/{taskId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Delete(Guid taskId)
+        {
+            _tasksService.DeleteAsync(taskId);
+            return Ok();
+        }
     }
 }

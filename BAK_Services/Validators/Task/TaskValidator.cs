@@ -26,9 +26,9 @@ namespace BAK_Services.Validators.Task
 
         }
 
-        private bool UniqueName(string taskName)
+        private bool UniqueName(Models.Entities.Task task, string taskName)
         {
-            var result = _taskRepository.Find(c => c.Name.Equals(taskName));
+            var result = _taskRepository.Find(c => c.Name.Equals(taskName) && c.Id != task.Id);
             return !result.Result.Any();
         }
 

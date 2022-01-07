@@ -46,22 +46,18 @@ namespace BAK_Services.Repositories
             _context.SaveChanges();
         }
 
-        public void Remove(T entity)
-        {
-            var deleted = _entities.Remove(entity);
 
-            if (deleted.Entity == null)
-                throw new EntityNotFoundException(nameof(deleted));
-        }
-
+       
         public void RemoveRange(IEnumerable<T> entities)
         {
             _entities.RemoveRange(entities);
+            _context.SaveChanges();
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
             _entities.AddRangeAsync(entities);
+            _context.SaveChanges();
         }
         
         public void ValidateConcurrencyToken(T entity, byte[] concurrencyToken)

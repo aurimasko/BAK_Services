@@ -10,5 +10,8 @@ namespace BAK_Services.Repositories.Task
     public interface ITaskRepository : IGenericRepository<Models.Entities.Task>
     {
         Task<Response<Models.Entities.Task>> UpdateAsync(Models.Entities.Task updatableTask, Models.Entities.Task newTask);
+
+        System.Threading.Tasks.Task Remove(Models.Entities.Task entity);
+
     }
 }

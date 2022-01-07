@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BAK_Services.Exceptions
 {
@@ -39,7 +40,11 @@ namespace BAK_Services.Exceptions
 
                                 if (contextFeature.Error.GetType() == typeof(EntityNotFoundException))
                                     response = new Response(ErrorCodesEnum.NotFound, contextFeature.Error.Message);
-                                
+
+                                if (contextFeature.Error.GetType() == typeof(DbUpdateConcurrencyException))
+                                    response = new Response(ErrorCodesEnum.ConcurrencyException,
+                                        contextFeature.Error.Message);
+
                                 await context.Response.WriteAsync(response.ToString());
                             }
                         }

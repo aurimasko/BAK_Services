@@ -9,5 +9,7 @@ namespace BAK_Services.Repositories.Course
     public interface ICourseRepository : IGenericRepository<Models.Course>
     {
         Task<Response<Models.Course>> UpdateAsync(Models.Course updatableCourse, Models.Course Course);
+        System.Threading.Tasks.Task Remove(Models.Course entity);
+
     }
 }

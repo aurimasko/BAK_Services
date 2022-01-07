@@ -30,7 +30,7 @@ namespace BAK_Services.Services.Course
         {
             IEnumerable<Models.Course> result;
 
-            if (CoursesId != null && CoursesId.Count() > 0)
+            if (CoursesId != null && !CoursesId.Any())
                 result = await _repository.Find(c => CoursesId.Contains(c.Id));
             else
                 result = await _repository.GetAll();
@@ -40,7 +40,7 @@ namespace BAK_Services.Services.Course
 
         public Response<Models.Course> Add(CourseDto courseDto)
         {
-            var course = _mapper.Map<CourseDto, Models.Course>(courseDto);
+            var course = _mapper.Map<Models.Course>(courseDto);
 
             var validationResult = _validator.Validate(course);
 
@@ -53,7 +53,7 @@ namespace BAK_Services.Services.Course
 
         public async Task<Response<Models.Course>> UpdateAsync(CourseDto courseDto)
         {
-            var course = _mapper.Map<CourseDto, Models.Course>(courseDto);
+            var course = _mapper.Map<Models.Course>(courseDto);
 
             var validationResult = _validator.Validate(course);
 
@@ -67,14 +67,14 @@ namespace BAK_Services.Services.Course
             return updated;
         }
 
-        public async void DeleteAsync(Guid id)
+        public async System.Threading.Tasks.Task DeleteAsync(Guid id)
         {
             var courseToBeDeleted = await _repository.GetById(id);
 
             if (courseToBeDeleted == null)
                 throw new EntityNotFoundException(nameof(courseToBeDeleted));
 
-            _repository.Remove(courseToBeDeleted);
+            await _repository.Remove(courseToBeDeleted);
         }
 
     }

@@ -1,0 +1,28 @@
+<div>
+
+  <h2>Kursai</h2>
+
+  <button (click)="addNewCourse()">Kurti naują kursą</button>
+
+  <table id="coursesTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Pavadinimas</th>
+        <th class="col-sm-4 hidden-xs">Lygis</th>
+        <th class="col-sm-4 hidden-xs">Veiksmai</th>
+      </tr>
+    </thead>
+    <tbody id="agreementsTableBody">
+    <tr tabindex="-1"
+        *ngFor="let course of courses"
+        (click)="openTasksForCourse(course)">
+          <td>{{course.name}}</td>
+          <td>{{course.level}}</td>
+          <td>
+            <a (click)="editCourse(course)">Redaguoti</a><br/>
+            <a (click)="deleteCourse(course)">Ištrinti</a>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

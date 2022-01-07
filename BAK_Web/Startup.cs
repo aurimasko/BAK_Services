@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BAK_Services;
 using BAK_Services.Database;
+using BAK_Services.DTO.AutoMapper;
 using BAK_Services.Exceptions;
 using BAK_Services.Models;
 using BAK_Services.Repositories.Course;
@@ -41,7 +42,10 @@ namespace bak_web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
+            //   services.AddAutoMapper(typeof(Startup));
+            AutoMapperInitializer.Initialize();
+            
+            services.AddSingleton(Mapper.MapperInstance);
 
             services.AddControllers(x => x.AllowEmptyInputInBodyModelBinding = true).AddFluentValidation()
                 .AddNewtonsoftJson(options =>
@@ -146,7 +150,7 @@ namespace bak_web
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "WebApp/dist";
             });
         }
 
@@ -197,7 +201,7 @@ namespace bak_web
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "WebApp";
 
                 if (env.IsDevelopment())
                 {

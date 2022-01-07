@@ -63,6 +63,14 @@ namespace BAK_Web.Controllers
                 return BadRequest(response);
         }
 
-
+        [HttpDelete]
+        [Route("{courseId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Delete(Guid courseId)
+        {
+            _courseService.DeleteAsync(courseId);
+            return Ok();
+        }
     }
 }

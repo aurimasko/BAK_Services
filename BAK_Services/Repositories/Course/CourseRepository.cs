@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BAK_Services.Exceptions;
 
@@ -17,11 +18,6 @@ namespace BAK_Services.Repositories.Course
         {
             _context = context;
         }
-        public void Addz(Models.Course entity)
-        {
-            var created = _context.Courses.AddAsync(entity);
-            _context.SaveChanges();
-        }
 
 
         public async Task<Response<Models.Course>> UpdateAsync(Models.Course updatableCourse, Models.Course newCourse)
@@ -31,6 +27,15 @@ namespace BAK_Services.Repositories.Course
 
             await _context.SaveChangesAsync();
             return new Response<Models.Course>(updatableCourse);
+        }
+
+        public async System.Threading.Tasks.Task Remove(Models.Course entity)
+        {
+            var deleted = _context.Courses.Remove(entity);
+
+            if (deleted.Entity == null)
+                throw new EntityNotFoundException(nameof(deleted));
+            await _context.SaveChangesAsync();
         }
     }
 }

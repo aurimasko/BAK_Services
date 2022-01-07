@@ -24,11 +24,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\interfaces\service-response.interface.ts" />
-    <None Remove="ClientApp\src\app\modules\course\course.component.ts" />
-    <None Remove="ClientApp\src\app\modules\courses\courses.component.ts" />
-    <None Remove="ClientApp\src\app\services\course.service.ts" />
-    <None Remove="ClientApp\src\app\services\task.service.ts" />
+    <None Remove="WebApp\src\app\interfaces\service-response.interface.ts" />
+    <None Remove="WebApp\src\app\modules\admin\course-create.component.ts" />
+    <None Remove="WebApp\src\app\modules\admin\course-edit.component.ts" />
+    <None Remove="WebApp\src\app\modules\admin\course-handling.component.ts" />
+    <None Remove="WebApp\src\app\modules\admin\task-create.component.ts" />
+    <None Remove="WebApp\src\app\modules\admin\task-edit.component.ts" />
+    <None Remove="WebApp\src\app\modules\admin\task-handling.component.ts" />
+    <None Remove="WebApp\src\app\modules\common\upload-files.component.ts" />
+    <None Remove="WebApp\src\app\modules\courses\courses.component.ts" />
+    <None Remove="WebApp\src\app\modules\course\course.component.ts" />
+    <None Remove="WebApp\src\app\services\course.service.ts" />
+    <None Remove="WebApp\src\app\services\task.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,15 +43,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\interfaces\service-response.interface.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\modules\course\course.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\interfaces\service-response.interface.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\app\modules\courses\courses.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\task.service.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-create.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\app\services\course.service.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-create.component.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-edit.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-edit.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-handling.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-handling.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\common\upload-files.component.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\modules\courses\courses.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\course\course.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\services\course.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\services\task.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

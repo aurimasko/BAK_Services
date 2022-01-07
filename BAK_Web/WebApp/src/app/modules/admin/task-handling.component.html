@@ -1,0 +1,27 @@
+<div>
+
+  <h2>Kurso užduotys</h2>
+
+  <button (click)="addNewTask()">Kurti naują užduotį</button>
+
+  <table id="tasksTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Pavadinimas</th>
+        <th class="col-sm-4 hidden-xs">Aprašymas</th>
+        <th class="col-sm-4 hidden-xs">Veiksmai</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr tabindex="-1"
+          *ngFor="let task of tasks">
+        <td>{{task.name}}</td>
+        <td>{{task.description}}</td>
+        <td>
+          <a (click)="editTask(task)">Redaguoti</a><br />
+          <a (click)="deleteTask(task)">Ištrinti</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -13,8 +13,8 @@ namespace BAK_Services.Repositories
         Task<IEnumerable<T>> Find(Expression<Func<T, bool>> filterCondition);
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
-        void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
         void ValidateConcurrencyToken(T entity, byte[] concurrencyToken);
+
     }
 }

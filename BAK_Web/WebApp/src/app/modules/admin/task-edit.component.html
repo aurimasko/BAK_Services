@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Redaguoti užduotį - {{task.name}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="taskEdited"><h3>Užduotis atnaujinta!</h3></div>
+
+  <table>
+    <td>
+      <label>Užduoties pavadinimas:</label>
+      <input type="text" name="taskName" [(ngModel)]="editableTask.name" />
+      <br />
+      <label>Užduoties aprašymas:</label>
+      <input type="text" name="taskDesc" [(ngModel)]="editableTask.description" />
+      <br />
+      <label>Užduoties kursas:</label>
+      <select [(ngModel)]="editableTask.courseId">
+        <option *ngFor="let course of courses" [ngValue]="course.id">{{course.name}}</option>
+      </select>
+      <br />
+      <label>Užduoties automatiniai testai:</label>
+    <upload-files></upload-files>
+      <br />
+      <button type="button" (click)="update()">Atnaujinti užduotį</button>
+</table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="close()">Uždaryti</button>
+</div>

@@ -18,4 +18,14 @@ export class CourseService {
     return this.httpClient.post<ServiceResponse>(this.baseUrl + '/get', [courseId]);
   }
 
+  deleteCourse(courseId) {
+    return this.httpClient.delete<ServiceResponse>(this.baseUrl + '/' + courseId);
+  }
+  createCourse(course) {
+    return this.httpClient.post<ServiceResponse>(this.baseUrl, course, { headers: { "Content-Type": "application/json" } });
+  }
+  updateCourse(course) {
+    return this.httpClient.put<ServiceResponse>(this.baseUrl, course);
+  }
+
 }

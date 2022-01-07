@@ -78,7 +78,7 @@ namespace BAK_Services.Services.Task
             if (taskToBeDeleted == null)
                 throw new EntityNotFoundException(nameof(taskToBeDeleted)); 
 
-            _repository.Remove(taskToBeDeleted);
+            await _repository.Remove(taskToBeDeleted);
         }
     }
 }

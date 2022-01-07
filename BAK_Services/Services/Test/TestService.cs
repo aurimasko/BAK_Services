@@ -67,7 +67,7 @@ namespace BAK_Services.Services.Test
             if (testToBeDeleted == null)
                 throw new EntityNotFoundException(nameof(testToBeDeleted)); 
 
-            _repository.Remove(testToBeDeleted);
+            //_repository.Remove(testToBeDeleted);
         }
     }
 }
