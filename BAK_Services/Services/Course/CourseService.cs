@@ -30,7 +30,7 @@ namespace BAK_Services.Services.Course
         {
             IEnumerable<Models.Course> result;
 
-            if (CoursesId != null && !CoursesId.Any())
+            if (CoursesId != null && CoursesId.Any())
                 result = await _repository.Find(c => CoursesId.Contains(c.Id));
             else
                 result = await _repository.GetAll();

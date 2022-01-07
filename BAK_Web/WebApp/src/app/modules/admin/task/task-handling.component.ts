@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from "../../services/task.service";
+import { TaskService } from "../../../services/task.service";
 import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TaskCreateComponent } from "./task-create.component";
 import { TaskEditComponent } from "./task-edit.component";
-
+import { NotificationsService } from "../../../services/notifications.service";
 
 @Component({
   selector: 'task-handling-component',
@@ -15,7 +15,7 @@ export class TaskHandlingComponent implements OnInit {
   courseId;
   tasks;
 
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private router: Router, private taskService: TaskService) { }
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private router: Router, private taskService: TaskService, private notificationsService: NotificationsService) { }
 
   ngOnInit() {
     this.route.paramMap
@@ -34,25 +34,25 @@ export class TaskHandlingComponent implements OnInit {
 
   editTask(task) {
     const modalRef = this.modalService.open(TaskEditComponent, { size: 'lg' });
-    modalRef.componentInstance.task = task;
+    modalRef.componentInstance.taskId = task.id;
     modalRef.result.then(() => this.getTasks(this.courseId));
   }
 
   deleteTask(task) {
     if (confirm("Tikrai norite ištrinti šią užduotį?")) {
       this.taskService.deleteTask(task.id).subscribe(result => {
-          console.log(result);
-          this.getTasks(this.courseId);
+        this.notificationsService.showSuccess("Užduotis buvo ištrinta!", "");
+        this.getTasks(this.courseId);
         },
-        error => console.log(error));
+        error => this.notificationsService.showError(error.error.errorMessages.toString(), ""));
     }
   }
 
   getTasks(courseId) {
     return this.taskService.getByCourseId(courseId).subscribe(result => {
-        this.tasks = result.content;
-      },
-      error => console.log(error));
+      this.tasks = result.content;
+    },
+      error => this.notificationsService.showError(error.error.errorMessages.toString(), ""));
   }
 
 }

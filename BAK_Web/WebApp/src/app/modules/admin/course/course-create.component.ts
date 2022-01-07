@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { CourseService } from "../../services/course.service";
+import { CourseService } from "../../../services/course.service";
+import { NotificationsService } from "../../../services/notifications.service";
 
 @Component({
   selector: 'course-create-component',
@@ -8,14 +9,13 @@ import { CourseService } from "../../services/course.service";
 
 })
 export class CourseCreateComponent {
-  constructor(public activeModal: NgbActiveModal, private courseService: CourseService) { }
+  constructor(public activeModal: NgbActiveModal, private courseService: CourseService, private notificationsService: NotificationsService) { }
 
   newCourse = {
     name: null,
     level: null
   };
 
-  courseCreated;
  
   close() {
     this.activeModal.close();
@@ -25,8 +25,9 @@ export class CourseCreateComponent {
 
     this.courseService.createCourse(this.newCourse).subscribe(result => {
         console.log(result);
-        this.courseCreated = true;
+      this.notificationsService.showSuccess("Kursas buvo sukurtas!", "");
+
       },
-      error => console.log(error));
+      error => this.notificationsService.showError(error.error.errorMessages.toString(), ""));
   }
 }

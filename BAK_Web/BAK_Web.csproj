@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="WebApp\src\app\helpers\response-helpers.ts" />
     <None Remove="WebApp\src\app\interfaces\service-response.interface.ts" />
     <None Remove="WebApp\src\app\modules\admin\course-create.component.ts" />
     <None Remove="WebApp\src\app\modules\admin\course-edit.component.ts" />
@@ -35,6 +36,7 @@
     <None Remove="WebApp\src\app\modules\courses\courses.component.ts" />
     <None Remove="WebApp\src\app\modules\course\course.component.ts" />
     <None Remove="WebApp\src\app\services\course.service.ts" />
+    <None Remove="WebApp\src\app\services\notifications.service.ts" />
     <None Remove="WebApp\src\app\services\task.service.ts" />
   </ItemGroup>
 
@@ -43,23 +45,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="WebApp\src\app\helpers\response-helpers.ts" />
     <TypeScriptCompile Include="WebApp\src\app\interfaces\service-response.interface.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-create.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task\task-create.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-create.component.ts" />
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-edit.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course\course-create.component.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task\task-edit.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-edit.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course\course-edit.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task-handling.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\task\task-handling.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course-handling.component.ts">
+    <TypeScriptCompile Include="WebApp\src\app\modules\admin\course\course-handling.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\common\upload-files.component.ts" />
@@ -72,6 +75,7 @@
     <TypeScriptCompile Include="WebApp\src\app\services\course.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\services\notifications.service.ts" />
     <TypeScriptCompile Include="WebApp\src\app\services\task.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

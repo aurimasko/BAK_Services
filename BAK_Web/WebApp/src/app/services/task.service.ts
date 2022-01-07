@@ -15,6 +15,10 @@ export class TaskService {
     return this.httpClient.get<ServiceResponse>(this.baseUrl + 'courses/' + courseId + '/tasks');
   }
 
+  getById(taskId) {
+    return this.httpClient.post<ServiceResponse>(this.baseUrl + 'tasks/get', JSON.stringify([taskId]), { headers: { "Content-Type": "application/json" } });
+  }
+
   createTask(task) {
     const formData: FormData = new FormData();
 

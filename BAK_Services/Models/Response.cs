@@ -163,14 +163,18 @@ namespace BAK_Services.Models
             IsSuccess = validationResult.IsValid;
             ErrorMessages = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
         }
-        
+
+        [JsonProperty(PropertyName = "isSuccess")]
         public bool IsSuccess { get; set; }
 
+        [JsonProperty(PropertyName = "errorCodes")]
         public List<ErrorCodesEnum> ErrorCodes { get; set; }
 
         /// <summary>
         /// Additional error messages
         /// </summary>
+        /// 
+        [JsonProperty(PropertyName = "errorMessages")]
         public List<string> ErrorMessages { get; set; }
 
         /// <summary>
@@ -294,6 +298,7 @@ namespace BAK_Services.Models
         /// <param name="errorCodesEnum">Error code of type <see cref="ErrorCodesEnum">Error codes enum</see></param>
         public Response(ErrorCodesEnum errorCodesEnum, string errorMessage) : this(errorMessage, errorCodesEnum) { }
 
+        [JsonProperty(PropertyName = "content")]
         public T Content { get; set; }
 
         public override string ToString()

@@ -15,7 +15,7 @@ export class CourseService {
   }
 
   getById(courseId) {
-    return this.httpClient.post<ServiceResponse>(this.baseUrl + '/get', [courseId]);
+    return this.httpClient.post<ServiceResponse>(this.baseUrl + '/get', JSON.stringify([courseId]), { headers: { "Content-Type": "application/json" } });
   }
 
   deleteCourse(courseId) {
