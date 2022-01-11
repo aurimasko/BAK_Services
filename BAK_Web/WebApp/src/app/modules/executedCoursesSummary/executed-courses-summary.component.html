@@ -1,0 +1,28 @@
+<div>
+
+  <h2>Jūsų įgyvendinti kursai</h2>
+
+  <p>Pasirinkite, kurį įgyvendintą kursą norite peržiūrėti:</p>
+
+  <table id="coursesTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Pavadinimas</th>
+        <th class="col-sm-4 hidden-xs">Įvertinimas</th>
+        <th class="col-sm-4 hidden-xs">Išlaikyta</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr (click)="openCourse(execution)" tabindex="-1"
+        *ngFor="let execution of coursesExecution">
+      <td>{{execution.course.name}}</td>
+      <td>{{execution.mark}}</td>
+      <td>
+        <b *ngIf="execution.successful" style="color: green;">Išlaikyta</b>
+        <b *ngIf="!execution.successful" style="color: red;">Neišlaikyta</b>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

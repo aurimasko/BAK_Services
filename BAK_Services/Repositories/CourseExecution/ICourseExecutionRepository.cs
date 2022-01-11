@@ -9,7 +9,7 @@ namespace BAK_Services.Repositories.Course
 {
     public interface ICourseExecutionRepository : IGenericRepository<CourseExecution>
     {
-       // Task<Response<Models.Course>> UpdateAsync(Models.Course updatableCourse, CourseExecution courseExecution);
-
+        // Task<Response<Models.Course>> UpdateAsync(Models.Course updatableCourse, CourseExecution courseExecution);
+        Task<IEnumerable<CourseExecution>> GetByUserIdWithCourseAsync(Guid userId);
     }
 }

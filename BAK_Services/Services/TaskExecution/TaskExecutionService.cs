@@ -42,6 +42,12 @@ namespace BAK_Services.Services.TaskExecution
             return new Response<IEnumerable<Models.Entities.TaskExecution>>(result);
         }
 
+        public async Task<Response<IEnumerable<Models.Entities.TaskExecution>>> GetByCourseExecutionIdAsync(Guid courseExecutionId)
+        {
+            var result = await _repository.GetByCourseExecutionIdAsync(courseExecutionId);
+            return new Response<IEnumerable<Models.Entities.TaskExecution>>(result);
+        }
+
         public async Task<Response<IEnumerable<Models.Entities.TaskExecution>>> GetByTaskIdAsync(Guid taskId)
         {
             var result = await _repository.Find(t => t.TaskId == taskId);
@@ -57,13 +63,7 @@ namespace BAK_Services.Services.TaskExecution
             if (!validationResult.IsValid)
                 return new Response<Models.Entities.TaskExecution>(validationResult);
             
-            using (var memoryStream = new MemoryStream())
-            {
-                taskExecutionDto.ExecutionFileEntry.CopyToAsync(memoryStream);
-
-                if (memoryStream.Length < 2097152)
-                    taskExecution.ExecutionFile = memoryStream.ToArray();
-            }
+            
             _repository.Add(taskExecution);
             return new Response<Models.Entities.TaskExecution>(taskExecution);
         }

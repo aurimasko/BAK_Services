@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
@@ -11,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -22,20 +22,20 @@ import { CourseHandlingComponent } from './modules/admin/course/course-handling.
 import { CourseEditComponent } from './modules/admin/course/course-edit.component';
 import { CourseCreateComponent } from './modules/admin/course/course-create.component';
 import { CourseExecutionComponent } from './modules/courseExecution/course-execution.component';
-import { CourseExecutionService } from "./services/course-execution.service";
-
 import { UploadFilesComponent } from './modules/common/upload-files.component';
-
 import { TaskHandlingComponent } from './modules/admin/task/task-handling.component';
 import { TaskEditComponent } from './modules/admin/task/task-edit.component';
 import { TaskCreateComponent } from './modules/admin/task/task-create.component';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ExecutedCoursesSummaryComponent } from './modules/executedCoursesSummary/executed-courses-summary.component';
+import { ExecutedCourseSummaryComponent } from './modules/executed-course-summary/executed-course-summary.component';
 
 import { CourseService } from './services/course.service';
 import { TaskService } from './services/task.service';
 import { NotificationsService } from './services/notifications.service';
 import { ResponseHelper } from "./helpers/response-helpers";
+import { CourseExecutionService } from "./services/course-execution.service";
+import { TaskExecutionService } from "./services/task-execution.service";
+
 
 @NgModule({
   declarations: [
@@ -51,7 +51,9 @@ import { ResponseHelper } from "./helpers/response-helpers";
     TaskEditComponent,
     UploadFilesComponent,
     TaskCreateComponent,
-    CourseExecutionComponent
+    CourseExecutionComponent,
+    ExecutedCoursesSummaryComponent,
+    ExecutedCourseSummaryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -68,10 +70,12 @@ import { ResponseHelper } from "./helpers/response-helpers";
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'courses', component: CoursesComponent },
-      { path: 'course', component: CourseComponent },
+      { path: 'course/:courseId', component: CourseComponent },
       { path: 'admin/courses', component: CourseHandlingComponent },
       { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent },
-      { path: 'course/:courseId/execution', component: CourseExecutionComponent }
+      { path: 'course/:courseId/execution', component: CourseExecutionComponent },
+      { path: 'summary', component: ExecutedCoursesSummaryComponent },
+      { path: 'summary/:courseExecutionId', component: ExecutedCourseSummaryComponent }
     ])
   ],
   providers: [
@@ -79,7 +83,8 @@ import { ResponseHelper } from "./helpers/response-helpers";
     TaskService,
     NotificationsService,
     ResponseHelper,
-    CourseExecutionService
+    CourseExecutionService,
+    TaskExecutionService
   ],
   bootstrap: [AppComponent]
 })

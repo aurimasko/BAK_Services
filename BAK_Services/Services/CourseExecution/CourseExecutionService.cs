@@ -33,7 +33,7 @@ namespace BAK_Services.Services.CourseExecution
 
         public async Task<Response<IEnumerable<Models.Entities.CourseExecution>>> GetByUserIdAsync(Guid userId)
         {
-            var result = await _repository.Find(x => x.UserId == userId);
+            var result = await _repository.GetByUserIdWithCourseAsync(userId);
             return new Response<IEnumerable<Models.Entities.CourseExecution>>(result);
         }
 

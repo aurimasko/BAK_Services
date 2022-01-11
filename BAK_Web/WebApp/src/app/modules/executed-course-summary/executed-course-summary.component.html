@@ -1,0 +1,47 @@
+<div>
+  <h2>Kursas</h2>
+  <hr />
+  <h3>Užduotys:</h3>
+  <ul *ngFor="let taskExecution of tasksExecution">
+    <li>
+      <a (click)="focusTaskExecution(taskExecution)">
+        <span [style.color]="taskExecution.successful ? 'green' : 'red'" [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
+
+          {{taskExecution.task.name}} (Įvykdyti testai: {{getMarkForTask(taskExecution)}} / {{taskExecution.taskExecutionsTests.length}})</span>
+      </a>
+    </li>
+  </ul>
+  <hr />
+  <div *ngIf="selectedTask != null">
+    <h3><b>Užduotis {{selectedTask.task.name}}</b></h3>
+    <p>Užduoties sąlyga: <br/>
+      {{selectedTask.task.description}}</p>
+
+    <h2><b>Blockly vieta</b></h2>
+
+    <p>Kodas, pagal kurį atliktas vertinimas:</p>
+    <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode" readonly></textarea>
+
+    <hr />
+    <h3>Įvykdyti automatiniai testai:</h3>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Testo nr.</th>
+        <th class="col-sm-4 hidden-xs"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr tabindex="-1"
+          *ngFor="let test of selectedTask.taskExecutionsTests; let i = index">
+        <td>Testas {{i+1}}</td>
+        <td>
+          <b *ngIf="test.completed" style="color: green;">Praėjo</b>
+          <b *ngIf="!test.completed" style="color: red;">Nepraėjo</b>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

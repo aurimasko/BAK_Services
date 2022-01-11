@@ -16,7 +16,7 @@
           *ngFor="let course of courses"
           (click)="openCourse(course)">
           <td>{{course.name}}</td>
-          <td>{{course.level}}</td>
+          <td>{{getCourseLevelText(course.level)}}</td>
       </tr>
     </tbody>
   </table>

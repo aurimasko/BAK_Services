@@ -15,5 +15,8 @@ namespace BAK_Services.Services.TaskExecution
         Response<Models.Entities.TaskExecution> AddAsync(TaskExecutionDto taskExecutionDto);
         //Task<Response<Models.Entities.TaskExecution>> UpdateAsync(Models.Entities.TaskExecution taskExecution);
         void DeleteAsync(Guid id);
+
+        Task<Response<IEnumerable<Models.Entities.TaskExecution>>> GetByCourseExecutionIdAsync(Guid courseExecutionId);
+
     }
 }

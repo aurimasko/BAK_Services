@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from "../../services/course.service";
-import { TaskService } from "../../services/task.service";
 import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
+import { NotificationsService } from "../../services/notifications.service";
+import { ResponseHelper } from "../../helpers/response-helpers";
 
 @Component({
   selector: 'course-component',
@@ -13,28 +14,22 @@ export class CourseComponent implements OnInit {
   courseId;
   courseTasks;
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private taskService: TaskService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper ) { }
 
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('courseId');
     this.getCourses(this.courseId);
-    this.getTasks(this.courseId);
   }
 
   startCourse(course) {
     this.router.navigate(['/course', course.id, 'execution']);
   }
 
-  getTasks(courseId) {
-    return this.taskService.getByCourseId(courseId).subscribe(result => {
-        this.courseTasks = result.content;
-      },
-      error => console.log(error));
-  }
+
   getCourses(courseId) {
     return this.courseService.getById(courseId).subscribe(result => {
           this.course = result.content[0];
         },
-        error => console.log(error));
+      error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
   }
 }

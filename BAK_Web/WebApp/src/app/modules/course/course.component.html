@@ -4,19 +4,4 @@
   <br/>
   <button (click)="startCourse(course)">Pradėti vykdyti kursą</button>
 
-  <table id="tasksTable" class="table table-hover">
-    <thead>
-    <tr>
-      <th class="col-xs-6 col-sm-5">Pavadinimas</th>
-      <th class="col-sm-4 hidden-xs">Aprašymas</th>
-    </tr>
-    </thead>
-    <tbody id="tasksTableBody">
-    <tr tabindex="-1"
-        *ngFor="let task of courseTasks">
-      <td>{{task.name}}</td>
-      <td>{{task.description}}</td>
-    </tr>
-    </tbody>
-  </table>
 </div>

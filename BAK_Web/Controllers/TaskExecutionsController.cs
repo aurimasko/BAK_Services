@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BAK_Services.DTO;
-using BAK_Services.Models;
-using BAK_Services.Models.Entities;
-using BAK_Services.Services.Course;
+﻿using BAK_Services.DTO;
 using BAK_Services.Services.TaskExecution;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BAK_Services.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     [ApiController]
     public class TaskExecutionsController : ControllerBase
     {
@@ -38,6 +33,19 @@ namespace BAK_Services.Controllers
         }
 
         [HttpGet]
+        [Route("api/courseexecutions/{courseExecutionId}/[controller]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByCourseId(Guid courseExecutionId)
+        {
+            var response = await _taskExecutionService.GetByCourseExecutionIdAsync(courseExecutionId);
+
+            if (response.IsSuccess)
+                return Ok(response);
+            else
+                return BadRequest(response);
+        }
+
+        [HttpGet]
         [Route("tasks/{taskId}/taskExecutions")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByTaskId(Guid taskId)
@@ -49,6 +57,7 @@ namespace BAK_Services.Controllers
             else
                 return BadRequest(response);
         }
+
 
         [HttpPost]
         [Route("[controller]")]

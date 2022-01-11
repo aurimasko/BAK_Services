@@ -3,20 +3,17 @@ import { Injectable } from '@angular/core';
 import { ServiceResponse } from "../interfaces/service-response.interface";
 
 @Injectable()
-export class CourseExecutionService {
+export class TaskExecutionService {
   private serviceUrl = "https://localhost:44319/api/";
-  private baseUrl = this.serviceUrl + "courseexecutions";
+  private baseUrl = this.serviceUrl + "taskexecutions";
 
   constructor(
     private httpClient: HttpClient
   ) { }
 
-  submitExecution(courseExecution) {
-    return this.httpClient.post<ServiceResponse>(this.baseUrl, courseExecution, { headers: { "Content-Type": "application/json" } });
-  }
-
-  getByUserId(userId) {
-    return this.httpClient.get<ServiceResponse>(this.serviceUrl + 'users/' + userId + '/courseexecutions');
+ 
+  getByCourseId(courseId) {
+    return this.httpClient.get<ServiceResponse>(this.serviceUrl + 'courseexecutions/' + courseId + '/taskexecutions');
   }
   /*
   getAll() {
