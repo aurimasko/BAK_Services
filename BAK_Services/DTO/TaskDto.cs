@@ -14,5 +14,6 @@ namespace BAK_Services.DTO
         public Guid CourseId { get; set; }
 
         public int MinimumTestsCompletedToSuccess { get; set; }
+        public ICollection<Test> Tests { get; set; }
     }
 }

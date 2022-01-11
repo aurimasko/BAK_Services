@@ -24,6 +24,8 @@ namespace BAK_Services.Repositories.Course
         {
             updatableCourse.Name = newCourse.Name;
             updatableCourse.Level = newCourse.Level;
+            updatableCourse.MinimumTasksCompletedToSuccess = newCourse.MinimumTasksCompletedToSuccess;
+            updatableCourse.Description = newCourse.Description;
 
             await _context.SaveChangesAsync();
             return new Response<Models.Course>(updatableCourse);

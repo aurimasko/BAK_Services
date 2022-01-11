@@ -8,6 +8,7 @@ using BAK_Services.Exceptions;
 using BAK_Services.Models;
 using BAK_Services.Models.Entities;
 using BAK_Services.Repositories.Course;
+using BAK_Services.Repositories.Task;
 using BAK_Services.Repositories.TaskExecution;
 using BAK_Services.Repositories.TaskExecutionTest;
 using BAK_Services.Repositories.Test;
@@ -20,13 +21,19 @@ namespace BAK_Services.Services.CourseExecution
     {
         private readonly ICourseExecutionRepository _repository;
         private readonly ITestRepository _testRepository;
+        private readonly ITaskRepository _taskRepository;
+        private readonly ICourseRepository _courseRepository;
+
         // private readonly ICourseExecutionValidator _validator;
         private readonly IMapper _mapper;
 
-        public CourseExecutionService(ICourseExecutionRepository repository, IMapper mapper, ITestRepository testRepository)
+        public CourseExecutionService(ICourseExecutionRepository repository, IMapper mapper, ITestRepository testRepository, ITaskRepository taskRepository, ICourseRepository courseRepository)
         {
             _repository = repository;
             _testRepository = testRepository;
+            _taskRepository = taskRepository;
+            _courseRepository = courseRepository;
+
             //_validator = validator;
             _mapper = mapper;
         }
@@ -46,6 +53,7 @@ namespace BAK_Services.Services.CourseExecution
         public async Task<Response<Models.Entities.CourseExecution>> Add(CourseExecutionDto courseExecutionDto)
         {
             var courseExecution = _mapper.Map<Models.Entities.CourseExecution>(courseExecutionDto);
+            int completedTasks = 0;
 
           /*  var validationResult = _validator.Validate(course);
 
@@ -69,8 +77,24 @@ namespace BAK_Services.Services.CourseExecution
                     test.TaskExecutionsTests.Add(executedTest);
                     taskExecution.TaskExecutionsTests.Add(executedTest);
                 }
+
+                var completedTests = taskExecution.TaskExecutionsTests.Count(x => x.Completed);
+                var task = await _taskRepository.GetById(taskExecution.TaskId);
+
+                if (completedTests >= task.MinimumTestsCompletedToSuccess)
+                {
+                    taskExecution.Successful = true;
+                    completedTasks++;
+                }
+                else
+                {
+                    taskExecution.Successful = false;
+                }
             }
 
+            var course = await _courseRepository.GetById(courseExecution.CourseId);
+            courseExecution.Successful = completedTasks >= course.MinimumTasksCompletedToSuccess;
+            
             var result = await _repository.Add(courseExecution);
             return new Response<Models.Entities.CourseExecution>(result);
         }

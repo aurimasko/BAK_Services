@@ -14,7 +14,9 @@ export class CourseCreateComponent {
 
   newCourse = {
     name: null,
-    level: null
+    description: null,
+    level: null,
+    minimumTasksCompletedToSuccess: null
   };
 
  

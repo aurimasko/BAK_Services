@@ -15,7 +15,9 @@ export class CourseEditComponent implements OnInit {
   courseId: any;
   editableCourse = {
     name: null,
-    level: null
+    description: null,
+    level: null,
+    minimumTasksCompletedToSuccess: null
   };
 
   ngOnInit() {

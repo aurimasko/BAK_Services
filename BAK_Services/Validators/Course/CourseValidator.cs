@@ -18,7 +18,8 @@ namespace BAK_Services.Validators.Test
         {
             _courseRepository = new CourseRepository(new ApplicationDbContext(options));
 
-            RuleFor(course => course.Name).NotNull();
+            RuleFor(course => course.Name).NotEmpty();
+            RuleFor(course => course.Description).NotEmpty();
             RuleFor(course => course.Name).MustAsync(async (entity, value, c) => await UniqueName(entity, value)).WithMessage("Course name must be unique.");
             RuleFor(course => course.Level).IsInEnum();
         }

@@ -10,6 +10,7 @@ namespace BAK_Services.Models
     public class Course : BaseEntity
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public CourseLevel Level { get; set; }
         public int MinimumTasksCompletedToSuccess { get; set; }
 

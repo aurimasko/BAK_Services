@@ -17,8 +17,9 @@ namespace BAK_Services.Validators.Test
         {
             _taskRepository = taskRepository;
 
-            RuleFor(course => course.TaskId).NotNull();
-            RuleFor(task => task.TaskId).Must(TaskExists).WithMessage("Task with this task id must exists.");
+            RuleFor(test => test.TaskId).NotNull();
+            RuleFor(test => test.TestCode).NotEmpty();
+            RuleFor(test => test.TaskId).Must(TaskExists).WithMessage("Task with this task id must exists.");
         }
 
         private bool TaskExists(Guid taskId)

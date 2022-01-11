@@ -10,7 +10,7 @@ namespace BAK_Services.Models.Entities
         public Task Task { get; set; }
         public Guid TaskId { get; set; }
 
-        // C code file
+        public string TestCode { get; set; }
 
         public ICollection<TaskExecutionTest> TaskExecutionsTests { get; set; } = new List<TaskExecutionTest>();
     }

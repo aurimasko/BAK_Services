@@ -16,7 +16,15 @@ export class TaskCreateComponent {
     name: null,
     description: null,
     courseId: null,
-    tests: []
+    minimumTestsCompletedToSuccess: null,
+    tests: [
+      {
+        testCode: "Test code 1"
+      },
+      {
+        testCode: "Test code 2"
+      }
+    ]
   };
 
   taskCreated;
@@ -30,7 +38,6 @@ export class TaskCreateComponent {
     this.newTask.courseId = this.courseId;
 
     this.taskService.createTask(this.newTask).subscribe(result => {
-        console.log(result);
         this.notificationsService.showSuccess("Užduotis buvo sukurta!", "");
       },
       error => this.notificationsService.showError(error.error.errorMessages.toString(), ""));

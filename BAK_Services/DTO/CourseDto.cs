@@ -10,6 +10,8 @@ namespace BAK_Services.DTO
     public class CourseDto : BaseDto
     {
         public string Name { get; set; }
+        public string Description { get; set; }
+
         public CourseLevel Level { get; set; }
         public int MinimumTasksCompletedToSuccess { get; set; }
     }

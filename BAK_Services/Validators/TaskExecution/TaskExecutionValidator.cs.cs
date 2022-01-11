@@ -14,7 +14,6 @@ namespace BAK_Services.Validators.TaskExecution
         {
             _taskRepository = taskRepository;
 
-            //RuleFor(taskExecution => taskExecution.ExecutionFile).NotNull();
             RuleFor(task => task.TaskId).Must(TaskExists).WithMessage("Task with this task id must exists.");
         }
 

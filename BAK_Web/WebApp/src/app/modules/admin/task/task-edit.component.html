@@ -18,9 +18,12 @@
       <select [(ngModel)]="editableTask.courseId">
         <option *ngFor="let course of courses" [ngValue]="course.id">{{course.name}}</option>
       </select>
+    <br />
+    <label>Minimalus skaičius testų, kurį reikia praeiti, kad būtų įvykdyta užduotis:</label>
+    <input type="number" min="0" [(ngModel)]="editableTask.minimumTestsCompletedToSuccess" />
       <br />
       <label>Užduoties automatiniai testai:</label>
-    <upload-files></upload-files>
+      <upload-files></upload-files>
       <br />
       <button type="button" (click)="update()">Atnaujinti užduotį</button>
 </table>

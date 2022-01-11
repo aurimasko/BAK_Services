@@ -11,6 +11,9 @@
       <label>Kurso pavadinimas:</label>
       <input type="text" name="courseName" [(ngModel)]="editableCourse.name" />
       <br />
+    <label>Kurso aprašymas:</label>
+    <input type="text" name="courseDesc" [(ngModel)]="editableCourse.description" />
+    <br />
       <label>Kurso lygis:</label>
       <select [(ngModel)]="editableCourse.level">
         <option value="Easy">Easy</option>
@@ -18,8 +21,9 @@
         <option value="Hard">Hard</option>
       </select>
       <br />
-
-
+      <label>Minimalus skaičius sėkmingai įveiktų užduočių, kad būtų užskaitytas kursas:</label>
+      <input type="number" min="0" [(ngModel)]="editableCourse.minimumTasksCompletedToSuccess" />
+      <br />
       <button type="button" (click)="update()">Atnaujinti kursą</button>
 </table>
 </div>

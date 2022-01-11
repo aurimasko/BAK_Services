@@ -13,10 +13,12 @@
       <label>Užduoties aprašymas:</label>
       <input type="text" name="courseDesc" [(ngModel)]="newTask.description" />
       <br />
-
-      <label>Užduoties automatiniai testai:</label>
-    <upload-files></upload-files>
+    <label>Minimalus skaičius testų, kurį reikia praeiti, kad būtų įvykdyta užduotis:</label>
+    <input type="number" min="0" name="" [(ngModel)]="newTask.minimumTestsCompletedToSuccess" />
     <br/>
+      <label>Užduoties automatiniai testai:</label>
+
+      <br />
       <button type="button" (click)="create()">Kurti</button>
 </table>
   
