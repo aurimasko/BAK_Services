@@ -11,7 +11,7 @@ namespace BAK_Services.Repositories
         Task<T> GetById(Guid id);
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> Find(Expression<Func<T, bool>> filterCondition);
-        void Add(T entity);
+        Task<T> Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void RemoveRange(IEnumerable<T> entities);
         void ValidateConcurrencyToken(T entity, byte[] concurrencyToken);

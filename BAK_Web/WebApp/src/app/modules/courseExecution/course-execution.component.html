@@ -1,0 +1,28 @@
+<div>
+
+  <h2>Kursas - {{course.name}}</h2>
+  <button *ngIf="!courseIsDone" (click)="submitExecution()">Pateikti vertinimui</button>
+  <span *ngIf="courseIsDone && !isLoading">Darbas pateiktas, galite išeiti iš šio puslapio.</span>
+  <hr/>
+  <h3>Užduotys:</h3>
+  <ul *ngFor="let task of course.tasks">
+    <li>
+
+      <a (click)="chooseTask(task)">
+        <b *ngIf="task == selectedTask">{{task.name}}</b>
+        <span  *ngIf="task != selectedTask">{{task.name}}</span>
+      </a>
+    </li>
+  </ul>
+  <hr/>
+  <div *ngIf="selectedTask != null">
+    Užduotis {{selectedTask.name}}
+    <br />
+    <p>Užduoties sąlyga: {{selectedTask.description}}</p>
+
+    <h3>Blockly vieta</h3>
+
+    <p>Sugeneruotas kodas, pagal kurį bus atliktas vertinimas:</p>
+    <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode"></textarea>
+  </div>
+</div>

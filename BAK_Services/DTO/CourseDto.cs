@@ -11,5 +11,6 @@ namespace BAK_Services.DTO
     {
         public string Name { get; set; }
         public CourseLevel Level { get; set; }
+        public int MinimumTasksCompletedToSuccess { get; set; }
     }
 }

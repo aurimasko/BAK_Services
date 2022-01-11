@@ -14,6 +14,8 @@ namespace BAK_Services.Models.Entities
         public Course Course { get; set; }
         public Guid CourseId { get; set; }
 
+        public int MinimumTestsCompletedToSuccess { get; set; }
+
         public ICollection<Test> Tests { get; set; }
     }
 }

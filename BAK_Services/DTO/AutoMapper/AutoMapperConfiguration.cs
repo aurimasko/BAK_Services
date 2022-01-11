@@ -17,6 +17,7 @@ namespace BAK_Services.DTO.AutoMapper
                 cfg.AddProfile<CourseProfile>();
                 cfg.AddProfile<UserProfile>();
                 cfg.AddProfile<TaskProfile>();
+                cfg.AddProfile<CourseExecutionProfile>();
                 //----
             });
 

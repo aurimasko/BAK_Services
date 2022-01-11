@@ -11,5 +11,7 @@ namespace BAK_Services.Models
     {
         public string Name { get; set; }
         public CourseLevel Level { get; set; }
+        public int MinimumTasksCompletedToSuccess { get; set; }
+
     }
 }

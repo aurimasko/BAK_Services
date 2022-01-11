@@ -6,6 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './modules/nav-menu/nav-menu.component';
@@ -15,6 +21,8 @@ import { CourseComponent } from './modules/course/course.component';
 import { CourseHandlingComponent } from './modules/admin/course/course-handling.component';
 import { CourseEditComponent } from './modules/admin/course/course-edit.component';
 import { CourseCreateComponent } from './modules/admin/course/course-create.component';
+import { CourseExecutionComponent } from './modules/courseExecution/course-execution.component';
+import { CourseExecutionService } from "./services/course-execution.service";
 
 import { UploadFilesComponent } from './modules/common/upload-files.component';
 
@@ -42,7 +50,8 @@ import { ResponseHelper } from "./helpers/response-helpers";
     TaskHandlingComponent,
     TaskEditComponent,
     UploadFilesComponent,
-    TaskCreateComponent
+    TaskCreateComponent,
+    CourseExecutionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -50,20 +59,27 @@ import { ResponseHelper } from "./helpers/response-helpers";
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'courses', component: CoursesComponent },
       { path: 'course', component: CourseComponent },
       { path: 'admin/courses', component: CourseHandlingComponent },
-      { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent }
+      { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent },
+      { path: 'course/:courseId/execution', component: CourseExecutionComponent }
     ])
   ],
   providers: [
     CourseService,
     TaskService,
     NotificationsService,
-    ResponseHelper
+    ResponseHelper,
+    CourseExecutionService
   ],
   bootstrap: [AppComponent]
 })

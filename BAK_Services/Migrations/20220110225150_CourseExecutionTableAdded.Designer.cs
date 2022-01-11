@@ -4,14 +4,16 @@ using BAK_Services.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BAK_Services.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220110225150_CourseExecutionTableAdded")]
+    partial class CourseExecutionTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,42 +158,7 @@ namespace BAK_Services.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("TaskExecutions");
-                });
-
-            modelBuilder.Entity("BAK_Services.Models.Entities.TaskExecutionTest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("TaskExecutionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskExecutionId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("TaskExecutionTests");
+                    b.ToTable("TaskExecution");
                 });
 
             modelBuilder.Entity("BAK_Services.Models.Entities.Test", b =>
@@ -294,6 +261,21 @@ namespace BAK_Services.Migrations
                     b.ToTable("Errors");
                 });
 
+            modelBuilder.Entity("TaskExecutionTest", b =>
+                {
+                    b.Property<Guid>("TaskExecutionsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TaskExecutionsId", "TestsId");
+
+                    b.HasIndex("TestsId");
+
+                    b.ToTable("TaskExecutionTest");
+                });
+
             modelBuilder.Entity("BAK_Services.Models.Entities.CourseExecution", b =>
                 {
                     b.HasOne("BAK_Services.Models.Course", "Course")
@@ -327,7 +309,7 @@ namespace BAK_Services.Migrations
             modelBuilder.Entity("BAK_Services.Models.Entities.TaskExecution", b =>
                 {
                     b.HasOne("BAK_Services.Models.Entities.CourseExecution", "CourseExecution")
-                        .WithMany("TaskExecutions")
+                        .WithMany()
                         .HasForeignKey("CourseExecutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -343,25 +325,6 @@ namespace BAK_Services.Migrations
                     b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("BAK_Services.Models.Entities.TaskExecutionTest", b =>
-                {
-                    b.HasOne("BAK_Services.Models.Entities.TaskExecution", "TaskExecution")
-                        .WithMany("TaskExecutionsTests")
-                        .HasForeignKey("TaskExecutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BAK_Services.Models.Entities.Test", "Test")
-                        .WithMany("TaskExecutionsTests")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaskExecution");
-
-                    b.Navigation("Test");
-                });
-
             modelBuilder.Entity("BAK_Services.Models.Entities.Test", b =>
                 {
                     b.HasOne("BAK_Services.Models.Entities.Task", "Task")
@@ -373,24 +336,24 @@ namespace BAK_Services.Migrations
                     b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("BAK_Services.Models.Entities.CourseExecution", b =>
+            modelBuilder.Entity("TaskExecutionTest", b =>
                 {
-                    b.Navigation("TaskExecutions");
+                    b.HasOne("BAK_Services.Models.Entities.TaskExecution", null)
+                        .WithMany()
+                        .HasForeignKey("TaskExecutionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BAK_Services.Models.Entities.Test", null)
+                        .WithMany()
+                        .HasForeignKey("TestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BAK_Services.Models.Entities.Task", b =>
                 {
                     b.Navigation("Tests");
-                });
-
-            modelBuilder.Entity("BAK_Services.Models.Entities.TaskExecution", b =>
-                {
-                    b.Navigation("TaskExecutionsTests");
-                });
-
-            modelBuilder.Entity("BAK_Services.Models.Entities.Test", b =>
-                {
-                    b.Navigation("TaskExecutionsTests");
                 });
 #pragma warning restore 612, 618
         }

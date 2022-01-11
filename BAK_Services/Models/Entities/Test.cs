@@ -12,6 +12,6 @@ namespace BAK_Services.Models.Entities
 
         // C code file
 
-        public ICollection<TaskExecution> TaskExecutions { get; set; }
+        public ICollection<TaskExecutionTest> TaskExecutionsTests { get; set; } = new List<TaskExecutionTest>();
     }
 }

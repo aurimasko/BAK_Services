@@ -36,18 +36,18 @@ namespace BAK_Services.Repositories
             return await _entities.Where(filterCondition).ToListAsync();
         }
 
-        public void Add(T entity)
+        public async Task<T> Add(T entity)
         {
-            var created = _entities.AddAsync(entity);
+            var created = await _entities.AddAsync(entity);
 
-            if (created.Result.Entity == null)
+            if (created.Entity == null)
                 throw new EntityNotFoundException(nameof(created));
 
             _context.SaveChanges();
+
+            return created.Entity;
         }
-
-
-       
+        
         public void RemoveRange(IEnumerable<T> entities)
         {
             _entities.RemoveRange(entities);

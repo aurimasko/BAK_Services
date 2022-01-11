@@ -9,11 +9,16 @@ namespace BAK_Services.Models.Entities
 {
     public class TaskExecution : BaseEntity
     {
-        public byte[] ExecutionFile { get; set; }
-        
+        public string ExecutionCode { get; set; }
+
+        public CourseExecution CourseExecution { get; set; }
+        public Guid CourseExecutionId { get; set; }
+
         public Task Task { get; set; }
         public Guid TaskId { get; set; }
 
-        public ICollection<Test> Tests { get; set; }
+        public bool Successful { get; set; }
+
+        public ICollection<TaskExecutionTest> TaskExecutionsTests { get; set; } = new List<TaskExecutionTest>();
     }
 }

@@ -9,8 +9,11 @@ namespace BAK_Services.DTO
 {
     public class TaskExecutionDto : BaseDto
     {
-        public IFormFile ExecutionFileEntry { get; set; }
+        public string ExecutionCode { get; set; }
         public Guid TaskId { get; set; }
+
+        public bool Successful { get; set; }
+
 
         //public ICollection<Test> Tests { get; set; }
     }

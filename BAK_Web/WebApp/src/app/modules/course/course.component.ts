@@ -21,6 +21,10 @@ export class CourseComponent implements OnInit {
     this.getTasks(this.courseId);
   }
 
+  startCourse(course) {
+    this.router.navigate(['/course', course.id, 'execution']);
+  }
+
   getTasks(courseId) {
     return this.taskService.getByCourseId(courseId).subscribe(result => {
         this.courseTasks = result.content;
