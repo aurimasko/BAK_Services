@@ -4,7 +4,7 @@ import { ServiceResponse } from "../interfaces/service-response.interface";
 
 @Injectable()
 export class CourseService {
-  private baseUrl = "https://localhost:44319/api/course";
+  private baseUrl = "./api/course";
 
   constructor(
     private httpClient: HttpClient

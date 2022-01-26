@@ -4,7 +4,7 @@ import { ServiceResponse } from "../interfaces/service-response.interface";
 
 @Injectable()
 export class TaskService {
-  private baseUrl = "https://localhost:44319/api/";
+  private baseUrl = "./api/";
 
   constructor(
     private httpClient: HttpClient

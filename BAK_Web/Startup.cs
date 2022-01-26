@@ -88,7 +88,7 @@ namespace bak_web
 
             //Add database connection
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Config.DatabaseConnectionString));
+                options.UseSqlServer(Configuration.GetConnectionString("RootDb")));
 
 
             //Add in memory cache
@@ -155,7 +155,7 @@ namespace bak_web
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "WebApp/dist";
+                configuration.RootPath = "WebApp/dist/WebApp";
             });
         }
 
