@@ -6,6 +6,17 @@ import { CreateVariableBlock } from "../../blocks/variables/createVariable.block
 import { ArithmeticActionBlock } from "../../blocks/arithmetics/arithmeticAction.block";
 import { NumberValueBlock } from "../../blocks/arithmetics/numberValue.block";
 import { ForLoopBlock } from "../../blocks/loops/forLoop.block";
+import { WhileLoopBlock } from "../../blocks/loops/whileLoop.block";
+import { DoWhileLoopBlock } from "../../blocks/loops/dowhileLoop.block";
+import { LoopFlowStatementsBlock } from "../../blocks/loops/loopFlowStatements.block";
+import { Ifblock } from "../../blocks/conditions/if.block";
+import { NotBlock } from "../../blocks/conditions/not.block";
+import { NullBlock } from "../../blocks/conditions/null.block";
+import { SwitchBlock } from "../../blocks/conditions/switch.block";
+import { SwitchBreakBlock } from "../../blocks/conditions/switchBreak.block";
+import { BooleanBlock } from "../../blocks/conditions/boolean.block";
+import { ConditionSentenceBlock } from "../../blocks/conditions/conditionSentence.block";
+import { ConditionComparisonBlock } from "../../blocks/conditions/conditionComparison.block";
 
 @Component({
   selector: 'blockly-workspace',
@@ -21,7 +32,12 @@ export class BlocklyComponent  {
   public arithmeticBlocks: CustomBlock[] = [
     new ArithmeticActionBlock(),
     new NumberValueBlock(),
-    new ForLoopBlock()
+    new ForLoopBlock(),
+    new WhileLoopBlock(),
+    new DoWhileLoopBlock(),
+    new LoopFlowStatementsBlock(),
+    new Ifblock(),
+    new NotBlock(), new NullBlock(), new SwitchBlock(), new SwitchBreakBlock(), new BooleanBlock(), new ConditionSentenceBlock(), new ConditionComparisonBlock()
   ];
   
   constructor() {

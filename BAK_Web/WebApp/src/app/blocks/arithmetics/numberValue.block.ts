@@ -25,7 +25,9 @@ export class NumberValueBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-  
-    return [" 123 ",0];
+    var insertedValue = block.getFieldValue('INSERTED_VALUE');
+
+    return [insertedValue, 0];
+    //todo: new ORDER_NONE
   }
 }

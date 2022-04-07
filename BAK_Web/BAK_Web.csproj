@@ -31,7 +31,18 @@
   <ItemGroup>
     <None Remove="WebApp\src\app\blocks\arithmetics\arithmeticAction.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\boolean.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\conditionComparison.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\conditionSentence.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\if.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\not.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\null.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\switch.block.ts" />
+    <None Remove="WebApp\src\app\blocks\conditions\switchBreak.block.ts" />
+    <None Remove="WebApp\src\app\blocks\loops\doWhileLoop.block.ts" />
     <None Remove="WebApp\src\app\blocks\loops\forLoop.block.ts" />
+    <None Remove="WebApp\src\app\blocks\loops\loopFlowStatements.block.ts" />
+    <None Remove="WebApp\src\app\blocks\loops\whileLoop.block.ts" />
     <None Remove="WebApp\src\app\blocks\variables\createVariable.block.ts" />
     <None Remove="WebApp\src\app\helpers\response-helpers.ts" />
     <None Remove="WebApp\src\app\interfaces\service-response.interface.ts" />
@@ -1335,7 +1346,36 @@
     <TypeScriptCompile Include="WebApp\node_modules\blockly\typings\python.d.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\arithmeticAction.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\switchBreak.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\switch.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\null.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\conditionComparison.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\conditionSentence.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\not.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\boolean.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\if.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\loops\loopFlowStatements.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\blocks\loops\forLoop.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\loops\doWhileLoop.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\loops\whileLoop.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\variables\createVariable.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\helpers\response-helpers.ts" />
     <TypeScriptCompile Include="WebApp\src\app\interfaces\service-response.interface.ts">
