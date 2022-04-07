@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { NgxBlocklyModule } from 'ngx-blockly';
+import 'blockly/blocks';
 
 
 import { AppComponent } from './app.component';
@@ -28,6 +31,7 @@ import { TaskEditComponent } from './modules/admin/task/task-edit.component';
 import { TaskCreateComponent } from './modules/admin/task/task-create.component';
 import { ExecutedCoursesSummaryComponent } from './modules/executedCoursesSummary/executed-courses-summary.component';
 import { ExecutedCourseSummaryComponent } from './modules/executed-course-summary/executed-course-summary.component';
+import { BlocklyComponent } from './modules/blockly/blockly.component';
 
 import { CourseService } from './services/course.service';
 import { TaskService } from './services/task.service';
@@ -53,7 +57,8 @@ import { TaskExecutionService } from "./services/task-execution.service";
     TaskCreateComponent,
     CourseExecutionComponent,
     ExecutedCoursesSummaryComponent,
-    ExecutedCourseSummaryComponent
+    ExecutedCourseSummaryComponent,
+    BlocklyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -66,6 +71,7 @@ import { TaskExecutionService } from "./services/task-execution.service";
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
+    NgxBlocklyModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -86,6 +92,7 @@ import { TaskExecutionService } from "./services/task-execution.service";
     CourseExecutionService,
     TaskExecutionService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
