@@ -29,9 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="WebApp\src\app\blocks\arithmetics\absValue.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\arithmeticAction.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\mod.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
+    <None Remove="WebApp\src\app\blocks\arithmetics\sqrt.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\boolean.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\conditionComparison.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\conditionSentence.block.ts" />
@@ -46,7 +48,11 @@
     <None Remove="WebApp\src\app\blocks\loops\whileLoop.block.ts" />
     <None Remove="WebApp\src\app\blocks\stdio\newLine.block.ts" />
     <None Remove="WebApp\src\app\blocks\stdio\printf.block.ts" />
+    <None Remove="WebApp\src\app\blocks\stdio\scanf.block.ts" />
     <None Remove="WebApp\src\app\blocks\stdio\stringValue.block.ts" />
+    <None Remove="WebApp\src\app\blocks\string\strcat.block.ts" />
+    <None Remove="WebApp\src\app\blocks\string\strcmp.block.ts" />
+    <None Remove="WebApp\src\app\blocks\string\strlen.block.ts" />
     <None Remove="WebApp\src\app\blocks\variables\createVariable.block.ts" />
     <None Remove="WebApp\src\app\helpers\response-helpers.ts" />
     <None Remove="WebApp\src\app\interfaces\service-response.interface.ts" />
@@ -59,6 +65,7 @@
     <None Remove="WebApp\src\app\modules\admin\task-handling.component.ts" />
     <None Remove="WebApp\src\app\modules\blockly\blockly.component.ts" />
     <None Remove="WebApp\src\app\modules\blockly\blocks.import.ts" />
+    <None Remove="WebApp\src\app\modules\blockly\C.generator.ts" />
     <None Remove="WebApp\src\app\modules\blockly\categories.ts" />
     <None Remove="WebApp\src\app\modules\common\upload-files.component.ts" />
     <None Remove="WebApp\src\app\modules\courseExecution\course-execution.component.ts" />
@@ -1353,6 +1360,12 @@
     <TypeScriptCompile Include="WebApp\node_modules\blockly\typings\php.d.ts" />
     <TypeScriptCompile Include="WebApp\node_modules\blockly\typings\python.d.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\arithmeticAction.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\absValue.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\sqrt.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\mod.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\switchBreak.block.ts">
@@ -1389,7 +1402,15 @@
     <TypeScriptCompile Include="WebApp\src\app\blocks\stdio\newLine.block.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\stdio\scanf.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\stdio\stringValue.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\string\strlen.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\string\strcat.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\string\strcmp.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\variables\createVariable.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\helpers\response-helpers.ts" />
     <TypeScriptCompile Include="WebApp\src\app\interfaces\service-response.interface.ts">
@@ -1414,6 +1435,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\blockly\blockly.component.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\blockly\blocks.import.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\modules\blockly\C.generator.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\blockly\categories.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\common\upload-files.component.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\courseExecution\course-execution.component.ts">

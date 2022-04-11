@@ -18,18 +18,33 @@ import { ConditionComparisonBlock } from "../../blocks/conditions/conditionCompa
 import { ModValueBlock } from "../../blocks/arithmetics/mod.block";
 import { PrintfBlock } from "../../blocks/stdio/printf.block";
 import { NewLineBlock } from "../../blocks/stdio/newLine.block";
+import { ScanfBlock } from "../../blocks/stdio/scanf.block";
+import { SqrtBlock } from "../../blocks/arithmetics/sqrt.block";
+import { AbsoluteValBlock } from "../../blocks/arithmetics/absValue.block";
+import { StringCompareBlock } from "../../blocks/string/strcmp.block";
+import { StringLengthBlock } from "../../blocks/string/strlen.block";
+import { StringConcatBlock } from "../../blocks/string/strcat.block";
 
 export class BlocklyCategories {
+
+  private stringBlocks: CustomBlock[] = [
+    new StringCompareBlock(),
+    new StringLengthBlock(),
+    new StringConcatBlock()
+  ];
 
   private arithmeticBlocks: CustomBlock[] = [
     new ArithmeticActionBlock(),
     new NumberValueBlock(),
-    new ModValueBlock()
+    new ModValueBlock(),
+    new SqrtBlock(),
+    new AbsoluteValBlock()
   ];
 
   public stdioBlocks: CustomBlock[] = [
     new PrintfBlock(),
-    new NewLineBlock()
+    new ScanfBlock(),
+  new NewLineBlock()
   ];
 
   private loopBlocks: CustomBlock[] = [
@@ -50,14 +65,15 @@ export class BlocklyCategories {
     new ConditionComparisonBlock()
   ];
 
-  public allCustomBlocks: CustomBlock[] = this.arithmeticBlocks.concat(this.loopBlocks, this.conditionBlocks, this.stdioBlocks);
+  public allCustomBlocks: CustomBlock[] = this.arithmeticBlocks.concat(this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
 
 
   public blocklyCategories: Node[] = [
     VARIABLES_CATEGORY,
-    new Category('Aritmetika', '#ff0000', [...this.arithmeticBlocks]),
+    new Category('Matematika', '#ff0000', [...this.arithmeticBlocks]),
     new Category('Ciklai', '#ff0000', [...this.loopBlocks]),
     new Category('Sąlygos sakiniai', '#ff0000', [...this.conditionBlocks]),
-    new Category('Duomenų įvedimas/išvedimas', '#ff0000', [...this.stdioBlocks])
+    new Category('Duomenų įvedimas/išvedimas', '#ff0000', [...this.stdioBlocks]),
+    new Category('Tekstai ir jų funkcijos', '#ff0000', [...this.stringBlocks])
   ];
 }
