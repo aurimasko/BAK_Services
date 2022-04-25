@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class StringConcatBlock extends CustomBlock {
   constructor() {
@@ -8,12 +8,15 @@ export class StringConcatBlock extends CustomBlock {
   }
 
   public defineBlock() {
+
+
     this.block.appendValueInput("OperandA")
       .setCheck("String")
       .appendField("Prie teksto");
     this.block.appendValueInput("OperandB")
       .setCheck("String")
       .appendField("prijungti tekstą");
+    this.block.setOutput(false);
     this.block.setInputsInline(true);
     this.block.setPreviousStatement(true, null);
     this.block.setNextStatement(true, null);
@@ -26,14 +29,16 @@ export class StringConcatBlock extends CustomBlock {
   public override toXML(): string {
     return '<block type="StringConcatBlock"></block>';
   }
-
+  
   public override  toDartCode(block: any): string | any[] {
-    var value_operanda = Blockly['dart'].valueToCode(block, 'OperandA', Blockly['dart'].ORDER_ATOMIC);
-    var value_operandb = Blockly['dart'].valueToCode(block, 'OperandB', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
-    //todo: new ORDER_NONE, ORDER_aTOMIC
+    var value_operanda =
+      Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandA', Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || "\"\"";
+    var value_operandb =
+      Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandB', Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || "\"\"";
+
+    Blockly[NgxBlocklyGenerator.DART].definitions_["include_string"] = "#include <string.h>";
+
+    var code = "strcat(" + value_operanda + ", " + value_operandb + ")";
+    return code;
   }
 }

@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator} from 'ngx-blockly';
 
 export class BooleanBlock extends CustomBlock {
   constructor() {
@@ -25,11 +25,14 @@ export class BooleanBlock extends CustomBlock {
 
   public override  toDartCode(block: any): string | any[] {
     var dropdown_input_selection = block.getFieldValue('INPUT_SELECTION');
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
 
-    // TODO: Change ORDER_NONE to the correct strength.
-    // todo: new ORDER_NONE definition
-    return [code, Blockly['dart'].ORDER_NONE];
+    var code;
+
+    if (dropdown_input_selection === "true")
+      code = "true";
+    else
+      code = "false";
+
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_NONE];
   }
 }

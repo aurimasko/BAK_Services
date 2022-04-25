@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class NotBlock extends CustomBlock {
   constructor() {
@@ -8,7 +8,7 @@ export class NotBlock extends CustomBlock {
   }
 
   public defineBlock() {
-    this.block.appendValueInput("NAME")
+    this.block.appendValueInput("INPUT")
       .setCheck("Boolean")
       .appendField("priešingai nei");
     this.block.setOutput(true, null);
@@ -25,13 +25,9 @@ export class NotBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var value_name = Blockly['dart'].valueToCode(block, 'NAME', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var input = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'INPUT', Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_NOT);
 
-    //todo: change ORDER_NONE to custom
-    //todo: change ORDER_ATOMIC to custom
+    var code = '!' + input;
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_NOT];
   }
 }

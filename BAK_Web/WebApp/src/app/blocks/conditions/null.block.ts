@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class NullBlock extends CustomBlock {
   constructor() {
@@ -25,11 +25,7 @@ export class NullBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    //todo: change ORDER_NONE
-
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var code = 'null';
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC];
   }
 }

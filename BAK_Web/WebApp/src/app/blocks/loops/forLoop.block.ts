@@ -1,7 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
-declare var require: any;
-
-const dartGenerator = require('blockly/dart');
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class ForLoopBlock extends CustomBlock {
   constructor() {
@@ -44,14 +41,15 @@ export class ForLoopBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var variable_var = dartGenerator.nameDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-    var value_from = dartGenerator.valueToCode(block, 'FROM', dartGenerator.ORDER_ATOMIC);
-    var value_to = dartGenerator.valueToCode(block, 'TO', dartGenerator.ORDER_ATOMIC);
-    var value_by = dartGenerator.valueToCode(block, 'BY', dartGenerator.ORDER_ATOMIC);
-    var statements_do_action = dartGenerator.statementToCode(block, 'DO_ACTION');
+    var variable_var = Blockly[NgxBlocklyGenerator.DART].nameDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+    var value_from = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'FROM', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
+    var value_to = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'TO', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
+    var value_by = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'BY', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
+    var statements_do_action = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO_ACTION');
 
-    console.log('test ' + variable_var + ' ' + value_from + ' ' + value_to + ', ' + value_by);
+    // todo: galimybe padaryti ne tik ++, bet ir --, galbut * ar /
+
     return "for(" + variable_var + " = " + value_from + "; " +
-    variable_var + "< " + value_to + "; " + variable_var + "+=" + value_by;
+      variable_var + "< " + value_to + "; " + variable_var + "+=" + value_by + ') {\n ' + statements_do_action + ' }\n';
   }
 }

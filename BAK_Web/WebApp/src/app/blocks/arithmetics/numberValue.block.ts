@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class NumberValueBlock extends CustomBlock {
   constructor() {
@@ -27,7 +27,6 @@ export class NumberValueBlock extends CustomBlock {
   public override  toDartCode(block: any): string | any[] {
     var insertedValue = block.getFieldValue('INSERTED_VALUE');
 
-    return [insertedValue, 0];
-    //todo: new ORDER_NONE
+    return [insertedValue, Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC];
   }
 }

@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class ConditionComparisonBlock extends CustomBlock {
   constructor() {
@@ -34,15 +34,24 @@ export class ConditionComparisonBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    //todo: change ORDER_ATOMIC to custom value
-    //todo: change ORDER_NONE
 
-    var value_operanda = Blockly['dart'].valueToCode(block, 'OperandA', Blockly['dart'].ORDER_ATOMIC);
-    var dropdown_operation = block.getFieldValue('OPERATION');
-    var value_operandb = Blockly['dart'].valueToCode(block, 'OperandB', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var operators = {
+      'EQ': '==',
+      'NEQ': '!=',
+      'LT': '<',
+      'LTE': '<=',
+      'GT': '>',
+      'GTE': '>='
+    };
+    var operator = operators[block.getFieldValue('OPERATION')];
+    var order = (operator === '==' || operator === '!=')
+      ? Blockly[NgxBlocklyGenerator.DART].ORDER_EQUALITY
+      : Blockly[NgxBlocklyGenerator.DART].ORDER_RELATIONAL;
+
+    var argument0 = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandA', order) || '0';
+    var argument1 = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandB', order) || '0';
+
+    var code = argument0 + ' ' + operator + ' ' + argument1;
+    return [code, order];
   }
 }

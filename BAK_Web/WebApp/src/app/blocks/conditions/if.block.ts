@@ -1,7 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
-declare var require: any;
-
-const dartGenerator = require('blockly/dart');
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class Ifblock extends CustomBlock {
   constructor() {
@@ -11,10 +8,10 @@ export class Ifblock extends CustomBlock {
   }
 
   public defineBlock() {
-    this.block.appendValueInput("CONDITION")
+    this.block.appendValueInput("CONDITION0")
       .setCheck("Boolean")
       .appendField("Jei");
-    this.block.appendStatementInput("DO")
+    this.block.appendStatementInput("DO0")
       .setCheck(null)
       .appendField("Vykdyti");
     this.block.setPreviousStatement(true, null);
@@ -35,12 +32,25 @@ export class Ifblock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    //todo: change ORDER_ATOMIC to custom value
+    var n = 0;
+    var argument = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'CONDITION' + n,
+      Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
 
-    var value_condition = Blockly['dart'].valueToCode(block, 'CONDITION', Blockly['dart'].ORDER_ATOMIC);
-    var statements_do = Blockly['dart'].statementToCode(block, 'DO');
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
-    return code;
+    var branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO' + n);
+
+    var code = 'if (' + argument + ') {\n' + branch + '}';
+
+    for (n = 1; n <= block.elseifCount_; n++) {
+      argument = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'CONDITION' + n,
+        Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
+      branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO' + n);
+      code += ' else if (' + argument + ') {\n' + branch + '}';
+    }
+
+    if (block.elseCount_) {
+      branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'ELSE');
+      code += ' else {\n' + branch + '}';
+    }
+    return code + '\n';
   }
 }

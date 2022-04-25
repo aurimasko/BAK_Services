@@ -17,7 +17,27 @@ export class SwitchBreakBlock extends CustomBlock {
     //todo: tooltip
     //todo: helpurl
     //todo: aiškiau užvardinti kas čia per blokas
-    //todo: gali būti naudojamas tik su switch
+  }
+
+  public override onChange(changeEvent) {
+    if (!this.block.workspace) {
+      return;
+    }
+    var legal = false;
+    var block = this.block;
+    do {
+      if (block.type === 'SwitchBlock') {
+        legal = true;
+        break;
+      }
+      block = block.getSurroundParent();
+    } while (block);
+
+    if (legal) {
+      this.block.setWarningText(null!);
+    } else {
+      this.block.setWarningText("Šis blokas gali būti naudojamas tik switch bloko viduje"); //todo: pakeisti žodį "switch"
+    }
   }
 
   public override toXML(): string {
@@ -25,7 +45,7 @@ export class SwitchBreakBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-
-    return "";
+    return "break;\n";
   }
+
 }

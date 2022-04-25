@@ -1,5 +1,5 @@
-import { Component, Output, EventEmitter, ViewChild, Input, SimpleChanges } from "@angular/core";
-import { Blockly, NgxBlocklyConfig, NgxBlocklyGenerator, NgxBlocklyComponent, CustomBlock, Category, NgxBlocklyToolbox, VARIABLES_CATEGORY} from 'ngx-blockly';
+import { Component, Output, EventEmitter, ViewChild, Input, SimpleChanges, AfterViewInit  } from "@angular/core";
+import { Blockly, NgxBlocklyConfig, NgxBlocklyGenerator, NgxBlocklyComponent, CustomBlock, NgxBlocklyToolbox } from 'ngx-blockly';
 import { BlocklyCode } from "../../interfaces/blockly-code.interface";
 import { BlocklyCategories } from "./categories";
 
@@ -9,7 +9,7 @@ import { BlocklyCategories } from "./categories";
   styleUrls: ['blockly.component.css']
 
 })
-export class BlocklyComponent  {
+export class BlocklyComponent implements AfterViewInit {
   @Output() codeChangeEvent = new EventEmitter<BlocklyCode>();
   @ViewChild(NgxBlocklyComponent) workspace;
   @Input() workspacecontent = "";
@@ -29,6 +29,26 @@ export class BlocklyComponent  {
     this.setupBlocklyForC();
   }
 
+  ngAfterViewInit() {
+
+    this.workspace.fromXml("<xml xmlns=\"https://developers.google.com/blockly/xml\">" +
+      "<block type=\"InitMainBlock\" id = \"lA^+972(@ai/N~`T{{j1\" x =\"8\" y = \"8\">" +
+      "</block></xml>");
+
+    var code = Blockly[NgxBlocklyGenerator.DART].workspaceToCode(Blockly.Workspace.getById(this.workspace));
+
+    let blocklyCode: BlocklyCode = {
+      workspaceJson: this.workspace.toXml(),
+      code: code
+    };
+
+
+    setTimeout(() => {
+        this.codeChangeEvent.emit(blocklyCode);
+      },
+      0);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (this.workspace === undefined)
       return;
@@ -36,12 +56,29 @@ export class BlocklyComponent  {
     for (const propName in changes) {
       const change = changes[propName];
 
-      if (change.currentValue === undefined || change.currentValue === null)
+      if (change.currentValue === undefined || change.currentValue === null) {
         this.workspace.clear();
-      else 
+        this.workspace.fromXml("<xml xmlns=\"https://developers.google.com/blockly/xml\">" +
+          "<block type=\"InitMainBlock\" id = \"lA^+972(@ai/N~`T{{j1\" x =\"8\" y = \"8\">" +
+          "</block></xml>");
+         var code = Blockly[NgxBlocklyGenerator.DART].workspaceToCode(Blockly.Workspace.getById(this.workspace));
+
+    let blocklyCode: BlocklyCode = {
+      workspaceJson: this.workspace.toXml(),
+      code: code
+    };
+
+
+    setTimeout(() => {
+        this.codeChangeEvent.emit(blocklyCode);
+      },
+      0);
+      } else
         this.workspace.fromXml(change.currentValue);
     }
   }
+
+ 
 
   public config: NgxBlocklyConfig = {
     toolbox: '<xml id="toolbox" style="display: none">' +
@@ -106,10 +143,7 @@ export class BlocklyComponent  {
     Blockly[NgxBlocklyGenerator.DART].ORDER_NONE = 99;          // (...)
 
     Blockly[NgxBlocklyGenerator.DART].init = function (workspace) {
-      // Create a dictionary of definitions to be printed before the code.
       Blockly[NgxBlocklyGenerator.DART].definitions_ = Object.create(null);
-      // Create a dictionary mapping desired function names in definitions_
-      // to actual function names (to avoid collisions with user functions).
       Blockly[NgxBlocklyGenerator.DART].functionNames_ = Object.create(null);
 
       if (!Blockly[NgxBlocklyGenerator.DART].variableDB_) {
@@ -118,43 +152,48 @@ export class BlocklyComponent  {
       } else {
         Blockly[NgxBlocklyGenerator.DART].variableDB_.reset();
       }
+      Blockly[NgxBlocklyGenerator.DART].nameDB_.setVariableMap(workspace.getVariableMap());
+      // todo: global variables
 
-      Blockly[NgxBlocklyGenerator.DART].variableDB_.setVariableMap(workspace.getVariableMap());
-
-      /*  var defvars = [];
-        // Add developer variables (not created or named by the user).
-        var devVarList = Blockly.Variables.allDeveloperVariables(workspace);
-        for (var i = 0; i < devVarList.length; i++) {
-          defvars.push(Blockly[NgxBlocklyGenerator.DART].variableDB_.getName(devVarList[i],
-            Blockly.Names.DEVELOPER_VARIABLE_TYPE));
-        }
-  
-        // Add user variables, but only ones that are being used.
-        var variables = Blockly.Variables.allUsedVarModels(workspace);
-        for (var i = 0; i < variables.length; i++) {
-          defvars.push(Blockly[NgxBlocklyGenerator.DART].variableDB_.getName(variables[i].getId(),
-            Blockly.VARIABLE_CATEGORY_NAME));
-        }
-  
-        // Declare all of the variables.
-        if (defvars.length) {
-          Blockly[NgxBlocklyGenerator.DART].definitions_['variables'] =
-            'var ' + defvars.join(', ') + ';';
-        }*/
       this.isInitialized = true;
     };
 
     Blockly[NgxBlocklyGenerator.DART].finish = function (code) {
-      // Convert the definitions dictionary into a list.
-      var definitions: any = [];
-      for (var name in Blockly[NgxBlocklyGenerator.DART].definitions_) {
-        definitions.push(Blockly[NgxBlocklyGenerator.DART].definitions_[name]);
+      // Indent every line.
+      if (code) {
+        code = Blockly[NgxBlocklyGenerator.DART].prefixLines(code, Blockly[NgxBlocklyGenerator.DART].INDENT);
       }
-      // Clean up temporary data.
-      delete Blockly[NgxBlocklyGenerator.DART].definitions_;
-      delete Blockly[NgxBlocklyGenerator.DART].functionNames_;
-      Blockly[NgxBlocklyGenerator.DART].variableDB_.reset();
-      return definitions.join('\n\n') + '\n\n\n' + code;
+      code = '\n' + code;
+
+      // Convert the definitions dictionary into a list.
+      var includes: string[] = [];
+      var declarations: string[] = [];
+      var defines: string[] = [];
+      var func_definitions :string[] = [];
+      for (var name in Blockly[NgxBlocklyGenerator.DART].definitions_) {
+        var def = Blockly[NgxBlocklyGenerator.DART].definitions_[name];
+        var nameInclude = 'include';
+        var nameFunc_declare = 'Func_declare';
+        var nameDefine = 'define';
+        if (name.match(nameInclude)) {
+          includes.push(def);
+        }
+        else if (name.match(nameFunc_declare)) {
+          declarations.push(def);//declaration
+        }
+        else if (name.match(nameDefine)) {
+          defines.push(def);//#define
+        }
+        else {
+          func_definitions.push(def);//definition
+        }
+      }
+      //imports--> #include
+      //definitions--> function def, #def
+      var allDefs = includes.join('\n') + '\n\n' + declarations.join('\n') + '\n\n' + defines.join('\n');
+      var allFuncs = func_definitions.join('\n');
+
+      return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n') + code + allFuncs.replace(/\n\n+/g, '\n\n');
     };
     Blockly[NgxBlocklyGenerator.DART].scrubNakedValue = function (line) {
       return line + ';\n';

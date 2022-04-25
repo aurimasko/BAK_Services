@@ -1,5 +1,4 @@
 import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
-import { BlocklyGeneratorC } from '../../modules/blockly/C.generator';
 
 export class SqrtBlock extends CustomBlock {
   constructor() {

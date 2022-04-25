@@ -1,19 +1,19 @@
 import { Blockly, BlockMutator } from 'ngx-blockly';
 
-export class PrintfMutator extends BlockMutator {
-  constructor(name, blockList?: string[]) {
+export class ScanfMutator extends BlockMutator {
+  constructor(name, blockList? : string[]) {
     super(name, blockList);
   }
 
   mutationToDom(block: any) {
     var container = Blockly.utils.xml.createElement('mutation');
-    container.setAttribute('printfadd', block.getFieldValue('COUNT').toString());
+    container.setAttribute('scanadd', block.getFieldValue('COUNT').toString());
     return container;
   }
 
   domToMutation(block: any, xmlElement: any) {
 
-    block.setFieldValue(parseInt(xmlElement.getAttribute('printfadd'), 10), "COUNT");
+    block.setFieldValue(parseInt(xmlElement.getAttribute('scanadd'), 10), "COUNT");
 
     for (var x = 1; x <= block.getFieldValue('COUNT'); x++) {
       block.appendValueInput('INPUT' + x)
@@ -23,12 +23,12 @@ export class PrintfMutator extends BlockMutator {
   }
 
   decompose(block: any, workspace: any) {
-    var containerBlock = workspace.newBlock('PrintfPrintfBlock');
+    var containerBlock = workspace.newBlock('ScanfScanf');
     containerBlock.initSvg();
     var connection = containerBlock.getInput('STACK').connection;
 
     for (var x = 1; x <= block.getFieldValue('COUNT'); x++) {
-      var scanAddBlock = workspace.newBlock('PrintfAddBlock');
+      var scanAddBlock = workspace.newBlock('ScanfAdd');
       scanAddBlock.initSvg();
       connection.connect(scanAddBlock.previousConnection);
       connection = scanAddBlock.nextConnection;
@@ -45,18 +45,18 @@ export class PrintfMutator extends BlockMutator {
     var clauseBlock = topBlock.getInputTargetBlock('STACK');
     while (clauseBlock) {
       switch (clauseBlock.type) {
-        case 'PrintfAddBlock':
-          block.setFieldValue(block.getFieldValue('COUNT') + 1, "COUNT");
+        case 'ScanfAdd':
+          block.setFieldValue(block.getFieldValue('COUNT')+1, "COUNT");
           var printInput = block.appendValueInput('INPUT' + block.getFieldValue('COUNT'))
-            .setCheck(null)
-            .appendField('');
-          // Reconnect any child blocks.
-          if (clauseBlock.valueConnection_) {
-            printInput.connection.connect(clauseBlock.valueConnection_);
-          }
-          break;
-        default:
-          throw 'Unknown block type.';
+          .setCheck(null)
+          .appendField('');
+        // Reconnect any child blocks.
+        if (clauseBlock.valueConnection_) {
+          printInput.connection.connect(clauseBlock.valueConnection_);
+        }
+        break;
+      default:
+        throw 'Unknown block type.';
       }
       clauseBlock = clauseBlock.nextConnection &&
         clauseBlock.nextConnection.targetBlock();
@@ -68,15 +68,15 @@ export class PrintfMutator extends BlockMutator {
     var x = 1;
     while (clauseBlock) {
       switch (clauseBlock.type) {
-        case 'PrintfAddBlock':
+        case 'ScanfAdd':
           var inputPrint = block.getInput('INPUT' + x);
-          clauseBlock.valueConnection_ =
-            inputPrint && inputPrint.connection.targetConnection;
-          clauseBlock.statementConnection_ =
-            x++;
-          break;
-        default:
-          throw 'Unknown block type.';
+        clauseBlock.valueConnection_ =
+          inputPrint && inputPrint.connection.targetConnection;
+        clauseBlock.statementConnection_ =
+          x++;
+        break;
+      default:
+        throw 'Unknown block type.';
       }
       clauseBlock = clauseBlock.nextConnection &&
         clauseBlock.nextConnection.targetBlock();
@@ -84,13 +84,13 @@ export class PrintfMutator extends BlockMutator {
   }
 
   afterBlockInit(block: any) {
-    block.setMutator(new Blockly.Mutator(['PrintfAddBlock']));
+    block.setMutator(new Blockly.Mutator(['ScanfAdd']));
   }
 
   loadExtraState(state: any): any {
   }
 
   saveExtraState(): any {
-
+  
   }
 }

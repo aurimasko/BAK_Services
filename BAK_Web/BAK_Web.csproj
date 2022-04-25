@@ -34,6 +34,7 @@
     <None Remove="WebApp\src\app\blocks\arithmetics\mod.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
     <None Remove="WebApp\src\app\blocks\arithmetics\sqrt.block.ts" />
+    <None Remove="WebApp\src\app\blocks\blocks.helper.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\boolean.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\conditionComparison.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\conditionSentence.block.ts" />
@@ -42,6 +43,7 @@
     <None Remove="WebApp\src\app\blocks\conditions\null.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\switch.block.ts" />
     <None Remove="WebApp\src\app\blocks\conditions\switchBreak.block.ts" />
+    <None Remove="WebApp\src\app\blocks\general\initMain.block.ts" />
     <None Remove="WebApp\src\app\blocks\loops\doWhileLoop.block.ts" />
     <None Remove="WebApp\src\app\blocks\loops\forLoop.block.ts" />
     <None Remove="WebApp\src\app\blocks\loops\loopFlowStatements.block.ts" />
@@ -64,8 +66,6 @@
     <None Remove="WebApp\src\app\modules\admin\task-edit.component.ts" />
     <None Remove="WebApp\src\app\modules\admin\task-handling.component.ts" />
     <None Remove="WebApp\src\app\modules\blockly\blockly.component.ts" />
-    <None Remove="WebApp\src\app\modules\blockly\blocks.import.ts" />
-    <None Remove="WebApp\src\app\modules\blockly\C.generator.ts" />
     <None Remove="WebApp\src\app\modules\blockly\categories.ts" />
     <None Remove="WebApp\src\app\modules\common\upload-files.component.ts" />
     <None Remove="WebApp\src\app\modules\courseExecution\course-execution.component.ts" />
@@ -74,8 +74,9 @@
     <None Remove="WebApp\src\app\modules\executed-course-summary\executed-course-summary.component.ts" />
     <None Remove="WebApp\src\app\modules\executedCoursesSummary\executed-courses-summary.component.ts" />
     <None Remove="WebApp\src\app\modules\login\login.component.ts" />
-    <None Remove="WebApp\src\app\mutators\custom-mutator.ts" />
     <None Remove="WebApp\src\app\mutators\printf.mutator.ts" />
+    <None Remove="WebApp\src\app\mutators\scanf.mutator.ts" />
+    <None Remove="WebApp\src\app\mutators\switch.mutator.ts" />
     <None Remove="WebApp\src\app\services\course-execution.service.ts" />
     <None Remove="WebApp\src\app\services\course.service.ts" />
     <None Remove="WebApp\src\app\services\data-share.service.ts" />
@@ -1368,6 +1369,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\mod.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\arithmetics\numberValue.block.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\blocks\blocks.helper.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\switchBreak.block.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -1388,6 +1390,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\boolean.block.ts" />
     <TypeScriptCompile Include="WebApp\src\app\blocks\conditions\if.block.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\blocks\general\initMain.block.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\blocks\loops\loopFlowStatements.block.ts">
@@ -1434,8 +1439,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\blockly\blockly.component.ts" />
-    <TypeScriptCompile Include="WebApp\src\app\modules\blockly\blocks.import.ts" />
-    <TypeScriptCompile Include="WebApp\src\app\modules\blockly\C.generator.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\blockly\categories.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\common\upload-files.component.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\courseExecution\course-execution.component.ts">
@@ -1452,7 +1455,12 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\executedCoursesSummary\executed-courses-summary.component.ts" />
     <TypeScriptCompile Include="WebApp\src\app\modules\login\login.component.ts" />
-    <TypeScriptCompile Include="WebApp\src\app\mutators\custom-mutator.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\mutators\switch.mutator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\mutators\scanf.mutator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\mutators\printf.mutator.ts" />
     <TypeScriptCompile Include="WebApp\src\app\services\data-share.service.ts" />
     <TypeScriptCompile Include="WebApp\src\app\services\task-execution.service.ts">

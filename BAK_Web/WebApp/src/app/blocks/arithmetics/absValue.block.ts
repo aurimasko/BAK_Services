@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class AbsoluteValBlock extends CustomBlock {
   constructor() {
@@ -26,11 +26,11 @@ export class AbsoluteValBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var value_input = Blockly['dart'].valueToCode(block, 'INPUT', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
-    //todo: new ORDER_NONE, ORDER_aTOMIC
+    var value_input = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'INPUT', Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
+
+    Blockly[NgxBlocklyGenerator.DART].definitions_["include_stdlib"] = "#include <stdlib.h>";
+
+    var code = 'abs(' + value_input + ')';
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_NONE];
   }
 }

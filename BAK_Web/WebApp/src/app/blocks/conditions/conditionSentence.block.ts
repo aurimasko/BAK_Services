@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class ConditionSentenceBlock extends CustomBlock {
   constructor() {
@@ -31,15 +31,13 @@ export class ConditionSentenceBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    //todo: change ORDER_ATOMIC to custom value
-    //todo: change ORDER_NONE
+    var operator = block.getFieldValue('OPERATION') === "AND" ? "&&" : "||";
+    var order = operator === "&&" ? Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_AND : Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_OR;
 
-    var value_operanda = Blockly['dart'].valueToCode(block, 'OperandA', Blockly['dart'].ORDER_ATOMIC);
-    var dropdown_operation = block.getFieldValue('OPERATION');
-    var value_operandb = Blockly['dart'].valueToCode(block, 'OperandB', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var value_operanda = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandA', order) || 'false';
+    var value_operandb = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandB', order) || 'false';
+
+    var code = value_operanda + " " + operator + " " + value_operandb;
+    return [code, order];
   }
 }

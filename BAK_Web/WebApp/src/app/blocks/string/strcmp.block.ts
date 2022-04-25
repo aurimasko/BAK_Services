@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class StringCompareBlock extends CustomBlock {
   constructor() {
@@ -27,12 +27,12 @@ export class StringCompareBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var value_operanda = Blockly['dart'].valueToCode(block, 'OperandA', Blockly['dart'].ORDER_ATOMIC);
-    var value_operandb = Blockly['dart'].valueToCode(block, 'OperandB', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
-    //todo: new ORDER_NONE, ORDER_aTOMIC
+    var value_operanda = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandA', Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || "\"\"";
+    var value_operandb = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'OperandB', Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || "\"\"";
+
+    Blockly[NgxBlocklyGenerator.DART].definitions_["include_string"] = "#include <string.h>";
+
+    var code = 'strcmp(' + value_operanda + ', ' + value_operandb + ')';
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC];
   }
 }

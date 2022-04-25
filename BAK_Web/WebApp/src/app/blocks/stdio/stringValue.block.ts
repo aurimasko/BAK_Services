@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class StringValueBlock extends CustomBlock {
   constructor() {
@@ -8,9 +8,9 @@ export class StringValueBlock extends CustomBlock {
   }
 
   public defineBlock() {
-    this.block.appendValueInput("INPUT")
-      .setCheck("String")
-      .appendField("Tekstas");
+    this.block.appendDummyInput()
+      .appendField("Tekstas")
+      .appendField(new Blockly.FieldTextInput(""), "INPUT");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "String");
     this.block.setColour(230);
@@ -25,12 +25,18 @@ export class StringValueBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var value_input = Blockly['dart'].valueToCode(block, 'INPUT', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var value_input = block.getFieldValue("INPUT");
 
-    //todo: new ORDER_NONE, ORDER_ATOMIC
+    var code = Blockly[NgxBlocklyGenerator.DART].quote_(value_input);
+
+    if (block.getParent()
+      && block.getParent().type === 'PrintfBlock') {
+      return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC];
+    } else if (code.length === 1) {
+      code = '\'' + code + '\'';
+    } else {
+      code = '\"' + code + '\"';
+    }
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC];
   }
 }

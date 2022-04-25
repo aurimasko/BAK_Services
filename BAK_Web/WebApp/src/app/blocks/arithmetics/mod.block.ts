@@ -1,4 +1,4 @@
-import { Blockly, CustomBlock } from 'ngx-blockly';
+import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
 
 export class ModValueBlock extends CustomBlock {
   constructor() {
@@ -28,13 +28,12 @@ export class ModValueBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-    var value_dividend = Blockly['dart'].valueToCode(block, 'DIVIDEND', Blockly['dart'].ORDER_ATOMIC);
-    var value_divisor = Blockly['dart'].valueToCode(block, 'DIVISOR', Blockly['dart'].ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...';
-    // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly['dart'].ORDER_NONE];
+    var value_dividend = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'DIVIDEND', Blockly[NgxBlocklyGenerator.DART].ORDER_MODULUS) || '0';
+    var value_divisor = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'DIVISOR', Blockly[NgxBlocklyGenerator.DART].ORDER_MODULUS) || '0';
 
-    //todo: new ORDER_NONE, ORDER_aTOMIC
+    var code = value_dividend + " % " + value_divisor;
+
+    return [code, Blockly[NgxBlocklyGenerator.DART].ORDER_MODULUS];
+
   }
 }
