@@ -17,8 +17,7 @@ namespace BAK_Services.Models.Entities
         public Task Task { get; set; }
         public Guid TaskId { get; set; }
 
-        public bool Successful { get; set; }
-
-        public ICollection<TaskExecutionTest> TaskExecutionsTests { get; set; } = new List<TaskExecutionTest>();
+        public int? Mark { get; set; }
+        public bool? Successful { get; set; }
     }
 }

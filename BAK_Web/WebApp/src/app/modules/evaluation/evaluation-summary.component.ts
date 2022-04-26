@@ -7,23 +7,19 @@ import { ResponseHelper } from "../../helpers/response-helpers";
 import { CourseExecutionService } from "../../services/course-execution.service";
 
 @Component({
-  selector: 'courses-component',
-  templateUrl: 'courses.component.html'
+  selector: 'evaluation-summary-component',
+  templateUrl: 'evaluation-summary.component.html'
 })
-export class CoursesComponent implements OnInit {
-  courses;
-  courseId;
+export class EvaluationSummaryComponent implements OnInit {
   coursesExecutions;
 
   constructor(private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private courseService: CourseService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper ) { }
 
   ngOnInit() {
-    this.courseId = this.route.snapshot.paramMap.get('courseId');
-    this.getCourses(this.courseId);
     this.getExecutedCourses();
   }
 
-  openCourse(course) {
+ /* openCourse(course) {
     console.log('asd ' + JSON.stringify(course) + ', ' + course.id);
 
     var courseExecution = this.getCourseExecution(course.id);
@@ -36,16 +32,15 @@ export class CoursesComponent implements OnInit {
 
   getCourseExecution(courseId) {
     return this.coursesExecutions.find(x => x.courseId === courseId);
-  }
-  getCourseExecutionStatus(courseId) {
+  }*/
+
+ getCourseExecutionStatus(executionId) {
     if (!this.coursesExecutions)
       return null;
 
-    var successful = this.coursesExecutions.some(x => x.courseId === courseId && x.successful === true);
-    var unsuccessful = this.coursesExecutions.some(x => x.courseId === courseId && x.successful === false);
-    var notEvaluatedYet = this.coursesExecutions.some(x => x.courseId === courseId && x.successful === null);
-
-    var notExists = !this.coursesExecutions.some(x => x.courseId === courseId);
+   var successful = this.coursesExecutions.some(x => x.id === executionId && x.successful);
+   var unsuccessful = this.coursesExecutions.some(x => x.id === executionId && !x.successful);
+   var notExists = !this.coursesExecutions.some(x => x.id === executionId);
 
     if (notExists)
       return 2;
@@ -56,22 +51,17 @@ export class CoursesComponent implements OnInit {
     if (successful)
       return 1;
 
-    if (notEvaluatedYet)
-      return 3;
-
     return null;
   }
 
   getExecutedCourses() {
-    var userId = 'd80bbc62-b97a-40a6-a99d-040313df3b6e';
-
-    return this.courseExecutionService.getByUserId(userId).subscribe(result => {
+    return this.courseExecutionService.getAll().subscribe(result => {
         this.coursesExecutions = result.content;
       },
       error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
   }
 
-  getCourses(courseId) {
+ /* getCourses(courseId) {
     if (!courseId) {
       return this.courseService.getAll().subscribe(result => {
           this.courses = result.content;
@@ -95,5 +85,5 @@ export class CoursesComponent implements OnInit {
       return 'Pažengusiems';
     }
     return null;
-  }
+  }*/
 }

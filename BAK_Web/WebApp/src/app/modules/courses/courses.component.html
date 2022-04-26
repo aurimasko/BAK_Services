@@ -9,14 +9,22 @@
       <tr>
         <th class="col-xs-6 col-sm-5">Pavadinimas</th>
         <th class="col-sm-4 hidden-xs">Lygis</th>
+        <th class="col-sm-4 hidden-xs">Statusas</th>
       </tr>
     </thead>
     <tbody id="agreementsTableBody">
       <tr tabindex="-1"
           *ngFor="let course of courses"
           (click)="openCourse(course)">
-          <td>{{course.name}}</td>
-          <td>{{getCourseLevelText(course.level)}}</td>
+        <td>{{course.name}}</td>
+        <td>{{getCourseLevelText(course.level)}}</td>
+        <td>
+          <b *ngIf="getCourseExecutionStatus(course.id) == 1" style="color: green;">Išlaikyta</b>
+          <b *ngIf="getCourseExecutionStatus(course.id) == 0" style="color: red;">Neišlaikyta</b>
+          <b *ngIf="getCourseExecutionStatus(course.id) == 2" style="color: black;">Laikyti kursą</b>
+          <b *ngIf="getCourseExecutionStatus(course.id) == 3" style="color: black;">Laukia įvertinimo</b>
+
+        </td>
       </tr>
     </tbody>
   </table>

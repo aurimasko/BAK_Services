@@ -23,7 +23,8 @@ namespace BAK_Services.Repositories.Task
             updatableTask.Name = newTask.Name;
             updatableTask.Description = newTask.Description;
             updatableTask.CourseId = newTask.CourseId;
-            updatableTask.MinimumTestsCompletedToSuccess = newTask.MinimumTestsCompletedToSuccess;
+            updatableTask.MaximumPointsToGet = newTask.MaximumPointsToGet;
+            updatableTask.MinimumPointsCompletedToSuccess = newTask.MinimumPointsCompletedToSuccess;
 
             await _context.SaveChangesAsync();
             return new Response<Models.Entities.Task>(updatableTask);

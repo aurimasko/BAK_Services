@@ -44,6 +44,12 @@ namespace BAK_Services.Services.CourseExecution
             return new Response<IEnumerable<Models.Entities.CourseExecution>>(result);
         }
 
+        public async Task<Response<IEnumerable<Models.Entities.CourseExecution>>> GetAllAsync()
+        {
+            var result = await _repository.GetAllWithCourseIncluded();
+            return new Response<IEnumerable<Models.Entities.CourseExecution>>(result);
+        }
+        
         public async Task<Response<Models.Entities.CourseExecution>> GetAsync(Guid id)
         {
             var result = await _repository.GetById(id);
@@ -53,48 +59,13 @@ namespace BAK_Services.Services.CourseExecution
         public async Task<Response<Models.Entities.CourseExecution>> Add(CourseExecutionDto courseExecutionDto)
         {
             var courseExecution = _mapper.Map<Models.Entities.CourseExecution>(courseExecutionDto);
-            int completedTasks = 0;
+            courseExecution.Successful = null;
 
           /*  var validationResult = _validator.Validate(course);
 
             if (!validationResult.IsValid)
                 return new Response<Models.Entities.CourseExecution>(validationResult);*/
 
-            foreach (var taskExecution in courseExecution.TaskExecutions)
-            {
-                // to do: execute tests
-                // some mocked tests added
-                var taskTests = await _testRepository.Find(t => t.TaskId.Equals(taskExecution.TaskId));
-
-                foreach(var test in taskTests)
-                {
-                    var executedTest = new TaskExecutionTest
-                    {
-                        TaskExecution = taskExecution,
-                        Test = test,
-                        Completed = true
-                    };
-                    test.TaskExecutionsTests.Add(executedTest);
-                    taskExecution.TaskExecutionsTests.Add(executedTest);
-                }
-
-                var completedTests = taskExecution.TaskExecutionsTests.Count(x => x.Completed);
-                var task = await _taskRepository.GetById(taskExecution.TaskId);
-
-                if (completedTests >= task.MinimumTestsCompletedToSuccess)
-                {
-                    taskExecution.Successful = true;
-                    completedTasks++;
-                }
-                else
-                {
-                    taskExecution.Successful = false;
-                }
-            }
-
-            var course = await _courseRepository.GetById(courseExecution.CourseId);
-            courseExecution.Successful = completedTasks >= course.MinimumTasksCompletedToSuccess;
-            
             var result = await _repository.Add(courseExecution);
             return new Response<Models.Entities.CourseExecution>(result);
         }

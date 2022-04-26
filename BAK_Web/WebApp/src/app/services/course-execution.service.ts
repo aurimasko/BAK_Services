@@ -15,6 +15,10 @@ export class CourseExecutionService {
     return this.httpClient.post<ServiceResponse>(this.baseUrl, courseExecution, { headers: { "Content-Type": "application/json" } });
   }
 
+  getAll() {
+    return this.httpClient.get<ServiceResponse>(this.baseUrl);
+  }
+
   getByUserId(userId) {
     return this.httpClient.get<ServiceResponse>(this.serviceUrl + 'users/' + userId + '/courseexecutions');
   }

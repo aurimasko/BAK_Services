@@ -16,6 +16,7 @@ export class ExecutedCourseSummaryComponent implements OnInit {
   tasksExecution;
   courseExecutionId;
   selectedTask;
+  //todo: prideti courseExecution gavima, kad gautume kurso pavadinima ir ar jau įvertinantas kursas ar ne.
 
   constructor(private route: ActivatedRoute, private router: Router, private taskExecutionService: TaskExecutionService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
 

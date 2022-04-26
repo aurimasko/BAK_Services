@@ -19,7 +19,7 @@ namespace BAK_Services.Repositories.TaskExecution
             Guid courseExecutionId)
         {
             return await _context.TaskExecutions.Where(x => x.CourseExecutionId == courseExecutionId)
-                .Include(x => x.Task).Include(x=> x.TaskExecutionsTests).ToListAsync();
+                .Include(x => x.Task).ToListAsync();
         }
     }
 }

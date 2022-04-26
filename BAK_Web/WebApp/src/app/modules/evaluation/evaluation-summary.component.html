@@ -1,0 +1,29 @@
+<div>
+
+  <h2>Vertinimas</h2>
+
+  <table id="coursesTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-6 col-sm-5">Pavadinimas</th>
+        <th class="col-sm-4 hidden-xs">Vartotojas</th>
+        <th class="col-sm-4 hidden-xs">Įvertinimas</th>
+        <th class="col-sm-4 hidden-xs">Statusas</th>
+      </tr>
+    </thead>
+    <tbody id="agreementsTableBody">
+      <tr tabindex="-1"
+          *ngFor="let execution of coursesExecutions">
+        <td>{{execution.course.name}}</td>
+        <td>{{execution.user.name}}</td>
+        <td></td>
+
+        <td>
+          <b *ngIf="getCourseExecutionStatus(execution.id) == 1" style="color: green;">Išlaikyta</b>
+          <b *ngIf="getCourseExecutionStatus(execution.id) == 0" style="color: red;">Neišlaikyta</b>
+          <b *ngIf="getCourseExecutionStatus(execution.id) == 2" style="color: black;">Pradėti vertinti</b>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

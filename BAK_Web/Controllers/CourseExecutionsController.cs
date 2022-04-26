@@ -21,6 +21,19 @@ namespace BAK_Web.Controllers
         }
 
         [HttpGet]
+        [Route("api/[controller]/")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Get()
+        {
+            var response = await _courseExecutionService.GetAllAsync();
+
+            if (response.IsSuccess)
+                return Ok(response);
+
+            return BadRequest(response);
+        }
+
+        [HttpGet]
         [Route("api/[controller]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(Guid id)

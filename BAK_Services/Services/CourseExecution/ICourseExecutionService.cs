@@ -12,5 +12,7 @@ namespace BAK_Services.Services.CourseExecution
         Task<Response<IEnumerable<Models.Entities.CourseExecution>>> GetByUserIdAsync(Guid userId);
         Task<Response<Models.Entities.CourseExecution>> GetAsync(Guid id);
         Task<Response<Models.Entities.CourseExecution>> Add(CourseExecutionDto courseExecutionDto);
+
+        Task<Response<IEnumerable<Models.Entities.CourseExecution>>> GetAllAsync();
     }
 }
