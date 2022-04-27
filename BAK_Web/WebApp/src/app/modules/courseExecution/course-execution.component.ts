@@ -50,6 +50,8 @@ export class CourseExecutionComponent implements OnInit   {
   }
 
   submitExecution() {
+    if (!confirm("Ar tikrai norite pateikti kursą vertinimui? Pateikus vertinimui, pakeitimų daryti nebegalėsite."))
+      return null;
 
     var taskExecutions = [] as any; // add concrete class
 
@@ -74,6 +76,9 @@ export class CourseExecutionComponent implements OnInit   {
     return this.courseExecutionService.submitExecution(courseExecution).subscribe(result => {
         if (result.isSuccess) {
           this.notificationsService.showSuccess("Darbas sėkmingai atiduotas vertinimui.", "");
+          console.log('asd ' + JSON.stringify(result.content));
+          console.log(result.content.courseExecutionId);
+          this.router.navigate(['/summary', result.content.id]);
         }
         this.isLoading = false;
       },

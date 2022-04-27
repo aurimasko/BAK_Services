@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,6 +13,8 @@ using BAK_Services.Repositories.Task;
 using BAK_Services.Repositories.TaskExecution;
 using BAK_Services.Repositories.TaskExecutionTest;
 using BAK_Services.Repositories.Test;
+using BAK_Services.Services.Task;
+using BAK_Services.Services.TaskExecution;
 using BAK_Services.Validators;
 using RazorLight.Extensions;
 
@@ -23,12 +26,14 @@ namespace BAK_Services.Services.CourseExecution
         private readonly ITestRepository _testRepository;
         private readonly ITaskRepository _taskRepository;
         private readonly ICourseRepository _courseRepository;
+        private readonly ITaskExecutionService _taskExecutionService;
 
         // private readonly ICourseExecutionValidator _validator;
         private readonly IMapper _mapper;
 
-        public CourseExecutionService(ICourseExecutionRepository repository, IMapper mapper, ITestRepository testRepository, ITaskRepository taskRepository, ICourseRepository courseRepository)
+        public CourseExecutionService(ITaskExecutionService taskExecutionService, ICourseExecutionRepository repository, IMapper mapper, ITestRepository testRepository, ITaskRepository taskRepository, ICourseRepository courseRepository)
         {
+            _taskExecutionService = taskExecutionService;
             _repository = repository;
             _testRepository = testRepository;
             _taskRepository = taskRepository;
@@ -52,7 +57,7 @@ namespace BAK_Services.Services.CourseExecution
         
         public async Task<Response<Models.Entities.CourseExecution>> GetAsync(Guid id)
         {
-            var result = await _repository.GetById(id);
+            var result = await _repository.GetByIdWithTaskExecutions(id);
             return new Response<Models.Entities.CourseExecution>(result);
         }
 
@@ -67,6 +72,26 @@ namespace BAK_Services.Services.CourseExecution
                 return new Response<Models.Entities.CourseExecution>(validationResult);*/
 
             var result = await _repository.Add(courseExecution);
+            return new Response<Models.Entities.CourseExecution>(result);
+        }
+
+        public async Task<Response<Models.Entities.CourseExecution>> Evaluate(CourseExecutionDto courseExecutionDto)
+        {
+            var courseExecution = _mapper.Map<Models.Entities.CourseExecution>(courseExecutionDto);
+            var course = await _courseRepository.GetById(courseExecution.CourseId);
+
+            var successfulCompletedTasks = 0;
+
+            foreach (var taskExecution in courseExecution.TaskExecutions)
+            {
+                var isTaskEvaluatedSuccessful = await _taskExecutionService.Evaluate(taskExecution);
+
+                if(isTaskEvaluatedSuccessful)
+                    successfulCompletedTasks++;
+            }
+            var isCourseSuccessful = course.MinimumTasksCompletedToSuccess <= successfulCompletedTasks;
+      
+            var result = await _repository.Evaluate(courseExecution.Id, isCourseSuccessful);
             return new Response<Models.Entities.CourseExecution>(result);
         }
     }

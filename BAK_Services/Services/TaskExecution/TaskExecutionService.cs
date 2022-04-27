@@ -22,9 +22,11 @@ namespace BAK_Services.Services.TaskExecution
         private readonly ITaskExecutionRepository _repository;
         private readonly IMapper _mapper;
         private readonly ITaskExecutionValidator _validator;
+        private readonly ITaskRepository _taskRepository;
 
-        public TaskExecutionService(ITaskExecutionRepository repository, IMapper mapper, ITaskExecutionValidator validator)
+        public TaskExecutionService(ITaskRepository taskRepository, ITaskExecutionRepository repository, IMapper mapper, ITaskExecutionValidator validator)
         {
+            _taskRepository = taskRepository;
             _repository = repository;
             _mapper = mapper;
             _validator = validator;
@@ -89,6 +91,18 @@ namespace BAK_Services.Services.TaskExecution
                 throw new EntityNotFoundException(nameof(taskExecutionToBeDeleted)); 
 
          //   _repository.Remove(taskExecutionToBeDeleted);
+        }
+
+        public async Task<bool> Evaluate(Models.Entities.TaskExecution taskExecution)
+        {
+            var task = await _taskRepository.GetById(taskExecution.TaskId);
+
+            var mark = taskExecution.Mark ?? default;
+            var isSuccessful = mark >= task.MinimumPointsCompletedToSuccess;
+
+            var result = await _repository.AddTaskExecutionEvaluation(taskExecution.Id, mark, isSuccessful);
+
+            return result.Successful ?? default;
         }
     }
 }

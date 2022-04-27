@@ -72,5 +72,19 @@ namespace BAK_Web.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("api/[controller]/evaluate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Evaluate([FromBody] CourseExecutionDto courseExecutionDto)
+        {
+            var result = await _courseExecutionService.Evaluate(courseExecutionDto);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }

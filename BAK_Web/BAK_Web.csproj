@@ -75,6 +75,7 @@
     <None Remove="WebApp\src\app\modules\courseExecution\course-execution.component.ts" />
     <None Remove="WebApp\src\app\modules\courses\courses.component.ts" />
     <None Remove="WebApp\src\app\modules\course\course.component.ts" />
+    <None Remove="WebApp\src\app\modules\evaluation\evaluate.component.ts" />
     <None Remove="WebApp\src\app\modules\evaluation\evaluation-summary.component.ts" />
     <None Remove="WebApp\src\app\modules\executed-course-summary\executed-course-summary.component.ts" />
     <None Remove="WebApp\src\app\modules\executedCoursesSummary\executed-courses-summary.component.ts" />
@@ -184,6 +185,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\course\course.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="WebApp\src\app\modules\evaluation\evaluate.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\evaluation\evaluation-summary.component.ts">

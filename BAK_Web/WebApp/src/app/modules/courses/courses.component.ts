@@ -24,8 +24,6 @@ export class CoursesComponent implements OnInit {
   }
 
   openCourse(course) {
-    console.log('asd ' + JSON.stringify(course) + ', ' + course.id);
-
     var courseExecution = this.getCourseExecution(course.id);
 
     if (courseExecution != null)

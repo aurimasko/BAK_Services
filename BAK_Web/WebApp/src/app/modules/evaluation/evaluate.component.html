@@ -1,0 +1,79 @@
+<div>
+  <h2>Kursas - {{coursesExecution.course.name}}</h2>
+  Vartotojas: <b>{{coursesExecution.user.name}}</b><br /><br />
+
+  <div *ngIf="coursesExecution.successful == null">
+    Būsimas įvertinimas:
+    <span [style.color]="'red'" *ngIf="!isCourseExecutionEvaluatedAsSuccessful()">Neišlaikyta</span>
+    <span [style.color]="'green'" *ngIf="isCourseExecutionEvaluatedAsSuccessful()">Išlaikyta</span>
+    <br />
+    <button (click)="saveEvaluation()" *ngIf="coursesExecution.successful == null">Pateikti kurso įvertinimą</button>
+  </div>
+
+  <span [style.color]="'green'" *ngIf="coursesExecution.successful == true">Kurso įvertinimas: Išlaikyta</span>
+  <span [style.color]="'red'" *ngIf="coursesExecution.successful == false">Kurso įvertinimas: Neišlaikyta</span>
+  <br />
+  Minimalus užduočių su teigiamu įvertinimu skaičius, jog kursas būtų užskaitytas teigiamai: {{coursesExecution.course.minimumTasksCompletedToSuccess}}
+  <hr />
+
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3">
+        <h3>Užduotys:</h3>
+        <ul *ngFor="let taskExecution of coursesExecution.taskExecutions">
+          <li>
+            <a (click)="focusTaskExecution(taskExecution)">
+              <div *ngIf="taskExecution.successful != null && taskExecution.mark != null">
+                <span [style.color]="taskExecution.successful ? 'green' : 'red'" [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
+                  {{taskExecution.task.name}} (Pažymys: {{taskExecution.mark}} / {{taskExecution.task.maximumPointsToGet}})
+                </span>
+              </div>
+
+              <div *ngIf="taskExecution.successful === null || taskExecution.mark === null">
+                <span [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
+                  {{taskExecution.task.name}}
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-md-9">
+        <div *ngIf="selectedTask != null">
+          <div class="col-xs-2">
+            Užduoties atlikimo įvertinimas:
+
+            <span *ngIf="selectedTask.successful == null">
+              <select name="marksList" [(ngModel)]="selectedTask.mark" style="width: 10%;">
+                <option *ngFor="let mark of possibleMarksArray" [value]="">
+                  {{mark}}
+                </option>
+              </select>
+              <span [style.color]="'red'" *ngIf="!isTaskExecutionEvaluatedAsSuccessful(selectedTask)"> Neišlaikyta</span>
+              <span [style.color]="'green'" *ngIf="isTaskExecutionEvaluatedAsSuccessful(selectedTask)"> Išlaikyta</span>
+            </span>
+
+            <span *ngIf="selectedTask.successful != null">{{selectedTask.mark}}</span>
+            <br />
+            Minimalus taškų skaičius teigiamam įvertinimui: {{selectedTask.task.minimumPointsCompletedToSuccess}}
+          </div>
+          <br />
+          <h3><b>Užduotis {{selectedTask.task.name}}</b></h3>
+          <p>
+            Užduoties sąlyga: <br />
+            {{selectedTask.task.description}}
+          </p>
+
+          <h2><b>Blockly vieta</b></h2>
+
+          <p>Kodas, pagal kurį atliktas vertinimas:</p>
+          <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode" readonly></textarea>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -19,6 +19,20 @@ namespace BAK_Services.Repositories.Course
             _context = context;
         }
 
+        public async Task<CourseExecution> Evaluate(Guid courseExecutionId, bool isCourseSuccessful)
+        {
+            var courseExecution = await _context.CourseExecutions.FindAsync(courseExecutionId);
+
+            courseExecution.Successful = isCourseSuccessful;
+            await _context.SaveChangesAsync();
+
+            return courseExecution;
+        }
+
+        public async Task<CourseExecution> GetByIdWithTaskExecutions(Guid id)
+        {
+            return await _context.CourseExecutions.Include(x => x.Course).Include(x=>x.User).FirstOrDefaultAsync(x => x.Id == id);
+        }
         public async Task<IEnumerable<CourseExecution>> GetAllWithCourseIncluded()
         {
             return await _context.CourseExecutions.Include(x => x.Course).Include(x => x.User).ToListAsync();

@@ -15,6 +15,17 @@ namespace BAK_Services.Repositories.TaskExecution
             _context = context;
         }
 
+        public async Task<Models.Entities.TaskExecution> AddTaskExecutionEvaluation(Guid taskExecutionId, int mark, bool isSuccessful)
+        {
+            var taskExecution = await GetById(taskExecutionId);
+
+            taskExecution.Mark = mark;
+            taskExecution.Successful = isSuccessful;
+
+            await _context.SaveChangesAsync();
+            return taskExecution;
+        }
+
         public async Task<IEnumerable<Models.Entities.TaskExecution>> GetByCourseExecutionIdAsync(
             Guid courseExecutionId)
         {

@@ -1,37 +1,52 @@
 <div>
-  <h2>Kursas</h2>
- 
+  <h2>Kursas - {{courseExecution.course.name}}</h2>
+  <span [style.color]="courseExecution.successful ? 'green' : 'red'" *ngIf="courseExecution.successful == true">Kurso įvertinimas: Išlaikyta</span>
+  <span [style.color]="courseExecution.successful ? 'green' : 'red'" *ngIf="courseExecution.successful == false">Kurso įvertinimas: Neišlaikyta</span>
+  <span *ngIf="courseExecution.successful == null">Kurso įvertinimas: <b>Laukia įvertinimo</b></span>
+  <br />
+
   <hr />
-  <h3>Užduotys:</h3>
-  <ul *ngFor="let taskExecution of tasksExecution">
-    <li>
-      <a (click)="focusTaskExecution(taskExecution)">
-        <div *ngIf="taskExecution.successful != null && taskExecution.mark != null">
-          <span [style.color]="taskExecution.successful ? 'green' : 'red'" [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
-            {{taskExecution.task.name}} (Pažymis: {{taskExecution.mark}} / {{taskExecution.task.maximumPointsToGet}})
-          </span>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3">
+        <h3>Užduotys:</h3>
+        <ul *ngFor="let taskExecution of courseExecution.taskExecutions">
+          <li>
+            <a (click)="focusTaskExecution(taskExecution)">
+              <div *ngIf="taskExecution.successful != null && taskExecution.mark != null">
+                <span [style.color]="taskExecution.successful ? 'green' : 'red'" [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
+                  {{taskExecution.task.name}} (Pažymys: {{taskExecution.mark}} / {{taskExecution.task.maximumPointsToGet}})
+                </span>
+              </div>
+
+              <div *ngIf="taskExecution.successful === null || taskExecution.mark === null">
+                <span [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
+                  {{taskExecution.task.name}}
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-md-9">
+        <div *ngIf="selectedTask != null">
+          <h3><b>Užduotis {{selectedTask.task.name}}</b></h3>
+          <p>
+            Užduoties sąlyga: <br />
+            {{selectedTask.task.description}}
+          </p>
+
+          <h2><b>Blockly vieta</b></h2>
+
+          <p>Kodas, pagal kurį atliktas vertinimas:</p>
+          <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode" readonly></textarea>
+
         </div>
-
-        <div *ngIf="taskExecution.successful === null || taskExecution.mark === null">
-          <span [style.font-weight]="taskExecution == selectedTask ? 'bold' : 'normal'">
-            {{taskExecution.task.name}}
-          </span>
-        </div>
-      </a>
-    </li>
-  </ul>
-  <hr />
-  <div *ngIf="selectedTask != null">
-    <h3><b>Užduotis {{selectedTask.task.name}}</b></h3>
-    <p>
-      Užduoties sąlyga: <br />
-      {{selectedTask.task.description}}
-    </p>
-
-    <h2><b>Blockly vieta</b></h2>
-
-    <p>Kodas, pagal kurį atliktas vertinimas:</p>
-    <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode" readonly></textarea>
+      </div>
+    </div>
 
   </div>
+
 </div>

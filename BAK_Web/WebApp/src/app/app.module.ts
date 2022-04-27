@@ -33,6 +33,7 @@ import { ExecutedCoursesSummaryComponent } from './modules/executedCoursesSummar
 import { ExecutedCourseSummaryComponent } from './modules/executed-course-summary/executed-course-summary.component';
 import { BlocklyComponent } from './modules/blockly/blockly.component';
 import { EvaluationSummaryComponent } from './modules/evaluation/evaluation-summary.component';
+import { EvaluateComponent } from './modules/evaluation/evaluate.component';
 
 import { CourseService } from './services/course.service';
 import { TaskService } from './services/task.service';
@@ -60,7 +61,8 @@ import { TaskExecutionService } from "./services/task-execution.service";
     ExecutedCoursesSummaryComponent,
     ExecutedCourseSummaryComponent,
     BlocklyComponent,
-    EvaluationSummaryComponent
+    EvaluationSummaryComponent,
+    EvaluateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -84,9 +86,10 @@ import { TaskExecutionService } from "./services/task-execution.service";
       { path: 'course/:courseId/execution', component: CourseExecutionComponent },
       { path: 'summary', component: ExecutedCoursesSummaryComponent },
       { path: 'summary/:courseExecutionId', component: ExecutedCourseSummaryComponent },
-      { path: 'evaluation', component: EvaluationSummaryComponent }
+      { path: 'evaluation', component: EvaluationSummaryComponent },
+      { path: 'evaluation/:courseExecutionId', component: EvaluateComponent }
 
-    ])
+])
   ],
   providers: [
     CourseService,

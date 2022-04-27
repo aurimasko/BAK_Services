@@ -11,8 +11,10 @@ namespace BAK_Services.Repositories.Course
     {
         // Task<Response<Models.Course>> UpdateAsync(Models.Course updatableCourse, CourseExecution courseExecution);
         Task<IEnumerable<CourseExecution>> GetByUserIdWithCourseAsync(Guid userId);
-
+        Task<CourseExecution> GetByIdWithTaskExecutions(Guid id);
         Task<IEnumerable<CourseExecution>> GetAllWithCourseIncluded();
+
+        Task<CourseExecution> Evaluate(Guid courseExecutionId, bool isCourseSuccessful);
 
     }
 }

@@ -19,40 +19,29 @@ export class EvaluationSummaryComponent implements OnInit {
     this.getExecutedCourses();
   }
 
- /* openCourse(course) {
-    console.log('asd ' + JSON.stringify(course) + ', ' + course.id);
-
-    var courseExecution = this.getCourseExecution(course.id);
-
-    if (courseExecution != null)
-      this.router.navigate(['/summary', courseExecution.id]); 
-    else
-      this.router.navigate(['/course', course.id]);
-  }
-
-  getCourseExecution(courseId) {
-    return this.coursesExecutions.find(x => x.courseId === courseId);
-  }*/
-
  getCourseExecutionStatus(executionId) {
-    if (!this.coursesExecutions)
-      return null;
+   if (!this.coursesExecutions)
+     return null;
 
-   var successful = this.coursesExecutions.some(x => x.id === executionId && x.successful);
-   var unsuccessful = this.coursesExecutions.some(x => x.id === executionId && !x.successful);
-   var notExists = !this.coursesExecutions.some(x => x.id === executionId);
+   var successful = this.coursesExecutions.some(x => x.id === executionId && x.successful === true);
+   var unsuccessful = this.coursesExecutions.some(x => x.id === executionId && x.successful === false);
+   var notEvaluatedYet = this.coursesExecutions.some(x => x.id === executionId && x.successful == null);
 
-    if (notExists)
-      return 2;
+   if (unsuccessful)
+     return 0;
 
-    if (unsuccessful)
-      return 0;
+   if (successful)
+     return 1;
 
-    if (successful)
-      return 1;
+   if (notEvaluatedYet)
+     return 2;
 
-    return null;
+   return null;
   }
+
+ openCourseExecution(executionId) {
+   this.router.navigate(['/evaluation', executionId]);
+ }
 
   getExecutedCourses() {
     return this.courseExecutionService.getAll().subscribe(result => {
@@ -61,29 +50,4 @@ export class EvaluationSummaryComponent implements OnInit {
       error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
   }
 
- /* getCourses(courseId) {
-    if (!courseId) {
-      return this.courseService.getAll().subscribe(result => {
-          this.courses = result.content;
-        },
-        error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
-    } else {
-      return this.courseService.getById(courseId).subscribe(result => {
-          this.courses = result.content;
-        },
-        error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
-    }
-  }
-
-  getCourseLevelText(courseLevel) {
-    switch (courseLevel) {
-    case 'Easy':
-      return "Pradendatiesiems";
-    case 'Medium':
-      return 'Susipažinusiems';
-    case 'Hard':
-      return 'Pažengusiems';
-    }
-    return null;
-  }*/
 }

@@ -14,5 +14,6 @@ namespace BAK_Services.Services.CourseExecution
         Task<Response<Models.Entities.CourseExecution>> Add(CourseExecutionDto courseExecutionDto);
 
         Task<Response<IEnumerable<Models.Entities.CourseExecution>>> GetAllAsync();
+        Task<Response<Models.Entities.CourseExecution>> Evaluate(CourseExecutionDto courseExecutionDto);
     }
 }

@@ -5,6 +5,7 @@ import { ResponseHelper } from "../../helpers/response-helpers";
 
 import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
+import { CourseExecutionService } from "../../services/course-execution.service";
 
 @Component({
   selector: 'executed-course-summary-component',
@@ -16,9 +17,9 @@ export class ExecutedCourseSummaryComponent implements OnInit {
   tasksExecution;
   courseExecutionId;
   selectedTask;
-  //todo: prideti courseExecution gavima, kad gautume kurso pavadinima ir ar jau įvertinantas kursas ar ne.
+  courseExecution;
 
-  constructor(private route: ActivatedRoute, private router: Router, private taskExecutionService: TaskExecutionService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
+  constructor(private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private taskExecutionService: TaskExecutionService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
 
   ngOnInit() {
     this.courseExecutionId = this.route.snapshot.paramMap.get('courseExecutionId');
@@ -27,26 +28,20 @@ export class ExecutedCourseSummaryComponent implements OnInit {
   }
 
   getTasksExecution(courseExecutionId) {
-    return this.taskExecutionService.getByCourseId(courseExecutionId).subscribe(result => {
-      this.tasksExecution = result.content;
-      this.selectedTask = result.content[0];
-    },
-      error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
-  }
+    return this.courseExecutionService.getById(courseExecutionId).subscribe(result => {
+        this.courseExecution = result.content;
 
-  getMarkForTask(taskExecution) {
-    var completedTests = taskExecution.taskExecutionsTests.filter(element => {
-      return element.completed;
-    })
-    return completedTests.length;
+      return this.taskExecutionService.getByCourseId(courseExecutionId).subscribe(result => {
+            this.courseExecution.taskExecutions = result.content;
+            this.selectedTask = result.content[0];
+          },
+          error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
+      },
+      error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
   }
 
   focusTaskExecution(taskExecution) {
     this.selectedTask = taskExecution;
   }
-  /*
-  openCourse(courseExecution) {
-    this.router.navigate(['/summary', courseExecution.id]);
-  }*/
-  
+
 }

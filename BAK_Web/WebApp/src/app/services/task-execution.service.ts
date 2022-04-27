@@ -15,6 +15,7 @@ export class TaskExecutionService {
   getByCourseId(courseId) {
     return this.httpClient.get<ServiceResponse>(this.serviceUrl + 'courseexecutions/' + courseId + '/taskexecutions');
   }
+
   /*
   getAll() {
     return this.httpClient.post<ServiceResponse>(this.baseUrl + '/get', null, { headers: { "Content-Type": "application/json" } });
