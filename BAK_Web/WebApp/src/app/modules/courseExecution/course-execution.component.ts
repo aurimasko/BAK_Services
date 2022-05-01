@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { BlocklyCode } from "../../interfaces/blockly-code.interface";
 import { AuthenticationService } from "../../services/auth.service";
+import { BlocklyWorkspaceContent } from "../blockly/blockly.workspace.content";
 
 type CourseTask = {
   id: any;
@@ -40,7 +41,7 @@ export class CourseExecutionComponent implements OnInit   {
   courseIsDone = false;
   isLoading = false;
   executionWorkspace = "";
-  executionWorkspaceToBlockly = "";
+  blocklyExecutionWorkspace: BlocklyWorkspaceContent | null = null;
 
   constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private router: Router, private courseExecutionService: CourseExecutionService, private courseService: CourseService, private taskService: TaskService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
   
@@ -60,6 +61,7 @@ export class CourseExecutionComponent implements OnInit   {
 
       var execution = {
         executionCode: task.executionCode,
+        executionWorkspace: task.executionWorkspace,
         taskId: task.id
       };
       taskExecutions.push(execution);
@@ -100,8 +102,12 @@ export class CourseExecutionComponent implements OnInit   {
   }
 
   chooseTask(task) {
-    this.executionWorkspaceToBlockly = task.executionWorkspace;
     this.selectedTask = task;
+
+    this.blocklyExecutionWorkspace = {
+      taskId: this.selectedTask.id,
+      workspaceContent: this.selectedTask.executionWorkspace ?? ""
+    };
   }
   getCourse(courseId) {
     return this.courseService.getById(courseId).subscribe(result => {

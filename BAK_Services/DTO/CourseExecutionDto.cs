@@ -9,6 +9,7 @@ namespace BAK_Services.DTO
 {
     public class CourseExecutionDto : BaseDto
     {
+        public UserDto User { get; set; }
         public Guid UserId { get; set; }
         public Guid CourseId { get; set; }
         public Course Course { get; set; }

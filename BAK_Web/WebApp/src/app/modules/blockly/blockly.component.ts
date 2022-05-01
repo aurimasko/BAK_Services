@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, ViewChild, Input, SimpleChanges, After
 import { Blockly, NgxBlocklyConfig, NgxBlocklyGenerator, NgxBlocklyComponent, CustomBlock, NgxBlocklyToolbox } from 'ngx-blockly';
 import { BlocklyCode } from "../../interfaces/blockly-code.interface";
 import { BlocklyCategories } from "./categories";
+import { BlocklyWorkspaceContent } from "./blockly.workspace.content";
 
 @Component({
   selector: 'blockly-workspace',
@@ -12,13 +13,18 @@ import { BlocklyCategories } from "./categories";
 export class BlocklyComponent implements AfterViewInit {
   @Output() codeChangeEvent = new EventEmitter<BlocklyCode>();
   @ViewChild(NgxBlocklyComponent) workspace;
-  @Input() workspacecontent = "";
+
+  @Input()
+  blocklyWorkspaceContent: BlocklyWorkspaceContent | null = null;
+
+  @Input()
+  readonly: boolean = false;
+
   private blocklyCategories: BlocklyCategories;
   public customBlocks: CustomBlock[];
 
   constructor() {
     this.blocklyCategories = new BlocklyCategories();
-
     const workspace = new Blockly.WorkspaceSvg(new Blockly.Options({}));
     const toolbox: NgxBlocklyToolbox = new NgxBlocklyToolbox(workspace);
     toolbox.nodes = this.blocklyCategories.blocklyCategories;
@@ -30,11 +36,37 @@ export class BlocklyComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if (!this.blocklyWorkspaceContent) {
+      this.setInitialWorkspace();
+    } else {
+      this.workspace.fromXml(this.blocklyWorkspaceContent.workspaceContent);
+    }
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['readonly']) {
+      this.config.readOnly = changes['readonly'].currentValue;
+    }
+
+    if (changes['blocklyWorkspaceContent']) {
+      if (this.workspace === undefined)
+        return;
+
+      var change = changes['blocklyWorkspaceContent'];
+
+      if (change.currentValue === undefined || change.currentValue === null || change.currentValue["workspaceContent"] === "" || change.currentValue["workspaceContent"] === undefined || change.currentValue["workspaceContent"] === null) {
+        this.workspace.clear();
+        this.setInitialWorkspace();
+      } else {
+        this.workspace.fromXml(change.currentValue.workspaceContent);
+      }
+    }
+  }
+
+  setInitialWorkspace() {
     this.workspace.fromXml("<xml xmlns=\"https://developers.google.com/blockly/xml\">" +
       "<block type=\"InitMainBlock\" id = \"lA^+972(@ai/N~`T{{j1\" x =\"8\" y = \"8\">" +
       "</block></xml>");
-
     var code = Blockly[NgxBlocklyGenerator.DART].workspaceToCode(Blockly.Workspace.getById(this.workspace));
 
     let blocklyCode: BlocklyCode = {
@@ -42,43 +74,12 @@ export class BlocklyComponent implements AfterViewInit {
       code: code
     };
 
-
     setTimeout(() => {
         this.codeChangeEvent.emit(blocklyCode);
       },
       0);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.workspace === undefined)
-      return;
-
-    for (const propName in changes) {
-      const change = changes[propName];
-
-      if (change.currentValue === undefined || change.currentValue === null) {
-        this.workspace.clear();
-        this.workspace.fromXml("<xml xmlns=\"https://developers.google.com/blockly/xml\">" +
-          "<block type=\"InitMainBlock\" id = \"lA^+972(@ai/N~`T{{j1\" x =\"8\" y = \"8\">" +
-          "</block></xml>");
-         var code = Blockly[NgxBlocklyGenerator.DART].workspaceToCode(Blockly.Workspace.getById(this.workspace));
-
-    let blocklyCode: BlocklyCode = {
-      workspaceJson: this.workspace.toXml(),
-      code: code
-    };
-
-
-    setTimeout(() => {
-        this.codeChangeEvent.emit(blocklyCode);
-      },
-      0);
-      } else
-        this.workspace.fromXml(change.currentValue);
-    }
-  }
-
- 
 
   public config: NgxBlocklyConfig = {
     toolbox: '<xml id="toolbox" style="display: none">' +
@@ -106,7 +107,6 @@ export class BlocklyComponent implements AfterViewInit {
       workspaceJson: this.workspace.toXml(),
       code: code
     };
-
     this.codeChangeEvent.emit(blocklyCode);
   }
 

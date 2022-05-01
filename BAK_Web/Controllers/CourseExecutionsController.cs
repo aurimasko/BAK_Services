@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BAK_Services.Authentication;
 using BAK_Services.DTO;
+using BAK_Services.Models;
+using BAK_Services.Models.Entities;
 using BAK_Services.Services.CourseExecution;
 using BAK_Web.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using BAK_Services.Extensions;
 
 namespace BAK_Web.Controllers
 {
@@ -17,10 +21,12 @@ namespace BAK_Web.Controllers
     public class CourseExecutionsController : ControllerBase
     {
         private readonly ICourseExecutionService _courseExecutionService;
+        private readonly IMapper _mapper;
 
-        public CourseExecutionsController(ICourseExecutionService courseExecutionService)
+        public CourseExecutionsController(IMapper mapper, ICourseExecutionService courseExecutionService)
         {
             _courseExecutionService = courseExecutionService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,11 +35,12 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> Get()
         {
             var response = await _courseExecutionService.GetAllAsync();
+            var mappedResponse = _mapper.ToDTO<IEnumerable<CourseExecutionDto>, IEnumerable<CourseExecution>>(response);
 
-            if (response.IsSuccess)
-                return Ok(response);
+            if (mappedResponse.IsSuccess)
+                return Ok(mappedResponse);
 
-            return BadRequest(response);
+            return BadRequest(mappedResponse);
         }
 
         [HttpGet]
@@ -42,11 +49,12 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var response = await _courseExecutionService.GetAsync(id);
+            var mappedResponse = _mapper.ToDTO<CourseExecutionDto, CourseExecution>(response);
 
-            if (response.IsSuccess)
-                return Ok(response);
+            if (mappedResponse.IsSuccess)
+                return Ok(mappedResponse);
 
-            return BadRequest(response);
+            return BadRequest(mappedResponse);
         }
 
         [HttpGet]
@@ -55,12 +63,12 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> GetByUser(Guid userId)
         {
             var response = await _courseExecutionService.GetByUserIdAsync(userId);
-            //todo: mapper
+            var mappedResponse = _mapper.ToDTO<CourseExecutionDto, CourseExecution>(response);
 
-            if (response.IsSuccess)
-                return Ok(response);
+            if (mappedResponse.IsSuccess)
+                return Ok(mappedResponse);
 
-            return BadRequest(response);
+            return BadRequest(mappedResponse);
         }
 
         [HttpPost]
@@ -85,12 +93,12 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> Evaluate([FromBody] CourseExecutionDto courseExecutionDto)
         {
             var result = await _courseExecutionService.Evaluate(courseExecutionDto);
-            //todo:mapper
+            var mappedResponse = _mapper.ToDTO<CourseExecutionDto, CourseExecution>(result);
 
-            if (!result.IsSuccess)
-                return BadRequest(result);
+            if (!mappedResponse.IsSuccess)
+                return BadRequest(mappedResponse);
 
-            return Ok(result);
+            return Ok(mappedResponse);
         }
     }
 }
