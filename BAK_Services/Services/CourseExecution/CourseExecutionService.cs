@@ -11,8 +11,6 @@ using BAK_Services.Models.Entities;
 using BAK_Services.Repositories.Course;
 using BAK_Services.Repositories.Task;
 using BAK_Services.Repositories.TaskExecution;
-using BAK_Services.Repositories.TaskExecutionTest;
-using BAK_Services.Repositories.Test;
 using BAK_Services.Services.Task;
 using BAK_Services.Services.TaskExecution;
 using BAK_Services.Validators;
@@ -23,7 +21,6 @@ namespace BAK_Services.Services.CourseExecution
     public class CourseExecutionService : ICourseExecutionService
     {
         private readonly ICourseExecutionRepository _repository;
-        private readonly ITestRepository _testRepository;
         private readonly ITaskRepository _taskRepository;
         private readonly ICourseRepository _courseRepository;
         private readonly ITaskExecutionService _taskExecutionService;
@@ -31,11 +28,10 @@ namespace BAK_Services.Services.CourseExecution
         // private readonly ICourseExecutionValidator _validator;
         private readonly IMapper _mapper;
 
-        public CourseExecutionService(ITaskExecutionService taskExecutionService, ICourseExecutionRepository repository, IMapper mapper, ITestRepository testRepository, ITaskRepository taskRepository, ICourseRepository courseRepository)
+        public CourseExecutionService(ITaskExecutionService taskExecutionService, ICourseExecutionRepository repository, IMapper mapper, ITaskRepository taskRepository, ICourseRepository courseRepository)
         {
             _taskExecutionService = taskExecutionService;
             _repository = repository;
-            _testRepository = testRepository;
             _taskRepository = taskRepository;
             _courseRepository = courseRepository;
 

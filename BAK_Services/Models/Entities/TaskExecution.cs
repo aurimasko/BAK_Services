@@ -10,6 +10,7 @@ namespace BAK_Services.Models.Entities
     public class TaskExecution : BaseEntity
     {
         public string ExecutionCode { get; set; }
+        public string ExecutionWorkspace { get; set; }
 
         public CourseExecution CourseExecution { get; set; }
         public Guid CourseExecutionId { get; set; }

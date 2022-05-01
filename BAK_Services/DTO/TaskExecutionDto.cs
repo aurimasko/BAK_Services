@@ -10,6 +10,8 @@ namespace BAK_Services.DTO
     public class TaskExecutionDto : BaseDto
     {
         public string ExecutionCode { get; set; }
+        public string ExecutionWorkspace { get; set; }
+
         public Guid TaskId { get; set; }
 
         public bool Successful { get; set; }

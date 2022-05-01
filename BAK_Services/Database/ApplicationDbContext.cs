@@ -14,7 +14,6 @@ namespace BAK_Services.Database
         public DbSet<Task> Tasks { get; set; }
 
         public DbSet<TaskExecution> TaskExecutions { get; set; }
-        public DbSet<TaskExecutionTest> TaskExecutionTests { get; set; }
         public DbSet<CourseExecution> CourseExecutions { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
