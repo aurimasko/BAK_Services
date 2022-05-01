@@ -27,7 +27,6 @@ export class CourseCreateComponent {
   create() {
 
     this.courseService.createCourse(this.newCourse).subscribe(result => {
-        console.log(result);
       this.notificationsService.showSuccess("Kursas buvo sukurtas!", "");
 
       },

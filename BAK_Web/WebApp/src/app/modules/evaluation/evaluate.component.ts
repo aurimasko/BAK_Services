@@ -6,6 +6,7 @@ import { NotificationsService } from "../../services/notifications.service";
 import { ResponseHelper } from "../../helpers/response-helpers";
 import { CourseExecutionService } from "../../services/course-execution.service";
 import { TaskExecutionService } from "../../services/task-execution.service";
+import { BlocklyWorkspaceContent } from "../blockly/blockly.workspace.content";
 
 @Component({
   selector: 'evaluate-component',
@@ -16,6 +17,7 @@ export class EvaluateComponent implements OnInit {
   courseExecutionId;
   selectedTask;
   possibleMarksArray: Array<number> = [];
+  blocklyExecutionWorkspace: BlocklyWorkspaceContent | null = null;
 
   constructor(private taskExecutionService: TaskExecutionService, private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private courseService: CourseService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper ) { }
 
@@ -26,6 +28,11 @@ export class EvaluateComponent implements OnInit {
 
   focusTaskExecution(taskExecution) {
     this.selectedTask = taskExecution;
+
+    this.blocklyExecutionWorkspace = {
+      taskId: this.selectedTask.id,
+      workspaceContent: this.selectedTask.executionWorkspace
+    };
   }
 
   saveEvaluation() {
@@ -68,6 +75,11 @@ export class EvaluateComponent implements OnInit {
             obj.mark = 0;
         });
         this.selectedTask = result.content[0];
+
+        this.blocklyExecutionWorkspace = {
+          taskId: this.selectedTask.id,
+          workspaceContent: this.selectedTask.executionWorkspace
+        };
 
         for (var i = 0; i <= this.selectedTask.task.maximumPointsToGet; i++) {
           this.possibleMarksArray.push(i);

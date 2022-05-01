@@ -65,10 +65,12 @@
             {{selectedTask.task.description}}
           </p>
 
-          <h2><b>Blockly vieta</b></h2>
-
-          <p>Kodas, pagal kurį atliktas vertinimas:</p>
           <textarea name="text" cols="150" rows="5" [(ngModel)]="selectedTask.executionCode" readonly></textarea>
+
+          <section id="blocklyContainer">
+            <blockly-workspace [blocklyWorkspaceContent]="blocklyExecutionWorkspace" [readonly]=true></blockly-workspace>
+          </section>
+
 
         </div>
       </div>

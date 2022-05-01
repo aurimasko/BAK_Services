@@ -37,7 +37,7 @@
           <p>Užduoties sąlyga: <br/> <b>{{selectedTask.description}}</b></p>
 
           <section id="blocklyContainer">
-            <blockly-workspace [workspacecontent]="executionWorkspaceToBlockly" (codeChangeEvent)="updateTaskExecutionCode($event)"></blockly-workspace>
+            <blockly-workspace [blocklyWorkspaceContent]="blocklyExecutionWorkspace" (codeChangeEvent)="updateTaskExecutionCode($event)"></blockly-workspace>
           </section>
 
 

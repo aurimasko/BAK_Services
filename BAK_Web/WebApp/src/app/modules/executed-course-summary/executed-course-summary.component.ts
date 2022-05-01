@@ -6,6 +6,7 @@ import { ResponseHelper } from "../../helpers/response-helpers";
 import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { CourseExecutionService } from "../../services/course-execution.service";
+import { BlocklyWorkspaceContent } from "../blockly/blockly.workspace.content";
 
 @Component({
   selector: 'executed-course-summary-component',
@@ -18,6 +19,7 @@ export class ExecutedCourseSummaryComponent implements OnInit {
   courseExecutionId;
   selectedTask;
   courseExecution;
+  blocklyExecutionWorkspace: BlocklyWorkspaceContent | null = null;
 
   constructor(private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private taskExecutionService: TaskExecutionService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
 
@@ -33,7 +35,12 @@ export class ExecutedCourseSummaryComponent implements OnInit {
 
       return this.taskExecutionService.getByCourseId(courseExecutionId).subscribe(result => {
             this.courseExecution.taskExecutions = result.content;
-            this.selectedTask = result.content[0];
+        this.selectedTask = result.content[0];
+
+        this.blocklyExecutionWorkspace = {
+          taskId: this.selectedTask.id,
+          workspaceContent: this.selectedTask.executionWorkspace
+        };
           },
           error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
       },
@@ -42,6 +49,11 @@ export class ExecutedCourseSummaryComponent implements OnInit {
 
   focusTaskExecution(taskExecution) {
     this.selectedTask = taskExecution;
+
+    this.blocklyExecutionWorkspace = {
+      taskId: this.selectedTask.id,
+      workspaceContent: this.selectedTask.executionWorkspace
+    };
   }
 
 }
