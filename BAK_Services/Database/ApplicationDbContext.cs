@@ -11,7 +11,6 @@ namespace BAK_Services.Database
         //Map entities to the database
        public DbSet<Error> Errors { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Test> Tests { get; set; }
         public DbSet<Task> Tasks { get; set; }
 
         public DbSet<TaskExecution> TaskExecutions { get; set; }
@@ -22,11 +21,6 @@ namespace BAK_Services.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Make username unique using fluent api
-         /*   modelBuilder.Entity<User>()
-                .HasIndex(x => x.Username)
-                .IsUnique();*/
-        
             base.OnModelCreating(modelBuilder);
         }
     }

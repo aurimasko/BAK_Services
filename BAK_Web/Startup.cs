@@ -10,13 +10,10 @@ using BAK_Services.Models;
 using BAK_Services.Repositories.Course;
 using BAK_Services.Repositories.Task;
 using BAK_Services.Repositories.TaskExecution;
-using BAK_Services.Repositories.TaskExecutionTest;
-using BAK_Services.Repositories.Test;
 using BAK_Services.Services.Course;
 using BAK_Services.Services.CourseExecution;
 using BAK_Services.Services.Task;
 using BAK_Services.Services.TaskExecution;
-using BAK_Services.Services.Test;
 using BAK_Services.Validators;
 using BAK_Services.Validators.Task;
 using BAK_Services.Validators.TaskExecution;
@@ -106,19 +103,15 @@ namespace bak_web
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<ITaskExecutionRepository, TaskExecutionRepository>();
-            services.AddScoped<ITestRepository, TestRepository>();
-            services.AddScoped<ITaskExecutionTestRepository, TaskExecutionTestRepository>();
 
             //Register services
             services.AddScoped<ICourseExecutionService, CourseExecutionService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITaskExecutionService, TaskExecutionService>();
-            services.AddScoped<ITestService, TestService>();
 
             services.AddScoped<ICourseValidator, CourseValidator>();
             services.AddScoped<ITaskValidator, TaskValidator>();
-            services.AddScoped<ITestValidator, TestValidator>();
             services.AddScoped<ITaskExecutionValidator, TaskExecutionValidator>();
 
             //Add http context accessor
