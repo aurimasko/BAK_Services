@@ -147,7 +147,7 @@ export class BlocklyComponent implements AfterViewInit {
       Blockly[NgxBlocklyGenerator.DART].functionNames_ = Object.create(null);
 
       if (!Blockly[NgxBlocklyGenerator.DART].variableDB_) {
-        Blockly[NgxBlocklyGenerator.DART].variableDB_ =
+        Blockly[NgxBlocklyGenerator.DART].nameDB_ =
           new Blockly.Names(Blockly[NgxBlocklyGenerator.DART].RESERVED_WORDS_);
       } else {
         Blockly[NgxBlocklyGenerator.DART].variableDB_.reset();

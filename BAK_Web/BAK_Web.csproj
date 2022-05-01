@@ -85,6 +85,7 @@
     <None Remove="WebApp\src\app\modules\executedCoursesSummary\executed-courses-summary.component.ts" />
     <None Remove="WebApp\src\app\modules\login\login.component.ts" />
     <None Remove="WebApp\src\app\modules\login\registration.component.ts" />
+    <None Remove="WebApp\src\app\mutators\if.mutator.ts" />
     <None Remove="WebApp\src\app\mutators\printf.mutator.ts" />
     <None Remove="WebApp\src\app\mutators\scanf.mutator.ts" />
     <None Remove="WebApp\src\app\mutators\switch.mutator.ts" />
@@ -212,6 +213,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\modules\login\login.component.ts" />
+    <TypeScriptCompile Include="WebApp\src\app\mutators\if.mutator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="WebApp\src\app\mutators\switch.mutator.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -7,7 +7,7 @@ import { ForLoopBlock } from "../../blocks/loops/forLoop.block";
 import { WhileLoopBlock } from "../../blocks/loops/whileLoop.block";
 import { DoWhileLoopBlock } from "../../blocks/loops/dowhileLoop.block";
 import { LoopFlowStatementsBlock } from "../../blocks/loops/loopFlowStatements.block";
-import { Ifblock } from "../../blocks/conditions/if.block";
+import { Ifblock, IfMutatorBlock, IfAddBlock, ElseBlock } from "../../blocks/conditions/if.block";
 import { NotBlock } from "../../blocks/conditions/not.block";
 import { NullBlock } from "../../blocks/conditions/null.block";
 import { SwitchBlock, SwitchAddBlock, SwitchMutatorBlock } from "../../blocks/conditions/switch.block";
@@ -84,7 +84,10 @@ export class BlocklyCategories {
     new PrintfAddBlock(),
     new PrintfPrintfBlock(),
     new SwitchAddBlock(),
-    new SwitchMutatorBlock()
+    new SwitchMutatorBlock(),
+    new IfAddBlock(),
+    new IfMutatorBlock(),
+    new ElseBlock()
   ];
 
   public allCustomBlocks: CustomBlock[] = this.variableBlocks.concat(this.generalBlocks, this.arithmeticBlocks,this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);

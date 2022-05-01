@@ -1,13 +1,22 @@
 import { Blockly, CustomBlock, NgxBlocklyGenerator } from 'ngx-blockly';
+import { IfMutator } from "../../mutators/if.mutator";
 
 export class Ifblock extends CustomBlock {
   constructor() {
-    super('Ifblock');
+    super('Ifblock', new IfMutator('if_mutator', ['IfAddBlock', 'IfMutatorBlock', 'ElseBlock']));
+
     this.class = Ifblock;
     this.disabled = true;
   }
 
   public defineBlock() {
+    this.block.appendDummyInput()
+      .appendField(new Blockly.FieldNumber(0), "ELSECOUNT")
+      .setVisible(false);
+
+    this.block.appendDummyInput()
+      .appendField(new Blockly.FieldNumber(0), "COUNT")
+      .setVisible(false);
     this.block.appendValueInput("CONDITION0")
       .setCheck("Boolean")
       .appendField("Jei");
@@ -20,11 +29,10 @@ export class Ifblock extends CustomBlock {
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     this.block.jsonInit({
-      'mutator': 'controls_if_mutator'
+      'mutator': 'if_mutator'
     });
     //todo: tooltip
     //todo: helpurl
-    //todo: sutvarkyti jsonInit
   }
 
   public override toXML(): string {
@@ -40,17 +48,100 @@ export class Ifblock extends CustomBlock {
 
     var code = 'if (' + argument + ') {\n' + branch + '}';
 
-    for (n = 1; n <= block.elseifCount_; n++) {
+    for (n = 1; n <= block.getFieldValue("COUNT"); n++) {
       argument = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'CONDITION' + n,
         Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
       branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO' + n);
       code += ' else if (' + argument + ') {\n' + branch + '}';
     }
 
-    if (block.elseCount_) {
-      branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'ELSE');
+    if (block.getFieldValue("ELSECOUNT") > 0) {
+      branch = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'ELSE_DO');
       code += ' else {\n' + branch + '}';
     }
     return code + '\n';
   }
+}
+
+export class ElseBlock extends CustomBlock {
+  constructor() {
+    super('ElseBlock');
+    this.class = ElseBlock;
+    this.disabled = true;
+  }
+
+  public defineBlock() {
+    this.block.setColour(280);
+
+    this.block.appendStatementInput("ELSE_DO")
+      .setCheck(null)
+      .appendField("Jei visa kita, vykdyti ");
+
+    this.block.setPreviousStatement(true);
+    this.block.setNextStatement(true);
+    this.block.contextMenu = false;
+  }
+
+  public override toXML(): string {
+    return '<block type="ElseBlock"></block>';
+  }
+
+  public override  toDartCode(block: any): string | any[] {
+    return "";
+  }
+}
+
+export class IfAddBlock extends CustomBlock {
+  constructor() {
+    super('IfAddBlock');
+    this.class = IfAddBlock;
+    this.disabled = true;
+  }
+
+  public defineBlock() {
+    this.block.setColour(280);
+
+    this.block.appendValueInput("CONDITION")
+      .setCheck("Boolean")
+      .appendField("Jei");
+    this.block.appendStatementInput("DO")
+      .setCheck(null)
+      .appendField("Vykdyti");
+    
+    this.block.setPreviousStatement(true);
+    this.block.setNextStatement(true);
+    this.block.contextMenu = false;
+  }
+
+  public override toXML(): string {
+    return '<block type="IfAddBlock"></block>';
+  }
+
+  public override  toDartCode(block: any): string | any[] {
+    return "";
+  }
+}
+
+export class IfMutatorBlock extends CustomBlock {
+  constructor() {
+    super('IfMutatorBlock');
+    this.class = IfMutatorBlock;
+    this.disabled = true;
+  }
+
+  public defineBlock() {
+    this.block.setColour(280);
+    this.block.appendDummyInput()
+      .appendField("Sąlygos sakinys");
+    this.block.appendStatementInput('STACK');
+  }
+
+  public override toXML(): string {
+    return '<block type="IfMutatorBlock"></block>';
+  }
+
+  public override toDartCode(block: any): string | any[] {
+    return "";
+  }
+
 }

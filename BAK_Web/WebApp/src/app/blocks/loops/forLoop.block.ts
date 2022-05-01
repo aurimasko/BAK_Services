@@ -20,8 +20,9 @@ export class ForLoopBlock extends CustomBlock {
     this.block.appendValueInput("TO")
       .setCheck("Number")
       .setAlign(Blockly.ALIGN_RIGHT);
+
     this.block.appendDummyInput()
-      .appendField("pakeliant po");
+      .appendField(new Blockly.FieldDropdown([["pridedant", "+"], ["minusuojant", "-"], ["dauginant", "*"], ["dalinant", "/"]]), "FOR_OPTION");
     this.block.appendValueInput("BY")
       .setCheck("Number")
       .setAlign(Blockly.ALIGN_RIGHT);
@@ -41,15 +42,14 @@ export class ForLoopBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
+    var forOption = block.getFieldValue('FOR_OPTION');
     var variable_var = Blockly[NgxBlocklyGenerator.DART].nameDB_.getName(block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
     var value_from = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'FROM', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
     var value_to = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'TO', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
     var value_by = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'BY', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC) || '0';
     var statements_do_action = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO_ACTION');
 
-    // todo: galimybe padaryti ne tik ++, bet ir --, galbut * ar /
-
     return "for(" + variable_var + " = " + value_from + "; " +
-      variable_var + "< " + value_to + "; " + variable_var + "+=" + value_by + ') {\n ' + statements_do_action + ' }\n';
+      variable_var + "< " + value_to + "; " + variable_var + " " + forOption +"=" + value_by + ') {\n ' + statements_do_action + ' }\n';
   }
 }
