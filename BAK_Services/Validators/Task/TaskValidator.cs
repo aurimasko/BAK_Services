@@ -19,17 +19,18 @@ namespace BAK_Services.Validators.Task
             _courseRepository = courseRepository;
 
             RuleFor(task => task.Name).NotNull();
-            RuleFor(task => task.Name).Must(UniqueName).WithMessage("Task name must be unique.");
 
             RuleFor(task => task.CourseId).NotNull();
-            RuleFor(task => task.CourseId).Must(CourseExists).WithMessage("Course must exists.");
+            RuleFor(task => task.CourseId).Must(CourseExists).WithMessage("Kursas privalo egzistuoti.");
 
-        }
+            RuleFor(task => task.MinimumPointsCompletedToSuccess).GreaterThanOrEqualTo(0)
+                .WithMessage("Minimalus taškų skaičius turi būti 0 arba daugiau.");
 
-        private bool UniqueName(Models.Entities.Task task, string taskName)
-        {
-            var result = _taskRepository.Find(c => c.Name.Equals(taskName) && c.Id != task.Id);
-            return !result.Result.Any();
+            RuleFor(task => task.MaximumPointsToGet).GreaterThanOrEqualTo(1)
+                .WithMessage("Maksimalus taškų skaičius turi būti 1 arba daugiau.");
+
+            RuleFor(task => task.MinimumPointsCompletedToSuccess).LessThanOrEqualTo(x => x.MaximumPointsToGet)
+                .WithMessage("Minimalus taškų skaičius negali būti didesnis už maksimalų!");
         }
 
         private bool CourseExists(Guid courseId)

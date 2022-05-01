@@ -16,15 +16,8 @@ export class TaskCreateComponent {
     name: null,
     description: null,
     courseId: null,
-    minimumTestsCompletedToSuccess: null,
-    tests: [
-      {
-        testCode: "Test code 1"
-      },
-      {
-        testCode: "Test code 2"
-      }
-    ]
+    minimumPointsCompletedToSuccess: null,
+    maximumPointsToGet: null,
   };
 
   taskCreated;

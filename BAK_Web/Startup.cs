@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Text;
 using BAK_Services;
+using BAK_Services.Authentication;
 using BAK_Services.Database;
 using BAK_Services.DTO.AutoMapper;
 using BAK_Services.Exceptions;
+using BAK_Services.Factories;
 using BAK_Services.Models;
 using BAK_Services.Repositories.Course;
 using BAK_Services.Repositories.Task;
@@ -19,15 +22,20 @@ using BAK_Services.Validators.Task;
 using BAK_Services.Validators.TaskExecution;
 using BAK_Services.Validators.Test;
 using FluentValidation.AspNetCore;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace bak_web
@@ -44,9 +52,7 @@ namespace bak_web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //   services.AddAutoMapper(typeof(Startup));
             AutoMapperInitializer.Initialize();
-            
             services.AddSingleton(Mapper.MapperInstance);
 
             services.AddControllers(x => x.AllowEmptyInputInBodyModelBinding = true).AddFluentValidation()
@@ -115,11 +121,11 @@ namespace bak_web
             services.AddScoped<ITaskExecutionValidator, TaskExecutionValidator>();
 
             //Register factories for custom error validation
-            /* services.AddTransient<IClientErrorFactory, CustomClientErrorFactory>((provider) =>
+          /*   services.AddTransient<IClientErrorFactory, CustomClientErrorFactory>((provider) =>
              {
                  using (var scope = provider.CreateScope())
                  {
-                     var loggingService = scope.ServiceProvider.GetService<ILo>();
+                     var loggingService = scope.ServiceProvider.GetService<ILogger>();
                      var service = new CustomClientErrorFactory(loggingService);
                      return service;
                  }
@@ -129,17 +135,34 @@ namespace bak_web
             //Add http context accessor
             services.AddHttpContextAccessor();
 
-            //Add JWT token validation for authentication
-            /* services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                 .AddJwtBearer(options =>
-                 {
-                     options.Authority = Config.IdentityServerUrl;
-                     options.Audience = Config.IdentityServerApiName;
-                 }
-                 );*/
 
-            //Add Cors for all request
-            //IN PRODUCTION REPLACE WITH HOSTED ADDRESS
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Adding Authentication  
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                // Adding Jwt Bearer  
+                .AddJwtBearer(options =>
+                {
+
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = true,
+                        ValidAudience = "http://localhost:4200",
+                        ValidIssuer = "http://localhost:61955",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"))
+                    };
+                });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllRequests", builder =>
@@ -162,8 +185,8 @@ namespace bak_web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
         {
-            
-            
+            app.UseMiddleware<JwtMiddleware>();
+
             // Configure Cors
             app.UseCors("AllowAllRequests");
 
@@ -177,13 +200,14 @@ namespace bak_web
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            app.UseAuthentication();
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

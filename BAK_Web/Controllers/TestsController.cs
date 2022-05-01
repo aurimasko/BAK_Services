@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BAK_Services.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class TestsController : ControllerBase

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BAK_Services.DTO;
 using BAK_Services.Services.CourseExecution;
+using BAK_Web.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace BAK_Web.Controllers
 {
-    // [Authorize]
+    [ApiAuthorize]
     [ApiController]
     public class CourseExecutionsController : ControllerBase
     {

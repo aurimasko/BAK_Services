@@ -6,28 +6,38 @@
 </div>
 <div class="modal-body">
 
-  <table>
-    <td>
-      <label>Užduoties pavadinimas:</label>
-      <input type="text" name="taskName" [(ngModel)]="editableTask.name" />
-      <br />
-      <label>Užduoties aprašymas:</label>
-      <input type="text" name="taskDesc" [(ngModel)]="editableTask.description" />
-      <br />
+    <div class="form-group">
+      <label for="taskName">Užduoties pavadinimas:</label>
+      <input class="form-control" type="text" id="taskName" name="taskName" [(ngModel)]="editableTask.name" />
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="taskDesc">Užduoties sąlyga:</label>
+      <textarea class="form-control" id="taskDesc" [(ngModel)]="editableTask.description"  rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
       <label>Užduoties kursas:</label>
-      <select [(ngModel)]="editableTask.courseId">
+      <select class="form-control" [(ngModel)]="editableTask.courseId">
         <option *ngFor="let course of courses" [ngValue]="course.id">{{course.name}}</option>
       </select>
+    </div>
     <br />
-    <label>Minimalus skaičius testų, kurį reikia praeiti, kad būtų įvykdyta užduotis:</label>
-    <input type="number" min="0" [(ngModel)]="editableTask.minimumTestsCompletedToSuccess" />
-      <br />
-      <label>Užduoties automatiniai testai:</label>
-      <upload-files></upload-files>
-      <br />
-      <button type="button" (click)="update()">Atnaujinti užduotį</button>
-</table>
+    <div class="form-group">
+      <label for="minimumPoints">Minimalus skaičius taškų, kurį reikia surinkti, kad būtų įvykdyta užduotis:</label>
+      <input class="form-control" type="number" min="0" id="minimumPoints" [(ngModel)]="editableTask.minimumPointsCompletedToSuccess" />
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="maximumPoints">Maksimalus skaičius taškų, kurį galima surinkti:</label>
+      <input class="form-control" type="number" min="0" id="maximumPoints" [(ngModel)]="editableTask.maximumPointsToGet" />
+    </div>
+    <br />
+
+
+ 
 </div>
 <div class="modal-footer">
+  <button type="button" (click)="update()" class="btn btn-primary">Atnaujinti užduotį</button>
   <button type="button" class="btn btn-outline-dark" (click)="close()">Uždaryti</button>
 </div>

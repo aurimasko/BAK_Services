@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using BAK_Services.DTO;
 using BAK_Services.Models;
 using BAK_Services.Services.Course;
+using BAK_Web.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BAK_Web.Controllers
 {
-   // [Authorize]
+    [ApiAuthorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CourseController : ControllerBase

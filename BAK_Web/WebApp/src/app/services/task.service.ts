@@ -20,23 +20,6 @@ export class TaskService {
   }
 
   createTask(task) {
-    const formData: FormData = new FormData();
-
-    for (var i = 0; i < task.tests.length; i++) {
-      formData.append("file[]", task.tests[i]);
-    }
-
-    /*formData.append('courseId', task.courseId);
-    formData.append('description', task.description);
-    formData.append('name', task.name);
-
-    const req = new HttpRequest('POST',
-      `${this.baseUrl}tasks/`,
-      formData
-    );
-
-    return this.httpClient.request(req);*/
-    
     return this.httpClient.post<ServiceResponse>(this.baseUrl + 'tasks/',
       task,
       { headers: { "Content-Type": "application/json" } });

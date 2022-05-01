@@ -13,7 +13,7 @@ namespace BAK_Services.DTO
         public string Description { get; set; }
         public Guid CourseId { get; set; }
 
-        public int MinimumTestsCompletedToSuccess { get; set; }
-        public ICollection<Test> Tests { get; set; }
+        public int MinimumPointsCompletedToSuccess { get; set; }
+        public int MaximumPointsToGet { get; set; }
     }
 }

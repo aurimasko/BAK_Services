@@ -7,10 +7,13 @@ using BAK_Services.DTO;
 using BAK_Services.Models;
 using BAK_Services.Services.Course;
 using BAK_Services.Services.Task;
+using BAK_Web.Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace BAK_Services.Controllers
 {
+    [ApiAuthorize]
     [ApiController]
     public class TasksController : ControllerBase
     {

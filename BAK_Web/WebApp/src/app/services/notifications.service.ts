@@ -9,19 +9,27 @@ export class NotificationsService {
   constructor(private toastr: ToastrService) { }
 
   showSuccess(message, title) {
-    this.toastr.success(message, title);
+    this.toastr.success(message, title, {
+      enableHtml: true
+    });
   }
 
   showError(message, title) {
-    this.toastr.error(message, title);
+    this.toastr.error(message, title, {
+      enableHtml: true
+    });
   }
 
   showInfo(message, title) {
-    this.toastr.info(message, title);
+    this.toastr.info(message, title, {
+      enableHtml: true
+    });
   }
 
   showWarning(message, title) {
-    this.toastr.warning(message, title);
+    this.toastr.warning(message, title, {
+      enableHtml: true
+    });
   }
 
 }

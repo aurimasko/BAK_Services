@@ -7,22 +7,31 @@
 <div class="modal-body">
   <table>
     <td>
-      <label>Užduoties pavadinimas:</label>
-      <input type="text" name="courseName" [(ngModel)]="newTask.name" />
-      <br />
-      <label>Užduoties aprašymas:</label>
-      <input type="text" name="courseDesc" [(ngModel)]="newTask.description" />
-      <br />
-    <label>Minimalus skaičius testų, kurį reikia praeiti, kad būtų įvykdyta užduotis:</label>
-    <input type="number" min="0" name="" [(ngModel)]="newTask.minimumTestsCompletedToSuccess" />
-    <br/>
-      <label>Užduoties automatiniai testai:</label>
+      <div class="form-group">
+        <label>Užduoties pavadinimas:</label>
+        <input class="form-control" type="text" name="courseName" [(ngModel)]="newTask.name" />
+        <br />
+      </div>
+      <div class="form-group">
+        <label>Užduoties sąlyga:</label>
+        <textarea class="form-control" id="taskDesc" [(ngModel)]="newTask.description" rows="3"></textarea>
 
-      <br />
-      <button type="button" (click)="create()">Kurti</button>
+        <br />
+      </div>
+      <div class="form-group">
+        <label>Minimalus skaičius taškų, kurį reikia surinkti, kad būtų įvykdyta užduotis:</label>
+        <input class="form-control" type="number" min="0" name="" [(ngModel)]="newTask.minimumPointsCompletedToSuccess" />
+        <br />
+      </div>
+      <div class="form-group">
+        <label>Maksimalus skaičius taškų, kurį galima surinkti:</label>
+        <input class="form-control" type="number" min="0" name="" [(ngModel)]="newTask.maximumPointsToGet" />
+        <br />
+      </div>
 </table>
   
 </div>
 <div class="modal-footer">
+  <button type="button" class="btn btn-primary "(click)="create()">Kurti</button>
   <button type="button" class="btn btn-outline-dark" (click)="close()">Uždaryti</button>
 </div>

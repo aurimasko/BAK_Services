@@ -20,8 +20,11 @@ namespace BAK_Services.Validators.Test
 
             RuleFor(course => course.Name).NotEmpty();
             RuleFor(course => course.Description).NotEmpty();
-            RuleFor(course => course.Name).MustAsync(async (entity, value, c) => await UniqueName(entity, value)).WithMessage("Course name must be unique.");
+            RuleFor(course => course.Name).MustAsync(async (entity, value, c) => await UniqueName(entity, value)).WithMessage("Toks kurso pavadinimas jau užimtas.");
             RuleFor(course => course.Level).IsInEnum();
+
+            RuleFor(course => course.MinimumTasksCompletedToSuccess).GreaterThanOrEqualTo(0)
+                .WithMessage("Minimalus įvykdytų užduočių kiekis teigiamam įvertinimui turi būti 0 arba daugiau.");
         }
 
         private async Task<bool> UniqueName(Models.Course course, string courseName)

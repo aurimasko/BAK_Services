@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BAK_Web.Attributes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BAK_Services.Controllers
 {
-    // [Authorize]
+    [ApiAuthorize]
     [ApiController]
     public class TaskExecutionsController : ControllerBase
     {
