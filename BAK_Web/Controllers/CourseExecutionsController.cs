@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BAK_Services.Authentication;
 using BAK_Services.DTO;
 using BAK_Services.Services.CourseExecution;
 using BAK_Web.Attributes;
@@ -76,6 +77,7 @@ namespace BAK_Web.Controllers
             return Ok(result);
         }
 
+        [ApiAuthorize(Role.Teacher)]
         [HttpPost]
         [Route("api/[controller]/evaluate")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -11,6 +11,6 @@ export class User {
   password: string="";
   firstName: string="";
   lastName: string="";
-  role: Role = Role.None;
+  roles: Role[] = [];
   token?: string="";
 }

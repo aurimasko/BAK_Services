@@ -13,6 +13,7 @@ import { JwtInterceptor } from './modules/auth/jwt.interceptor';
 import { LoginComponent } from './modules/login/login.component';
 import { RegistrationComponent } from './modules/login/registration.component';
 import { AuthGuard } from './modules/auth/authGuard';
+import { Role } from './interfaces/user';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './modules/nav-menu/nav-menu.component';
@@ -75,14 +76,14 @@ import { TaskExecutionService } from "./services/task-execution.service";
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
       { path: 'course/:courseId', component: CourseComponent, canActivate: [AuthGuard] },
-      { path: 'admin/courses', component: CourseHandlingComponent, canActivate: [AuthGuard] },
-      { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent, canActivate: [AuthGuard] },
+      { path: 'admin/courses', component: CourseHandlingComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+      { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
       { path: 'course/:courseId/execution', component: CourseExecutionComponent, canActivate: [AuthGuard] },
       { path: 'summary/:courseExecutionId', component: ExecutedCourseSummaryComponent, canActivate: [AuthGuard] },
-      { path: 'evaluation', component: EvaluationSummaryComponent, canActivate: [AuthGuard] },
-      { path: 'evaluation/:courseExecutionId', component: EvaluateComponent, canActivate: [AuthGuard] },
+      { path: 'evaluation', component: EvaluationSummaryComponent, canActivate: [AuthGuard], data: { roles: [Role.Teacher] } },
+      { path: 'evaluation/:courseExecutionId', component: EvaluateComponent, canActivate: [AuthGuard], data: { roles: [Role.Teacher] }},
       { path: 'login', component: LoginComponent },
-      { path: 'registration', component: RegistrationComponent }
+      { path: 'registration', component: RegistrationComponent}
     ])
   ],
   providers: [

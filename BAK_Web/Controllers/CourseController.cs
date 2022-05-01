@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BAK_Services.Authentication;
 using BAK_Services.DTO;
 using BAK_Services.Models;
 using BAK_Services.Services.Course;
@@ -12,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BAK_Web.Controllers
 {
-    [ApiAuthorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CourseController : ControllerBase
@@ -24,6 +24,7 @@ namespace BAK_Web.Controllers
             _courseService = courseService;
         }
 
+        [ApiAuthorize]
         [HttpPost]
         [Route("Get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -37,6 +38,7 @@ namespace BAK_Web.Controllers
                 return BadRequest(response);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,6 +52,7 @@ namespace BAK_Web.Controllers
             return Ok(result);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,13 +67,14 @@ namespace BAK_Web.Controllers
                 return BadRequest(response);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpDelete]
         [Route("{courseId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Delete(Guid courseId)
+        public async Task<IActionResult> Delete(Guid courseId)
         {
-            _courseService.DeleteAsync(courseId);
+            await _courseService.DeleteAsync(courseId);
             return Ok();
         }
     }

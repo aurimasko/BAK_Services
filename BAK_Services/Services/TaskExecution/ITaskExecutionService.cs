@@ -14,8 +14,7 @@ namespace BAK_Services.Services.TaskExecution
         Task<Response<IEnumerable<Models.Entities.TaskExecution>>> GetByTaskIdAsync(Guid taskId);
         Response<Models.Entities.TaskExecution> AddAsync(TaskExecutionDto taskExecutionDto);
         //Task<Response<Models.Entities.TaskExecution>> UpdateAsync(Models.Entities.TaskExecution taskExecution);
-        void DeleteAsync(Guid id);
-
+        System.Threading.Tasks.Task DeleteAsync(Guid id);
         Task<bool> Evaluate(Models.Entities.TaskExecution taskExecution);
 
         Task<Response<IEnumerable<Models.Entities.TaskExecution>>> GetByCourseExecutionIdAsync(Guid courseExecutionId);

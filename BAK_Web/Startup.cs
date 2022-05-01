@@ -23,6 +23,7 @@ using BAK_Services.Validators.TaskExecution;
 using BAK_Services.Validators.Test;
 using FluentValidation.AspNetCore;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -120,18 +121,6 @@ namespace bak_web
             services.AddScoped<ITestValidator, TestValidator>();
             services.AddScoped<ITaskExecutionValidator, TaskExecutionValidator>();
 
-            //Register factories for custom error validation
-          /*   services.AddTransient<IClientErrorFactory, CustomClientErrorFactory>((provider) =>
-             {
-                 using (var scope = provider.CreateScope())
-                 {
-                     var loggingService = scope.ServiceProvider.GetService<ILogger>();
-                     var service = new CustomClientErrorFactory(loggingService);
-                     return service;
-                 }
-             });*/
-
-
             //Add http context accessor
             services.AddHttpContextAccessor();
 
@@ -140,25 +129,17 @@ namespace bak_web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            
             // Adding Authentication  
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                // Adding Jwt Bearer  
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = false,
                         ValidateAudience = true,
                         ValidAudience = "http://localhost:4200",
-                        ValidIssuer = "http://localhost:61955",
+                        ValidIssuer = "http://localhost:61955", //todo: put to config
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"))
                     };
                 });
@@ -190,24 +171,8 @@ namespace bak_web
             // Configure Cors
             app.UseCors("AllowAllRequests");
 
-            // Add request localization
-            app.UseRequestLocalization();
-            
             //Add global exception handler
             app.ConfigureExceptionHandler();
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            app.UseAuthentication();
-
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -216,6 +181,15 @@ namespace bak_web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+       
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -229,8 +203,6 @@ namespace bak_web
                 }
             });
 
-            //Applies any pending migrations and seeds initial data
-            dbContext.Migrate();
         }
     }
 }

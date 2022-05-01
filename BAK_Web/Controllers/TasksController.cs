@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BAK_Services.Authentication;
 using BAK_Services.DTO;
 using BAK_Services.Models;
 using BAK_Services.Services.Course;
@@ -50,6 +51,7 @@ namespace BAK_Services.Controllers
                 return BadRequest(response);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpPost]
         [Route("api/[controller]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -64,6 +66,7 @@ namespace BAK_Services.Controllers
             return Ok(result);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpPut]
         [Route("api/[controller]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -78,13 +81,14 @@ namespace BAK_Services.Controllers
             return BadRequest(response);
         }
 
+        [ApiAuthorize(Role.Admin)]
         [HttpDelete]
         [Route("api/[controller]/{taskId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Delete(Guid taskId)
+        public async Task<IActionResult> Delete(Guid taskId)
         {
-            _tasksService.DeleteAsync(taskId);
+            await _tasksService.DeleteAsync(taskId);
             return Ok();
         }
     }

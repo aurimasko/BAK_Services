@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from "../../services/auth.service";
+import { User, Role } from '../../interfaces/user';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,7 +8,11 @@ import { AuthenticationService } from "../../services/auth.service";
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  constructor(private authService: AuthenticationService) { }
+  currentUser: User = new User;
+
+  constructor(private authService: AuthenticationService) {
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
 
   isExpanded = false;
@@ -22,5 +27,17 @@ export class NavMenuComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  isUserAdmin() {
+    return this.currentUser.roles.find(x => x === Role.Admin) != null;
+  }
+
+  isUserTeacher() {
+    return this.currentUser.roles.find(x => x === Role.Teacher) != null;
+  }
+
+  isUserStudent() {
+    return this.currentUser.roles.find(x => x === Role.Student) != null;
   }
 }

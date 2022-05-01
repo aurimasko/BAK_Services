@@ -13,6 +13,6 @@ namespace BAK_Services.Services.Task
         Task<Response<IEnumerable<Models.Entities.Task>>> GetByCourseIdAsync(Guid courseId);
         Response<Models.Entities.Task> AddAsync(TaskDto taskDto);
         Task<Response<Models.Entities.Task>> UpdateAsync(TaskDto taskDto);
-        void DeleteAsync(Guid id);
+        System.Threading.Tasks.Task DeleteAsync(Guid id);
     }
 }

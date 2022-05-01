@@ -9,6 +9,8 @@ using BAK_Services.Authentication;
 using BAK_Services.Models;
 using BAK_Web.Attributes;
 using BAK_Web.Mappers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +23,14 @@ namespace BAK_Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public AuthController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -44,10 +46,10 @@ namespace BAK_Web.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await userManager.FindByNameAsync(model.Username);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var userRoles = await userManager.GetRolesAsync(user);
+                var userRoles = await _userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
                 {
@@ -70,13 +72,13 @@ namespace BAK_Web.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
-                var tokenHandler = new JwtSecurityTokenHandler();
-
+                
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    id = user.Id
+                    id = user.Id,
+                    roles = userRoles
                 });
             }
             return Unauthorized();
@@ -86,7 +88,7 @@ namespace BAK_Web.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.Username);
 
             if (userExists != null)
                 return BadRequest(new Response
@@ -102,7 +104,7 @@ namespace BAK_Web.Controllers
                 UserName = model.Username
             };
 
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
@@ -112,7 +114,14 @@ namespace BAK_Web.Controllers
                     ErrorMessages = IdentityErrorMapper.MapIdentityErrorsToErrorMessages(result.Errors).ToList()
                 });
             }
-            //await userManager.AddToRoleAsync(user, Roles.Student);
+
+            foreach (var role in (Role[])Enum.GetValues(typeof(Role)))
+            {
+                if (!await _roleManager.RoleExistsAsync(role.ToString()))
+                    await _roleManager.CreateAsync(new IdentityRole(role.ToString()));
+            }
+
+            await _userManager.AddToRoleAsync(user, Role.Student.ToString());
 
             return Ok(new Response { IsSuccess = true  });
         }

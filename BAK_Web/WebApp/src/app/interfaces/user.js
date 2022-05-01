@@ -15,7 +15,7 @@ var User = /** @class */ (function () {
         this.password = "";
         this.firstName = "";
         this.lastName = "";
-        this.role = Role.None;
+        this.roles = [];
         this.token = "";
     }
     return User;

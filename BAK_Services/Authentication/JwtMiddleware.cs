@@ -51,7 +51,9 @@ namespace BAK_Services.Authentication
                 var jwtToken = (JwtSecurityToken) validatedToken;
                 var userId = jwtToken.Claims.First(x => x.Type == UserIdClaimIdentificator).Value;
 
-                context.Items["User"] = await userManager.FindByIdAsync(userId);
+                var user = await userManager.FindByIdAsync(userId);
+                context.Items["User"] = user;
+                context.Items["Roles"] = await userManager.GetRolesAsync(user);
             }
             catch
             {

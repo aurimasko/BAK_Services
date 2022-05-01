@@ -83,7 +83,7 @@ namespace BAK_Services.Services.TaskExecution
           return null;
         }
 
-        public async void DeleteAsync(Guid id)
+        public async System.Threading.Tasks.Task DeleteAsync(Guid id)
         {
             var taskExecutionToBeDeleted = await _repository.GetById(id);
 
