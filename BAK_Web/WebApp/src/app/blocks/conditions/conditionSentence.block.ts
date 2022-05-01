@@ -22,7 +22,6 @@ export class ConditionSentenceBlock extends CustomBlock {
 
     //todo: tooltip
     //todo: helpurl
-    //todo: sutvarkyti jsonInit
 
   }
 

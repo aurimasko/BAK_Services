@@ -15,7 +15,7 @@ export class PrintfBlock extends CustomBlock {
       .setVisible(false);
 
     this.block.appendValueInput("INPUT0")
-      .setCheck("String")
+      .setCheck(null)
       .appendField("Išvesti į ekraną");
     this.block.setPreviousStatement(true, null);
     this.block.setNextStatement(true, null);
@@ -44,12 +44,11 @@ export class PrintfBlock extends CustomBlock {
       argument = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'INPUT' + n,
         Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '';
 
-      var childConnection = block.inputList[n+1].connection;
+      var childConnection = block.inputList[n + 1].connection;
       var childBlock = childConnection.targetBlock();
 
       if (childBlock) {
         var childBlockType = childBlock.type;
-
         // todo: add new types if there are such
         if (
           childBlockType === 'ArithmeticActionBlock' ||
@@ -66,23 +65,16 @@ export class PrintfBlock extends CustomBlock {
           inQutCode += '%s';
           outQutCode += ', ' + argument;
         }
-        // todo: neleisti įdeti blogų blokų
-       /* else if (childBlockType === 'ConditionComparisonBlock' ||
+        else if (childBlockType === 'ConditionComparisonBlock' ||
           childBlockType === 'ConditionSentenceBlock' ||
           childBlockType === 'NotBlock' ||
           childBlockType === 'BooleanBlock' ||
           childBlockType === 'NullBlock' ||
           childBlockType === 'SwitchBlock') {
-          childConnection.sourceBlock.bumpNeighbours();
 
-          if (childConnection.isSuperior()) {
-            childConnection.targetBlock().setParent(null);
-          } else {
-            childConnection.sourceBlock.setParent(null);
-          }
-          // Bump away.
-        }*/
-        else {
+          childConnection.targetBlock().unplug(true, true);
+
+        } else {
           typeCode = BlocksHelper.varTypeCheckInPrintScan(this.block, argument);
 
           if (typeCode === '') {

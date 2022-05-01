@@ -131,9 +131,9 @@ namespace bak_web
                     {
                         ValidateIssuer = false,
                         ValidateAudience = true,
-                        ValidAudience = "http://localhost:4200",
-                        ValidIssuer = "http://localhost:61955", //todo: put to config
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"))
+                        ValidAudience = Configuration.GetValue<string>("AuthenticationAudience"), //"http://localhost:4200",
+                        ValidIssuer = Configuration.GetValue<string>("AuthenticationIssuer"), // "http://localhost:61955", //todo: put to config
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("AuthenticationSecret")))
                     };
                 });
 

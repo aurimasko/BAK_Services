@@ -36,7 +36,7 @@ export class WhileLoopBlock extends CustomBlock {
     var value_while_condition = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'WHILE_CONDITION', whileConditionIsTrue ? Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_NOT : Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
     var statements_do = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO');
 
-    statements_do = Blockly[NgxBlocklyGenerator.DART].addLoopTrap(statements_do, block.id); // todo: sukurti infinitive loop trap
+    statements_do = Blockly[NgxBlocklyGenerator.DART].addLoopTrap(statements_do, block.id); 
 
     if (!whileConditionIsTrue)
       value_while_condition = '!' + value_while_condition;

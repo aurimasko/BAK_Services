@@ -13,7 +13,7 @@ export class NumberValueBlock extends CustomBlock {
       .appendField("Skaičius");
     this.block.appendDummyInput()
       .appendField(new Blockly.FieldNumber(0), "INSERTED_VALUE");
-    this.block.setOutput(true, null);
+    this.block.setOutput(true, "Number");
 
     this.block.setInputsInline(true);
     this.block.setColour(230);

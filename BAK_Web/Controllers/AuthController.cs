@@ -27,7 +27,7 @@ namespace BAK_Web.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthController(IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -63,12 +63,12 @@ namespace BAK_Web.Controllers
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM"));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("AuthenticationSecret")));
 
                 var token = new JwtSecurityToken(
-                    issuer: "http://localhost:61955", 
-                    audience: "http://localhost:4200",
-                    expires: DateTime.UtcNow.AddHours(20),
+                    issuer: _configuration.GetValue<string>("AuthenticationIssuer"), 
+                    audience: _configuration.GetValue<string>("AuthenticationAudience"),
+                    expires: DateTime.UtcNow.AddHours(2),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );

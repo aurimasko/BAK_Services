@@ -30,19 +30,11 @@ export class DoWhileLoopBlock extends CustomBlock {
   }
 
   public override  toDartCode(block: any): string | any[] {
-  /*  var statements_do_statement = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO_STATEMENT');
-    var dropdown_while_condition_option = block.getFieldValue('WHILE_CONDITION_OPTION');
-    var value_while_condition = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'WHILE_CONDITION', Blockly[NgxBlocklyGenerator.DART].ORDER_ATOMIC);
-
-    // TODO: Assemble JavaScript into code variable.
-    var code = '...;\n';
-    return code;*/
-
     var whileConditionIsTrue = block.getFieldValue('WHILE_CONDITION_OPTION') === "true";
     var value_while_condition = Blockly[NgxBlocklyGenerator.DART].valueToCode(block, 'WHILE_CONDITION', whileConditionIsTrue ? Blockly[NgxBlocklyGenerator.DART].ORDER_LOGICAL_NOT : Blockly[NgxBlocklyGenerator.DART].ORDER_NONE) || '0';
     var statements_do_statement = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'DO_STATEMENT');
 
-    statements_do_statement = Blockly[NgxBlocklyGenerator.DART].addLoopTrap(statements_do_statement, block.id); // todo: sukurti infinitive loop trap
+    statements_do_statement = Blockly[NgxBlocklyGenerator.DART].addLoopTrap(statements_do_statement, block.id); 
 
     if (!whileConditionIsTrue)
       value_while_condition = '!' + value_while_condition;

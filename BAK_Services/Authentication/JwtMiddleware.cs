@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace BAK_Services.Authentication
 {
@@ -23,22 +27,22 @@ namespace BAK_Services.Authentication
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, UserManager<User> userManager)
+        public async Task Invoke(HttpContext context, UserManager<User> userManager, IConfiguration configuration)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
             if (token != null)
-                await attachUserToContext(context, token, userManager);
+                await attachUserToContext(context, token, userManager, configuration);
 
             await _next(context);
         }
 
-        private async Task attachUserToContext(HttpContext context, string token, UserManager<User> userManager)
+        private async Task attachUserToContext(HttpContext context, string token, UserManager<User> userManager, IConfiguration configuration)
         {
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM");
+                var key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("AuthenticationSecret"));
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
