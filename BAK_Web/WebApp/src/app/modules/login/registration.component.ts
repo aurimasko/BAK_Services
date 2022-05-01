@@ -57,7 +57,6 @@ export class RegistrationComponent  {
           this.loading = false;
         },
         data => {
-          console.log('error: ' + JSON.stringify(data.error));
           this.notificationsService.showError(this.responseHelper.getRegistrationErrorMessages(data.error.errorMessages), "");
           this.loading = false;
         });

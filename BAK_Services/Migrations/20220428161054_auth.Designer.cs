@@ -143,9 +143,6 @@ namespace BAK_Services.Migrations
                     b.Property<bool?>("Successful")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 

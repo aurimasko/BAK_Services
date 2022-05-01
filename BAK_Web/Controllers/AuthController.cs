@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BAK_Services.Authentication;
 using BAK_Services.Models;
+using BAK_Web.Attributes;
 using BAK_Web.Mappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -29,6 +30,14 @@ namespace BAK_Web.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
             _configuration = configuration;
+        }
+
+        [ApiAuthorize]
+        [HttpGet]
+        [Route("auth")]
+        public IActionResult Auth()
+        {
+            return Ok();
         }
 
         [HttpPost]
@@ -66,7 +75,8 @@ namespace BAK_Web.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    id = user.Id
                 });
             }
             return Unauthorized();

@@ -64,7 +64,8 @@ export class EvaluateComponent implements OnInit {
         this.coursesExecution.taskExecutions = result.content;
 
         this.coursesExecution.taskExecutions.forEach(obj => {
-          obj.mark = 0;
+          if(obj.mark === null || obj.mark === undefined)
+            obj.mark = 0;
         });
         this.selectedTask = result.content[0];
 

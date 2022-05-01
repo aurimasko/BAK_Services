@@ -7,6 +7,7 @@ import { ResponseHelper } from "../../helpers/response-helpers";
 import { Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { BlocklyCode } from "../../interfaces/blockly-code.interface";
+import { AuthenticationService } from "../../services/auth.service";
 
 type CourseTask = {
   id: any;
@@ -41,7 +42,7 @@ export class CourseExecutionComponent implements OnInit   {
   executionWorkspace = "";
   executionWorkspaceToBlockly = "";
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseExecutionService: CourseExecutionService, private courseService: CourseService, private taskService: TaskService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
+  constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private router: Router, private courseExecutionService: CourseExecutionService, private courseService: CourseService, private taskService: TaskService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper) { }
   
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('courseId');
@@ -63,9 +64,14 @@ export class CourseExecutionComponent implements OnInit   {
       };
       taskExecutions.push(execution);
     });
-  
+
+    var currentUser = this.authenticationService.currentUserValue;
+
+    if (!currentUser)
+      return null;
+
     var courseExecution = {
-      userId: 'd80bbc62-b97a-40a6-a99d-040313df3b6e',
+      userId: currentUser.id,
       courseId: this.courseId,
       taskExecutions: taskExecutions,
     };
@@ -76,8 +82,6 @@ export class CourseExecutionComponent implements OnInit   {
     return this.courseExecutionService.submitExecution(courseExecution).subscribe(result => {
         if (result.isSuccess) {
           this.notificationsService.showSuccess("Darbas sėkmingai atiduotas vertinimui.", "");
-          console.log('asd ' + JSON.stringify(result.content));
-          console.log(result.content.courseExecutionId);
           this.router.navigate(['/summary', result.content.id]);
         }
         this.isLoading = false;

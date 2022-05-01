@@ -78,7 +78,6 @@ import { TaskExecutionService } from "./services/task-execution.service";
       { path: 'admin/courses', component: CourseHandlingComponent, canActivate: [AuthGuard] },
       { path: 'admin/courses/:courseId/tasks', component: TaskHandlingComponent, canActivate: [AuthGuard] },
       { path: 'course/:courseId/execution', component: CourseExecutionComponent, canActivate: [AuthGuard] },
-      { path: 'summary', component: ExecutedCoursesSummaryComponent, canActivate: [AuthGuard] },
       { path: 'summary/:courseExecutionId', component: ExecutedCourseSummaryComponent, canActivate: [AuthGuard] },
       { path: 'evaluation', component: EvaluationSummaryComponent, canActivate: [AuthGuard] },
       { path: 'evaluation/:courseExecutionId', component: EvaluateComponent, canActivate: [AuthGuard] },

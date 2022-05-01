@@ -54,6 +54,7 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> GetByUser(Guid userId)
         {
             var response = await _courseExecutionService.GetByUserIdAsync(userId);
+            //todo: mapper
 
             if (response.IsSuccess)
                 return Ok(response);
@@ -82,6 +83,7 @@ namespace BAK_Web.Controllers
         public async Task<IActionResult> Evaluate([FromBody] CourseExecutionDto courseExecutionDto)
         {
             var result = await _courseExecutionService.Evaluate(courseExecutionDto);
+            //todo:mapper
 
             if (!result.IsSuccess)
                 return BadRequest(result);

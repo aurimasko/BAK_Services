@@ -39,7 +39,7 @@ namespace BAK_Services.Repositories.Course
         }
         public async Task<IEnumerable<CourseExecution>> GetByUserIdWithCourseAsync(Guid userId)
         {
-            return await _context.CourseExecutions.Where(x => x.UserId == userId).Include(x => x.Course).ToListAsync();
+            return await _context.CourseExecutions.Where(x => x.UserId == userId.ToString()).Include(x => x.Course).ToListAsync();
         }
     }
 }

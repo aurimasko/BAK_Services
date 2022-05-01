@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { NotificationsService } from "../../services/notifications.service";
 
 import { AuthenticationService } from "../../services/auth.service";
 
@@ -21,9 +22,9 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string = "";
-  error = '';
 
   constructor(
+    private notificationsService: NotificationsService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -60,7 +61,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
+          if (error.status === 401)
+            this.notificationsService.showError("Neteisingas vartotojo vardas arba slaptažodis.", "");
+
           this.loading = false;
         });
   }

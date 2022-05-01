@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NotificationsService } from "../../services/notifications.service";
 import { ResponseHelper } from "../../helpers/response-helpers";
 import { CourseExecutionService } from "../../services/course-execution.service";
+import { AuthenticationService } from "../../services/auth.service";
 
 @Component({
   selector: 'courses-component',
@@ -15,7 +16,7 @@ export class CoursesComponent implements OnInit {
   courseId;
   coursesExecutions;
 
-  constructor(private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private courseService: CourseService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper ) { }
+  constructor(private authenticationService: AuthenticationService,private courseExecutionService: CourseExecutionService, private route: ActivatedRoute, private router: Router, private courseService: CourseService, private notificationsService: NotificationsService, private responseHelper: ResponseHelper ) { }
 
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('courseId');
@@ -61,9 +62,12 @@ export class CoursesComponent implements OnInit {
   }
 
   getExecutedCourses() {
-    var userId = 'd80bbc62-b97a-40a6-a99d-040313df3b6e';
+    var currentUser = this.authenticationService.currentUserValue;
 
-    return this.courseExecutionService.getByUserId(userId).subscribe(result => {
+    if (!currentUser)
+      return null;
+
+    return this.courseExecutionService.getByUserId(currentUser.id).subscribe(result => {
         this.coursesExecutions = result.content;
       },
       error => this.notificationsService.showError(this.responseHelper.showErrorMessage(error), ""));
