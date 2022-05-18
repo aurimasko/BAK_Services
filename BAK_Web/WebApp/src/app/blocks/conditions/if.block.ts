@@ -25,7 +25,7 @@ export class Ifblock extends CustomBlock {
       .appendField("Vykdyti");
     this.block.setPreviousStatement(true, null);
     this.block.setNextStatement(true, null);
-    this.block.setColour(230);
+    this.block.setColour(210);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     this.block.jsonInit({
@@ -72,6 +72,7 @@ export class ElseBlock extends CustomBlock {
 
   public defineBlock() {
     this.block.setColour(280);
+
 
     this.block.appendStatementInput("ELSE_DO")
       .setCheck(null)

@@ -20,7 +20,7 @@ export class StringConcatBlock extends CustomBlock {
     this.block.setInputsInline(true);
     this.block.setPreviousStatement(true, null);
     this.block.setNextStatement(true, null);
-    this.block.setColour(230);
+    this.block.setColour(102);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     //todo: tooltip

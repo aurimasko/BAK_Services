@@ -11,11 +11,10 @@ export class NullBlock extends CustomBlock {
     this.block.appendDummyInput()
       .appendField("null");
     this.block.setOutput(true, null);
-    this.block.setColour(230);
+    this.block.setColour(0);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 
-    //todo: galbut perkelti i kita kategorija
     //todo: tooltip
     //todo: helpurl
   }

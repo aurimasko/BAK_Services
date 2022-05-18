@@ -16,7 +16,7 @@ export class ConditionSentenceBlock extends CustomBlock {
       .setCheck("Boolean");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Boolean");
-    this.block.setColour(230);
+    this.block.setColour(210);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

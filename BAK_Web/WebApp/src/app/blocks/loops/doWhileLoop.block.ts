@@ -6,13 +6,13 @@ export class DoWhileLoopBlock extends CustomBlock {
     this.class = DoWhileLoopBlock;
     this.disabled = true;
   }
-
+  
   public defineBlock() {
     this.block.appendStatementInput("DO_STATEMENT")
       .setCheck(null)
       .appendField("Vykdyti");
     this.block.appendDummyInput()
-      .appendField("Kol šį sąlyga yra");
+      .appendField("ir kartoti tol, kol sąlyga yra");
     this.block.appendDummyInput()
       .appendField(new Blockly.FieldDropdown([["tiesa", "TRUE"], ["netiesa", "FALSE"]]), "WHILE_CONDITION_OPTION");
     this.block.appendValueInput("WHILE_CONDITION")
@@ -20,7 +20,7 @@ export class DoWhileLoopBlock extends CustomBlock {
     this.block.setInputsInline(true);
     this.block.setPreviousStatement(true, null);
     this.block.setNextStatement(true, null);
-    this.block.setColour(230);
+    this.block.setColour(20);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
   }

@@ -18,7 +18,7 @@ export class PowerBlock extends CustomBlock {
       .appendField("laipsniu");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Number");
-    this.block.setColour(230);
+    this.block.setColour(65);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     //todo: tooltip

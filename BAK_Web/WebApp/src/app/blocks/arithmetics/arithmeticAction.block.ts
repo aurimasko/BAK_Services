@@ -16,7 +16,7 @@ export class ArithmeticActionBlock extends CustomBlock {
       .setCheck("Number");
     this.block.setInputsInline(true);
     this.block.setOutput(true);
-    this.block.setColour(230);
+    this.block.setColour(65);
     this.block.setTooltip("Aritmetinio veiksmo (sudėtis, atimtis, daugyba, dalyba) atlikimas");
   }
 

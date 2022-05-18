@@ -26,7 +26,7 @@ export class ConditionComparisonBlock extends CustomBlock {
       .setCheck(null);
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Boolean");
-    this.block.setColour(230);
+    this.block.setColour(210);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

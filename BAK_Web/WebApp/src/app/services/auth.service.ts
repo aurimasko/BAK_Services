@@ -34,7 +34,7 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          sessionStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
 
@@ -44,7 +44,7 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null!);
     this.router.navigate(['/login']);
   }

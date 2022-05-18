@@ -13,7 +13,7 @@ export class StringValueBlock extends CustomBlock {
       .appendField(new Blockly.FieldTextInput(""), "INPUT");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "String");
-    this.block.setColour(230);
+    this.block.setColour(0);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

@@ -27,19 +27,21 @@ var WhileLoopBlock = /** @class */ (function (_super) {
     }
     WhileLoopBlock.prototype.defineBlock = function () {
         this.block.appendDummyInput()
-            .appendField("Kol ši sąlyga yra");
-        this.block.appendDummyInput()
-            .appendField(new ngx_blockly_1.Blockly.FieldDropdown([["tiesa", "true"], ["netiesa", "false"]]), "WHILE_CONDITION_OPTION");
+            .appendField("Kol sąlyga");
         this.block.appendValueInput("WHILE_CONDITION")
             .setCheck("Boolean");
         this.block.appendDummyInput()
-            .appendField("Kartoti");
+            .appendField("yra");
+        this.block.appendDummyInput()
+            .appendField(new ngx_blockly_1.Blockly.FieldDropdown([["tiesa", "true"], ["netiesa", "false"]]), "WHILE_CONDITION_OPTION");
+        this.block.appendDummyInput()
+            .appendField("tol kartoti");
         this.block.appendStatementInput("DO")
             .setCheck(null);
         this.block.setInputsInline(true);
         this.block.setPreviousStatement(true, null);
         this.block.setNextStatement(true, null);
-        this.block.setColour(230);
+        this.block.setColour(20);
         this.block.setTooltip("");
         this.block.setHelpUrl("");
     };

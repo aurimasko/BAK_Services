@@ -16,7 +16,7 @@ export class ModValueBlock extends CustomBlock {
       .appendField("iš");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Number");
-    this.block.setColour(230);
+    this.block.setColour(65);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

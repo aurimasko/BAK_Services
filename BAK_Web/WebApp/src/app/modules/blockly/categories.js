@@ -18,7 +18,6 @@ var if_block_1 = require("../../blocks/conditions/if.block");
 var not_block_1 = require("../../blocks/conditions/not.block");
 var null_block_1 = require("../../blocks/conditions/null.block");
 var switch_block_1 = require("../../blocks/conditions/switch.block");
-var switchBreak_block_1 = require("../../blocks/conditions/switchBreak.block");
 var boolean_block_1 = require("../../blocks/conditions/boolean.block");
 var conditionSentence_block_1 = require("../../blocks/conditions/conditionSentence.block");
 var conditionComparison_block_1 = require("../../blocks/conditions/conditionComparison.block");
@@ -42,24 +41,28 @@ var BlocklyCategories = /** @class */ (function () {
         this.variableBlocks = [
             new createVariable_block_1.CreateVariableBlock()
         ];
+        this.constBlocks = [
+            new stringValue_block_1.StringValueBlock(),
+            new numberValue_block_1.NumberValueBlock(),
+            new boolean_block_1.BooleanBlock(),
+            new null_block_1.NullBlock(),
+            new newLine_block_1.NewLineBlock()
+        ];
         this.stringBlocks = [
             new strcmp_block_1.StringCompareBlock(),
             new strlen_block_1.StringLengthBlock(),
-            new strcat_block_1.StringConcatBlock(),
-            new stringValue_block_1.StringValueBlock()
+            new strcat_block_1.StringConcatBlock()
         ];
         this.arithmeticBlocks = [
             new arithmeticAction_block_1.ArithmeticActionBlock(),
             new pow_block_1.PowerBlock(),
-            new numberValue_block_1.NumberValueBlock(),
             new mod_block_1.ModValueBlock(),
             new sqrt_block_1.SqrtBlock(),
             new absValue_block_1.AbsoluteValBlock()
         ];
         this.stdioBlocks = [
             new printf_block_1.PrintfBlock(),
-            new scanf_block_1.ScanfBlock(),
-            new newLine_block_1.NewLineBlock()
+            new scanf_block_1.ScanfBlock()
         ];
         this.loopBlocks = [
             new forLoop_block_1.ForLoopBlock(),
@@ -70,10 +73,6 @@ var BlocklyCategories = /** @class */ (function () {
         this.conditionBlocks = [
             new if_block_1.Ifblock(),
             new not_block_1.NotBlock(),
-            new null_block_1.NullBlock(),
-            new switch_block_1.SwitchBlock(),
-            new switchBreak_block_1.SwitchBreakBlock(),
-            new boolean_block_1.BooleanBlock(),
             new conditionSentence_block_1.ConditionSentenceBlock(),
             new conditionComparison_block_1.ConditionComparisonBlock()
         ];
@@ -88,15 +87,16 @@ var BlocklyCategories = /** @class */ (function () {
             new if_block_1.IfMutatorBlock(),
             new if_block_1.ElseBlock()
         ];
-        this.allCustomBlocks = this.variableBlocks.concat(this.generalBlocks, this.arithmeticBlocks, this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
+        this.allCustomBlocks = this.variableBlocks.concat(this.generalBlocks, this.constBlocks, this.arithmeticBlocks, this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
         this.blocklyCategories = [
             ngx_blockly_1.VARIABLES_CATEGORY,
             //  new Category('Kintamieji', '#ff0000', [...this.variableBlocks]),
-            new ngx_blockly_1.Category('Matematika', '#ff0000', __spreadArray([], this.arithmeticBlocks)),
-            new ngx_blockly_1.Category('Ciklai', '#ff0000', __spreadArray([], this.loopBlocks)),
-            new ngx_blockly_1.Category('Sąlygos sakiniai', '#ff0000', __spreadArray([], this.conditionBlocks)),
-            new ngx_blockly_1.Category('Duomenų įvedimas/išvedimas', '#ff0000', __spreadArray([], this.stdioBlocks)),
-            new ngx_blockly_1.Category('Tekstai ir jų funkcijos', '#ff0000', __spreadArray([], this.stringBlocks))
+            new ngx_blockly_1.Category('Konstantos', '#ff0000', __spreadArray([], this.constBlocks)),
+            new ngx_blockly_1.Category('Matematika', '#B0BF1A', __spreadArray([], this.arithmeticBlocks)),
+            new ngx_blockly_1.Category('Ciklai', '#FF9966	', __spreadArray([], this.loopBlocks)),
+            new ngx_blockly_1.Category('Sąlygos sakiniai', '#007FFF', __spreadArray([], this.conditionBlocks)),
+            new ngx_blockly_1.Category('Duomenų įvedimas/išvedimas', '#CB4154', __spreadArray([], this.stdioBlocks)),
+            new ngx_blockly_1.Category('Tekstai ir jų funkcijos', '#7BB661', __spreadArray([], this.stringBlocks))
         ];
     }
     return BlocklyCategories;

@@ -30,7 +30,7 @@ var DoWhileLoopBlock = /** @class */ (function (_super) {
             .setCheck(null)
             .appendField("Vykdyti");
         this.block.appendDummyInput()
-            .appendField("Kol šį sąlyga yra");
+            .appendField("ir kartoti tol, kol sąlyga yra");
         this.block.appendDummyInput()
             .appendField(new ngx_blockly_1.Blockly.FieldDropdown([["tiesa", "TRUE"], ["netiesa", "FALSE"]]), "WHILE_CONDITION_OPTION");
         this.block.appendValueInput("WHILE_CONDITION")
@@ -38,7 +38,7 @@ var DoWhileLoopBlock = /** @class */ (function (_super) {
         this.block.setInputsInline(true);
         this.block.setPreviousStatement(true, null);
         this.block.setNextStatement(true, null);
-        this.block.setColour(230);
+        this.block.setColour(20);
         this.block.setTooltip("");
         this.block.setHelpUrl("");
     };

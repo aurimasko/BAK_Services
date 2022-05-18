@@ -11,12 +11,11 @@ export class BooleanBlock extends CustomBlock {
       this.block.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([["tiesa", "true"], ["netiesa", "false"]]), "INPUT_SELECTION");
     this.block.setOutput(true, "Boolean");
-    this.block.setColour(230);
+    this.block.setColour(0);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     //todo: tooltip
     //todo: helpurl
-    //todo: pagalvoti, gal perkelti prie kintamųjų
   }
 
   public override toXML(): string {

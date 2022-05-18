@@ -36,7 +36,7 @@ var PrintfBlock = /** @class */ (function (_super) {
             .appendField("Išvesti į ekraną");
         this.block.setPreviousStatement(true, null);
         this.block.setNextStatement(true, null);
-        this.block.setColour(230);
+        this.block.setColour(352);
         this.block.setTooltip("");
         this.block.setHelpUrl("");
         this.block.jsonInit({

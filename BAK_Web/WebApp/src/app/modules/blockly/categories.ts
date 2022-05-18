@@ -38,17 +38,23 @@ export class BlocklyCategories {
     new CreateVariableBlock()
   ];
 
+  private constBlocks: CustomBlock[] = [
+    new StringValueBlock(),
+    new NumberValueBlock(),
+    new BooleanBlock(),
+    new NullBlock(),
+    new NewLineBlock()
+  ];
+
   private stringBlocks: CustomBlock[] = [
     new StringCompareBlock(),
     new StringLengthBlock(),
-    new StringConcatBlock(),
-    new StringValueBlock()
+    new StringConcatBlock()
   ];
 
   private arithmeticBlocks: CustomBlock[] = [
     new ArithmeticActionBlock(),
     new PowerBlock(),
-    new NumberValueBlock(),
     new ModValueBlock(),
     new SqrtBlock(),
     new AbsoluteValBlock()
@@ -56,8 +62,7 @@ export class BlocklyCategories {
 
   public stdioBlocks: CustomBlock[] = [
     new PrintfBlock(),
-    new ScanfBlock(),
-  new NewLineBlock()
+    new ScanfBlock()
   ];
 
   private loopBlocks: CustomBlock[] = [
@@ -70,10 +75,6 @@ export class BlocklyCategories {
   private conditionBlocks: CustomBlock[] = [
     new Ifblock(),
     new NotBlock(),
-    new NullBlock(),
-    new SwitchBlock(),
-    new SwitchBreakBlock(),
-    new BooleanBlock(),
     new ConditionSentenceBlock(),
     new ConditionComparisonBlock()
   ];
@@ -90,16 +91,17 @@ export class BlocklyCategories {
     new ElseBlock()
   ];
 
-  public allCustomBlocks: CustomBlock[] = this.variableBlocks.concat(this.generalBlocks, this.arithmeticBlocks,this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
+  public allCustomBlocks: CustomBlock[] = this.variableBlocks.concat(this.generalBlocks, this.constBlocks, this.arithmeticBlocks,this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
 
 
   public blocklyCategories: Node[] = [
     VARIABLES_CATEGORY,
     //  new Category('Kintamieji', '#ff0000', [...this.variableBlocks]),
-    new Category('Matematika', '#ff0000', [...this.arithmeticBlocks]),
-    new Category('Ciklai', '#ff0000', [...this.loopBlocks]),
-    new Category('Sąlygos sakiniai', '#ff0000', [...this.conditionBlocks]),
-    new Category('Duomenų įvedimas/išvedimas', '#ff0000', [...this.stdioBlocks]),
-    new Category('Tekstai ir jų funkcijos', '#ff0000', [...this.stringBlocks])
+    new Category('Konstantos', '#ff0000', [...this.constBlocks]),
+    new Category('Matematika', '#B0BF1A', [...this.arithmeticBlocks]),
+    new Category('Ciklai', '#FF9966	', [...this.loopBlocks]),
+    new Category('Sąlygos sakiniai', '#007FFF', [...this.conditionBlocks]),
+    new Category('Duomenų įvedimas/išvedimas', '#CB4154', [...this.stdioBlocks]),
+    new Category('Tekstai ir jų funkcijos', '#7BB661', [...this.stringBlocks])
   ];
 }

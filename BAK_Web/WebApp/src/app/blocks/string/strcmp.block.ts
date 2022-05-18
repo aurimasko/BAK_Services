@@ -16,7 +16,7 @@ export class StringCompareBlock extends CustomBlock {
       .appendField("lygus tekstui");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Boolean");
-    this.block.setColour(230);
+    this.block.setColour(102);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     //todo: tooltip

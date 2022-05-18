@@ -41,7 +41,7 @@ var Ifblock = /** @class */ (function (_super) {
             .appendField("Vykdyti");
         this.block.setPreviousStatement(true, null);
         this.block.setNextStatement(true, null);
-        this.block.setColour(230);
+        this.block.setColour(210);
         this.block.setTooltip("");
         this.block.setHelpUrl("");
         this.block.jsonInit({

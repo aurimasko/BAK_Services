@@ -33,7 +33,7 @@ var NumberValueBlock = /** @class */ (function (_super) {
             .appendField(new ngx_blockly_1.Blockly.FieldNumber(0), "INSERTED_VALUE");
         this.block.setOutput(true, "Number");
         this.block.setInputsInline(true);
-        this.block.setColour(230);
+        this.block.setColour(0);
         this.block.setTooltip("Įrašyti skaitinę reikšmę");
     };
     NumberValueBlock.prototype.toXML = function () {

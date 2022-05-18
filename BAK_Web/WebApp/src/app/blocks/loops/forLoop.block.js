@@ -48,8 +48,9 @@ var ForLoopBlock = /** @class */ (function (_super) {
         this.block.setInputsInline(true);
         this.block.setPreviousStatement(true, null);
         this.block.setNextStatement(true, null);
-        this.block.setColour(230);
-        this.block.setTooltip("");
+        this.block.setColour(20);
+        this.block.setTooltip("Šis blokas kartoja veiksmus, esančius 'Vykdyti' dalyje tol, kol pateiktas kintamasis yra mažesnis už skaičių pateiktą 'iki' dalyje." +
+            "Po kiekvieno veiksmų pakartojimo, kintamojo reikšmę galima keisti.");
     };
     ForLoopBlock.prototype.toXML = function () {
         return '<block type="ForLoopBlock"></block>';

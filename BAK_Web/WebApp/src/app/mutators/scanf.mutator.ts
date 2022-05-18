@@ -17,7 +17,7 @@ export class ScanfMutator extends BlockMutator {
 
     for (var x = 1; x <= block.getFieldValue('COUNT'); x++) {
       block.appendValueInput('INPUT' + x)
-        .setCheck(null)
+        .setCheck("Variable")
         .appendField(''); // a blank space
     }
   }
@@ -48,8 +48,8 @@ export class ScanfMutator extends BlockMutator {
         case 'ScanfAdd':
           block.setFieldValue(block.getFieldValue('COUNT')+1, "COUNT");
           var printInput = block.appendValueInput('INPUT' + block.getFieldValue('COUNT'))
-          .setCheck(null)
-          .appendField('');
+            .setCheck("Variable")
+            .appendField('');
         // Reconnect any child blocks.
         if (clauseBlock.valueConnection_) {
           printInput.connection.connect(clauseBlock.valueConnection_);

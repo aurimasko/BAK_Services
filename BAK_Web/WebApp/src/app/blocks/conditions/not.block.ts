@@ -12,7 +12,7 @@ export class NotBlock extends CustomBlock {
       .setCheck("Boolean")
       .appendField("priešingai nei");
     this.block.setOutput(true, null);
-    this.block.setColour(230);
+    this.block.setColour(0);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

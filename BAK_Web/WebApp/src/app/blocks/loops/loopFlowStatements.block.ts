@@ -16,7 +16,7 @@ export class LoopFlowStatementsBlock extends CustomBlock {
       .appendField(new Blockly.FieldDropdown([["išeiti iš ciklo", "BREAK"], ["tęsti su kita ciklo iteracija", "CONTINUE"]]), "FLOW_OPTION");
     this.block.setInputsInline(true);
     this.block.setPreviousStatement(true, null);
-    this.block.setColour(230);
+    this.block.setColour(20);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 

@@ -15,7 +15,7 @@ export class StringLengthBlock extends CustomBlock {
       .appendField("ilgis");
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Number");
-    this.block.setColour(230);
+    this.block.setColour(102);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
     //todo: tooltip

@@ -52,4 +52,16 @@ export class CourseHandlingComponent implements OnInit {
     modalRef.result.then(() => this.getCourses());
 
   }
+
+  getCourseLevelText(courseLevel) {
+    switch (courseLevel) {
+    case 'Easy':
+      return "Pradendatiesiems";
+    case 'Medium':
+      return 'Susipažinusiems';
+    case 'Hard':
+      return 'Pažengusiems';
+    }
+    return null;
+  }
 }

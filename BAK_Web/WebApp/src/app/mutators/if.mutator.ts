@@ -75,7 +75,7 @@ export class IfMutator extends BlockMutator {
         case 'ElseBlock':
           block.setFieldValue(block.getFieldValue('ELSECOUNT') + 1, "ELSECOUNT");
 
-          var elseInput = block.appendValueInput('ELSE_DO')
+          var elseInput = block.appendStatementInput('ELSE_DO')
             .appendField("Jei visa kita, vykdyti ");
           
           // Reconnect any child blocks.

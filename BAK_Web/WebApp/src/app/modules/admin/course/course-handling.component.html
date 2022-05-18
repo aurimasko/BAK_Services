@@ -17,7 +17,7 @@
         *ngFor="let course of courses"
         >
           <td (click)="openTasksForCourse(course)">{{course.name}}</td>
-          <td (click)="openTasksForCourse(course)">{{course.level}}</td>
+          <td (click)="openTasksForCourse(course)">{{getCourseLevelText(course.level)}}</td>
           <td>
             <a (click)="editCourse(course)">Redaguoti</a><br/>
             <a (click)="deleteCourse(course)">Ištrinti</a>

@@ -16,7 +16,7 @@ export class NumberValueBlock extends CustomBlock {
     this.block.setOutput(true, "Number");
 
     this.block.setInputsInline(true);
-    this.block.setColour(230);
+    this.block.setColour(0);
     this.block.setTooltip("Įrašyti skaitinę reikšmę");
   }
 
