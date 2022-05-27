@@ -1,5 +1,4 @@
 import { Blockly, CustomBlock } from 'ngx-blockly';
-declare var require: any;
 
 export class LoopFlowStatementsBlock extends CustomBlock {
 

@@ -1,6 +1,6 @@
 import { CustomBlock, Category, Node, VARIABLES_CATEGORY } from 'ngx-blockly';
 
-import { CreateVariableBlock } from "../../blocks/variables/createVariable.block";
+import { CreateIntVariableBlock } from "../../blocks/variables/createVariable.block";
 import { ArithmeticActionBlock } from "../../blocks/arithmetics/arithmeticAction.block";
 import { NumberValueBlock } from "../../blocks/arithmetics/numberValue.block";
 import { ForLoopBlock } from "../../blocks/loops/forLoop.block";
@@ -27,6 +27,7 @@ import { StringLengthBlock } from "../../blocks/string/strlen.block";
 import { StringConcatBlock } from "../../blocks/string/strcat.block";
 import { StringValueBlock } from "../../blocks/stdio/stringValue.block";
 import { InitMainBlock } from "../../blocks/general/initMain.block";
+import { Blockly } from 'ngx-blockly';
 
 export class BlocklyCategories {
 
@@ -35,7 +36,6 @@ export class BlocklyCategories {
   ];
 
   private variableBlocks: CustomBlock[] = [
-    new CreateVariableBlock()
   ];
 
   private constBlocks: CustomBlock[] = [
@@ -94,9 +94,26 @@ export class BlocklyCategories {
   public allCustomBlocks: CustomBlock[] = this.variableBlocks.concat(this.generalBlocks, this.constBlocks, this.arithmeticBlocks,this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
 
 
+  public createFlyout = function (workspace) {
+    let xmlList : Element[] = [];
+    // Add your button and give it a callback name.
+    const button = document.createElement('button');
+    button.setAttribute('text', 'Create Typed Variable');
+    button.setAttribute('callbackKey', 'callbackName');
+
+    xmlList.push(button);
+
+    // This gets all the variables that the user creates and adds them to the
+    // flyout.
+    const blockList = Blockly.VariablesDynamic.flyoutCategoryBlocks(workspace);
+    xmlList = [...blockList];
+    console.log(JSON.stringify(xmlList));
+    return xmlList;
+  };
+
   public blocklyCategories: Node[] = [
     VARIABLES_CATEGORY,
-    //  new Category('Kintamieji', '#ff0000', [...this.variableBlocks]),
+    new Category('Kintamieji', '#ff0000', [...this.variableBlocks], "VARIABLES1"),
     new Category('Konstantos', '#ff0000', [...this.constBlocks]),
     new Category('Matematika', '#B0BF1A', [...this.arithmeticBlocks]),
     new Category('Ciklai', '#FF9966	', [...this.loopBlocks]),

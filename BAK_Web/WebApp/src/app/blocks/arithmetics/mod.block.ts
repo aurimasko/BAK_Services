@@ -10,17 +10,19 @@ export class ModValueBlock extends CustomBlock {
   public defineBlock() {
     this.block.appendValueInput("DIVIDEND")
       .setCheck("Number")
-      .appendField("Dalybos liekana");
+      .appendField("Dalybos");
     this.block.appendValueInput("DIVISOR")
       .setCheck("Number")
       .appendField("iš");
+    this.block.appendDummyInput().appendField("liekana");
+
     this.block.setInputsInline(true);
     this.block.setOutput(true, "Number");
     this.block.setColour(65);
     this.block.setTooltip("");
     this.block.setHelpUrl("");
 
-    //todo: tooltip, geresnis tekstas
+    //todo: tooltip
   }
 
   public override toXML(): string {

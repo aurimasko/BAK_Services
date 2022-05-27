@@ -7,7 +7,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlocklyCategories = void 0;
 var ngx_blockly_1 = require("ngx-blockly");
-var createVariable_block_1 = require("../../blocks/variables/createVariable.block");
 var arithmeticAction_block_1 = require("../../blocks/arithmetics/arithmeticAction.block");
 var numberValue_block_1 = require("../../blocks/arithmetics/numberValue.block");
 var forLoop_block_1 = require("../../blocks/loops/forLoop.block");
@@ -33,14 +32,13 @@ var strlen_block_1 = require("../../blocks/string/strlen.block");
 var strcat_block_1 = require("../../blocks/string/strcat.block");
 var stringValue_block_1 = require("../../blocks/stdio/stringValue.block");
 var initMain_block_1 = require("../../blocks/general/initMain.block");
+var ngx_blockly_2 = require("ngx-blockly");
 var BlocklyCategories = /** @class */ (function () {
     function BlocklyCategories() {
         this.generalBlocks = [
             new initMain_block_1.InitMainBlock()
         ];
-        this.variableBlocks = [
-            new createVariable_block_1.CreateVariableBlock()
-        ];
+        this.variableBlocks = [];
         this.constBlocks = [
             new stringValue_block_1.StringValueBlock(),
             new numberValue_block_1.NumberValueBlock(),
@@ -88,9 +86,23 @@ var BlocklyCategories = /** @class */ (function () {
             new if_block_1.ElseBlock()
         ];
         this.allCustomBlocks = this.variableBlocks.concat(this.generalBlocks, this.constBlocks, this.arithmeticBlocks, this.hidinBlocks, this.loopBlocks, this.conditionBlocks, this.stdioBlocks, this.stringBlocks);
+        this.createFlyout = function (workspace) {
+            var xmlList = [];
+            // Add your button and give it a callback name.
+            var button = document.createElement('button');
+            button.setAttribute('text', 'Create Typed Variable');
+            button.setAttribute('callbackKey', 'callbackName');
+            xmlList.push(button);
+            // This gets all the variables that the user creates and adds them to the
+            // flyout.
+            var blockList = ngx_blockly_2.Blockly.VariablesDynamic.flyoutCategoryBlocks(workspace);
+            xmlList = __spreadArray([], blockList);
+            console.log(JSON.stringify(xmlList));
+            return xmlList;
+        };
         this.blocklyCategories = [
             ngx_blockly_1.VARIABLES_CATEGORY,
-            //  new Category('Kintamieji', '#ff0000', [...this.variableBlocks]),
+            new ngx_blockly_1.Category('Kintamieji', '#ff0000', __spreadArray([], this.variableBlocks), "VARIABLES1"),
             new ngx_blockly_1.Category('Konstantos', '#ff0000', __spreadArray([], this.constBlocks)),
             new ngx_blockly_1.Category('Matematika', '#B0BF1A', __spreadArray([], this.arithmeticBlocks)),
             new ngx_blockly_1.Category('Ciklai', '#FF9966	', __spreadArray([], this.loopBlocks)),

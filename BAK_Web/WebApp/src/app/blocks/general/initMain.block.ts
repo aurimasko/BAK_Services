@@ -24,7 +24,15 @@ export class InitMainBlock extends CustomBlock {
 
   public override  toDartCode(block: any): string | any[] {
     var statements_program = Blockly[NgxBlocklyGenerator.DART].statementToCode(block, 'PROGRAM');
+    var variablesOutput = "";
 
-    return 'int main() { \n' + statements_program + 'return 0;\n}';
+    const defvars: string[] = [];
+
+    const variables = block.workspace.getAllVariables();
+    for (let i = 0; i < variables.length; i++) {
+      defvars.push("int " + Blockly[NgxBlocklyGenerator.DART].nameDB_.getName(variables[i].getId(), "VARIABLE") + ";");
+    }
+
+    return 'int main() { \n' + defvars.join('\n') +'\n' + statements_program + 'return 0;\n}';
   }
 }

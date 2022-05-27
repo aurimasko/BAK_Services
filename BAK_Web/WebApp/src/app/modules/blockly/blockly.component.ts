@@ -3,6 +3,7 @@ import { Blockly, NgxBlocklyConfig, NgxBlocklyGenerator, NgxBlocklyComponent, Cu
 import { BlocklyCode } from "../../interfaces/blockly-code.interface";
 import { BlocklyCategories } from "./categories";
 import { BlocklyWorkspaceContent } from "./blockly.workspace.content";
+import { TypedVariableModal } from '@blockly/plugin-typed-variable-modal';
 
 @Component({
   selector: 'blockly-workspace',
@@ -27,11 +28,32 @@ export class BlocklyComponent implements AfterViewInit {
     this.blocklyCategories = new BlocklyCategories();
     const workspace = new Blockly.WorkspaceSvg(new Blockly.Options({}));
     const toolbox: NgxBlocklyToolbox = new NgxBlocklyToolbox(workspace);
-    toolbox.nodes = this.blocklyCategories.blocklyCategories;
     this.customBlocks = this.blocklyCategories.allCustomBlocks;
 
+    toolbox.nodes = this.blocklyCategories.blocklyCategories;
     this.config.toolbox = toolbox.toXML();
 
+    workspace.registerButtonCallback('VARIABLES1', function (button) {
+      Blockly.Variables.createVariable(button.getTargetWorkspace(), undefined, 'int');
+    });
+
+    workspace.registerToolboxCategoryCallback('VARIABLES1', function (workspace) {
+      let xmlList: Element[] = [];
+      // Add your button and give it a callback name.
+      /*const button = document.createElement('button');
+      button.setAttribute('text', 'Create Typed Variable');
+      button.setAttribute('callbackKey', 'CREATE_TYPED_VARIABLE');
+
+      xmlList.push(button);
+
+      // This gets all the variables that the user creates and adds them to the
+      // flyout.
+      const blockList = Blockly.VariablesDynamic.flyoutCategoryBlocks(workspace);
+      xmlList = [...blockList];
+      console.log(JSON.stringify(xmlList));*/
+      return xmlList ;
+    });
+ 
     this.setupBlocklyForC();
   }
 
@@ -146,16 +168,17 @@ export class BlocklyComponent implements AfterViewInit {
       Blockly[NgxBlocklyGenerator.DART].definitions_ = Object.create(null);
       Blockly[NgxBlocklyGenerator.DART].functionNames_ = Object.create(null);
 
-      if (!Blockly[NgxBlocklyGenerator.DART].variableDB_) {
+      if (!Blockly[NgxBlocklyGenerator.DART].nameDB_) {
         Blockly[NgxBlocklyGenerator.DART].nameDB_ =
           new Blockly.Names(Blockly[NgxBlocklyGenerator.DART].RESERVED_WORDS_);
       } else {
-        Blockly[NgxBlocklyGenerator.DART].variableDB_.reset();
+        Blockly[NgxBlocklyGenerator.DART].nameDB_.reset();
       }
       Blockly[NgxBlocklyGenerator.DART].nameDB_.setVariableMap(workspace.getVariableMap());
-      // todo: global variables
+      Blockly[NgxBlocklyGenerator.DART].nameDB_.populateVariables(workspace);
+      Blockly[NgxBlocklyGenerator.DART].nameDB_.populateProcedures(workspace);
 
-      this.isInitialized = true;
+      Blockly[NgxBlocklyGenerator.DART].isInitialized = true;
     };
 
     Blockly[NgxBlocklyGenerator.DART].finish = function (code) {

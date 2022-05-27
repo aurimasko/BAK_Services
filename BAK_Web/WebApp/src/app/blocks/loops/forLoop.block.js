@@ -31,13 +31,14 @@ var ForLoopBlock = /** @class */ (function (_super) {
         this.block.appendValueInput("FROM")
             .setCheck("Number")
             .setAlign(ngx_blockly_1.Blockly.ALIGN_RIGHT)
-            .appendField(new ngx_blockly_1.Blockly.FieldVariable("i"), "VAR").appendField("nuo");
+            .appendField(new ngx_blockly_1.Blockly.FieldVariable(""), "VAR").appendField("nuo");
         this.block.appendDummyInput()
             .appendField("iki");
         this.block.appendValueInput("TO")
             .setCheck("Number")
             .setAlign(ngx_blockly_1.Blockly.ALIGN_RIGHT);
         this.block.appendDummyInput()
+            .appendField("po kiekvieno vykdymo ")
             .appendField(new ngx_blockly_1.Blockly.FieldDropdown([["pridedant", "+"], ["minusuojant", "-"], ["dauginant", "*"], ["dalinant", "/"]]), "FOR_OPTION");
         this.block.appendValueInput("BY")
             .setCheck("Number")
@@ -47,6 +48,11 @@ var ForLoopBlock = /** @class */ (function (_super) {
             .appendField("Vykdyti");
         this.block.setInputsInline(true);
         this.block.setPreviousStatement(true, null);
+        this.block.jsonInit({
+            'extensions': [
+                'contextMenu_newGetVariableBlock'
+            ]
+        });
         this.block.setNextStatement(true, null);
         this.block.setColour(20);
         this.block.setTooltip("Šis blokas kartoja veiksmus, esančius 'Vykdyti' dalyje tol, kol pateiktas kintamasis yra mažesnis už skaičių pateiktą 'iki' dalyje." +

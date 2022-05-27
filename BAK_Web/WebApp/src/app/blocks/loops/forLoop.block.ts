@@ -13,7 +13,7 @@ export class ForLoopBlock extends CustomBlock {
     this.block.appendValueInput("FROM")
       .setCheck("Number")
       .setAlign(Blockly.ALIGN_RIGHT)
-      .appendField(new Blockly.FieldVariable("i"), "VAR").appendField("nuo");
+      .appendField(new Blockly.FieldVariable(""), "VAR").appendField("nuo");
  
     this.block.appendDummyInput()
       .appendField("iki");
@@ -22,6 +22,7 @@ export class ForLoopBlock extends CustomBlock {
       .setAlign(Blockly.ALIGN_RIGHT);
 
     this.block.appendDummyInput()
+    .appendField("po kiekvieno vykdymo ")
       .appendField(new Blockly.FieldDropdown([["pridedant", "+"], ["minusuojant", "-"], ["dauginant", "*"], ["dalinant", "/"]]), "FOR_OPTION");
     this.block.appendValueInput("BY")
       .setCheck("Number")
@@ -32,6 +33,11 @@ export class ForLoopBlock extends CustomBlock {
     this.block.setInputsInline(true);
     this.block.setPreviousStatement(true, null);
 
+    this.block.jsonInit({
+      'extensions': [
+        'contextMenu_newGetVariableBlock'
+      ]
+    });
     this.block.setNextStatement(true, null);
     this.block.setColour(20);
     this.block.setTooltip(

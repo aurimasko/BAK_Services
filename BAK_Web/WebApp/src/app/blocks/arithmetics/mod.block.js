@@ -28,16 +28,17 @@ var ModValueBlock = /** @class */ (function (_super) {
     ModValueBlock.prototype.defineBlock = function () {
         this.block.appendValueInput("DIVIDEND")
             .setCheck("Number")
-            .appendField("Dalybos liekana");
+            .appendField("Dalybos");
         this.block.appendValueInput("DIVISOR")
             .setCheck("Number")
             .appendField("iš");
+        this.block.appendDummyInput().appendField("liekana");
         this.block.setInputsInline(true);
         this.block.setOutput(true, "Number");
         this.block.setColour(65);
         this.block.setTooltip("");
         this.block.setHelpUrl("");
-        //todo: tooltip, geresnis tekstas
+        //todo: tooltip
     };
     ModValueBlock.prototype.toXML = function () {
         return '<block type="ModValueBlock"></block>';
